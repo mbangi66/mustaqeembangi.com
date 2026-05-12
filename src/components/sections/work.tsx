@@ -33,9 +33,16 @@ export function Work() {
         </div>
 
         <ul className="group/list">
-          {experience.map((job, i) => {
-            const Inner = (
-              <div className="relative grid grid-cols-12 items-baseline gap-4 rounded-lg p-4 transition-all duration-300 hover:!opacity-100 hover:bg-[var(--color-bg-subtle)]/50 lg:gap-6 lg:group-hover/list:opacity-50 lg:hover:[box-shadow:inset_0_1px_0_var(--color-border-strong)]">
+          {experience.map((job, i) => (
+            <motion.li
+              key={`${job.company}-${i}`}
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.45, delay: i * 0.06 }}
+              className="group/item"
+            >
+              <div className="relative grid grid-cols-12 items-baseline gap-4 rounded-lg p-4 transition-all duration-300 hover:!opacity-100 hover:bg-[var(--color-bg-subtle)]/50 lg:gap-6 lg:group-hover/list:opacity-50">
                 <div className="col-span-12 lg:col-span-3">
                   <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-subtle)]">
                     {job.period}
@@ -46,7 +53,6 @@ export function Work() {
                     <span>{job.role}</span>
                     <span className="text-[var(--color-fg-muted)]">·</span>
                     <span className="text-[var(--color-fg-muted)]">{job.company}</span>
-                    {job.href && <ArrowUpRight className="h-4 w-4 opacity-0 transition-opacity lg:group-hover/item:opacity-100" />}
                   </h3>
                   <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
                     {job.location}
@@ -66,26 +72,8 @@ export function Work() {
                   </div>
                 </div>
               </div>
-            );
-            return (
-              <motion.li
-                key={`${job.company}-${i}`}
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.45, delay: i * 0.06 }}
-                className="group/item"
-              >
-                {job.href ? (
-                  <a href={job.href} target="_blank" rel="noopener noreferrer" className="block">
-                    {Inner}
-                  </a>
-                ) : (
-                  Inner
-                )}
-              </motion.li>
-            );
-          })}
+            </motion.li>
+          ))}
         </ul>
       </div>
     </section>
