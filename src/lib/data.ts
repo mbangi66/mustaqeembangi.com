@@ -11,7 +11,7 @@ export const siteConfig = {
   email: "mbangi66@gmail.com",
   phone: "+965 410 76750",
   cvPath: "/Mustaqeem_Bangi_CV.pdf",
-  url: "https://mustaqeembangi.com",
+  url: "https://mustaqeembangi.vercel.app",
   ogImage: "/og.png",
   capacity: "Available for 2–3 Laravel/Filament builds per year. Typical engagement: 6–12 weeks.",
   responsePromise: "I reply within 1 business day · GMT+3",
