@@ -9,16 +9,16 @@ export function Projects() {
   return (
     <section
       id="work"
-      className="relative scroll-mt-24 border-t border-[var(--color-border)] bg-[var(--color-bg-subtle)] py-28 sm:py-36"
+      className="relative scroll-mt-24 border-t border-[var(--color-border)] bg-[var(--color-bg-subtle)] py-20 sm:py-36"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="mb-16 flex items-end justify-between gap-6">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6">
+        <div className="mb-10 flex items-end justify-between gap-6 sm:mb-16">
           <div>
-            <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-fg-subtle)]">
+            <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
               <span className="h-px w-8 bg-[var(--color-border-strong)]" />
               Selected work · 2024 — 2026
             </div>
-            <h2 className="mt-4 max-w-3xl text-balance text-4xl font-extrabold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)] sm:text-6xl md:text-7xl">
+            <h2 className="mt-3 max-w-3xl text-balance text-4xl font-extrabold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)] sm:mt-4 sm:text-6xl md:text-7xl">
               Three production <span className="font-serif italic font-normal text-[var(--color-fg-muted)]">SaaS</span>.
               <br />
               Live now.
@@ -40,7 +40,7 @@ export function Projects() {
                 style={{ ["--card-accent" as string]: p.accent ?? "#6366f1" } as React.CSSProperties}
               >
                 <div className={cn("grid gap-0", reversed ? "lg:grid-cols-[1fr_1.1fr]" : "lg:grid-cols-[1.1fr_1fr]")}>
-                  <div className={cn("relative p-8 sm:p-12", reversed && "lg:order-2")}>
+                  <div className={cn("relative p-6 sm:p-12", reversed && "lg:order-2")}>
                     <div className="flex items-baseline gap-4">
                       <span className="font-mono text-xs text-[var(--color-fg-subtle)]">0{i + 1} / 03</span>
                       <span
@@ -101,7 +101,7 @@ export function Projects() {
                   {/* Visual panel */}
                   <div
                     className={cn(
-                      "relative min-h-[260px] overflow-hidden border-t border-[var(--color-border)] lg:min-h-[440px] lg:border-l lg:border-t-0",
+                      "relative min-h-[180px] overflow-hidden border-t border-[var(--color-border)] sm:min-h-[260px] lg:min-h-[440px] lg:border-l lg:border-t-0",
                       reversed && "lg:order-1 lg:border-l-0 lg:border-r",
                     )}
                   >
@@ -126,7 +126,7 @@ export function Projects() {
                       </div>
                     </div>
 
-                    <div className="relative flex h-full min-h-[260px] flex-col justify-end gap-1 p-6 lg:min-h-[440px] lg:p-10">
+                    <div className="relative flex h-full min-h-[180px] flex-col justify-end gap-1 p-5 sm:min-h-[260px] sm:p-6 lg:min-h-[440px] lg:p-10">
                       <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
                         <span
                           className="inline-block h-1.5 w-1.5 rounded-full"

@@ -33,9 +33,9 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 border-t border-[var(--color-border)] bg-[var(--color-bg)] py-32 sm:py-40"
+      className="relative scroll-mt-24 border-t border-[var(--color-border)] bg-[var(--color-bg)] py-20 sm:py-40"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,14 +56,14 @@ export function Contact() {
             {siteConfig.capacity} If you&apos;re a Gulf founder or agency with a production Laravel system you want shipped or stabilised, send a short email — I read every one.
           </p>
 
-          <div className="mt-12">
+          <div className="mt-10 sm:mt-12">
             <a
               href={`mailto:${siteConfig.email}`}
-              className="group inline-flex items-baseline gap-3 text-balance font-mono text-2xl tracking-[-0.02em] text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-[8px] transition-colors hover:decoration-brand-400 sm:text-4xl md:text-5xl"
+              className="group inline-flex flex-wrap items-center gap-x-3 gap-y-1 break-all font-mono text-xl tracking-[-0.02em] text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-[6px] transition-colors hover:decoration-brand-400 sm:gap-3 sm:text-4xl sm:underline-offset-[8px] md:text-5xl"
             >
-              <Mail className="h-6 w-6 self-center text-brand-400 sm:h-8 sm:w-8" />
-              {siteConfig.email}
-              <ArrowUpRight className="h-5 w-5 self-center opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 sm:h-7 sm:w-7" />
+              <Mail className="h-5 w-5 shrink-0 text-brand-400 sm:h-8 sm:w-8" />
+              <span className="break-all">{siteConfig.email}</span>
+              <ArrowUpRight className="hidden h-5 w-5 self-center opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 sm:inline-block sm:h-7 sm:w-7" />
             </a>
             <div className="mt-4 flex flex-wrap items-center gap-4">
               <button

@@ -98,17 +98,18 @@ export function Nav() {
           <button
             type="button"
             onClick={triggerPalette}
-            className="hidden h-9 items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] px-2.5 text-xs text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-muted)] hover:text-[var(--color-fg)] sm:inline-flex"
+            aria-label="Open command palette"
+            className="hidden h-10 items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] px-2.5 text-xs text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-muted)] hover:text-[var(--color-fg)] sm:inline-flex"
           >
             <span className="hidden lg:inline">Search</span>
             <kbd className="inline-flex items-center gap-0.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-1 py-px font-mono text-[10px] text-[var(--color-fg-subtle)]">
               <Command className="h-2.5 w-2.5" />K
             </kbd>
           </button>
-          <ThemeToggle />
+          <ThemeToggle className="h-10 w-10" />
           <a
             href="#contact"
-            className="hidden h-9 items-center rounded-md bg-[var(--color-fg)] px-3 text-sm font-medium text-[var(--color-bg)] transition-opacity hover:opacity-90 sm:inline-flex"
+            className="hidden h-10 items-center rounded-md bg-[var(--color-fg)] px-3.5 text-sm font-medium text-[var(--color-bg)] transition-opacity hover:opacity-90 sm:inline-flex"
           >
             Hire me
           </a>
@@ -116,7 +117,7 @@ export function Nav() {
             type="button"
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] md:hidden"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -125,13 +126,13 @@ export function Nav() {
 
       {open && (
         <div className="border-t border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-xl md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 sm:px-6">
+          <div className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-3 sm:px-6">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm text-[var(--color-fg-muted)] hover:bg-[var(--color-bg-muted)] hover:text-[var(--color-fg)]"
+                className="rounded-md px-3 py-3 text-base text-[var(--color-fg-muted)] hover:bg-[var(--color-bg-muted)] hover:text-[var(--color-fg)]"
               >
                 {item.label}
               </a>
@@ -139,7 +140,7 @@ export function Nav() {
             <a
               href="#contact"
               onClick={() => setOpen(false)}
-              className="mt-1 inline-flex h-10 items-center justify-center rounded-md bg-[var(--color-fg)] text-sm font-medium text-[var(--color-bg)]"
+              className="mt-2 inline-flex h-12 items-center justify-center rounded-md bg-[var(--color-fg)] text-sm font-semibold text-[var(--color-bg)]"
             >
               Hire me
             </a>
