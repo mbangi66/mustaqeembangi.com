@@ -4,6 +4,7 @@ export const siteConfig = {
   initials: "MB",
   title: "Senior Laravel & Systems Engineer",
   location: "Kuwait City, Kuwait",
+  avatar: "https://avatars.githubusercontent.com/u/37992013?v=4",
   tagline: "I ship Laravel to production.",
   bio:
     "Senior Laravel & Systems Engineer based in Kuwait City. I architect and ship production SaaS — competitive intelligence, fleet telematics, WhatsApp commerce — for the GCC market.",

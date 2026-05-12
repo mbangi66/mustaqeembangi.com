@@ -56,12 +56,17 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name} — ${siteConfig.title}`,
     description: siteConfig.bio,
+    images: [{ url: siteConfig.avatar, width: 460, height: 460, alt: siteConfig.fullName }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: `${siteConfig.name} — ${siteConfig.title}`,
     description: siteConfig.bio,
     creator: "@Mustaqeembangi",
+    images: [siteConfig.avatar],
+  },
+  icons: {
+    icon: [{ url: siteConfig.avatar, sizes: "any" }],
   },
   robots: {
     index: true,

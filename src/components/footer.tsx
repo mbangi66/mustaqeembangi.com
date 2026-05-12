@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { navItems, siteConfig, socials } from "@/lib/data";
 import { Mail } from "lucide-react";
 import { GithubIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from "./brand-icons";
@@ -24,9 +25,15 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr] md:gap-8">
           <div>
-            <div className="flex items-center gap-2 text-base font-semibold">
-              <span className="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-brand-500 to-accent-500 font-mono text-[11px] font-bold text-white">
-                MB
+            <div className="flex items-center gap-2.5 text-base font-semibold">
+              <span className="relative inline-block h-8 w-8 overflow-hidden rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-subtle)]">
+                <Image
+                  src={siteConfig.avatar}
+                  alt={siteConfig.fullName}
+                  fill
+                  sizes="32px"
+                  className="object-cover"
+                />
               </span>
               {siteConfig.name}
             </div>

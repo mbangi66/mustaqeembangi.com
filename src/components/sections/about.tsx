@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import Image from "next/image";
 import { Download, MapPin } from "lucide-react";
 import { siteConfig } from "@/lib/data";
 
@@ -19,10 +20,33 @@ export function About() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="relative"
           >
-            <div className="aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
-              <div className="relative flex h-full w-full items-center justify-center bg-[radial-gradient(70%_60%_at_50%_30%,rgba(99,102,241,0.18),transparent_70%)]">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-fg-subtle)]">
-                  photo · {siteConfig.location.split(",")[0]}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-6 -z-10 rounded-3xl bg-[radial-gradient(60%_55%_at_50%_30%,rgba(99,102,241,0.22),transparent_70%)] blur-2xl"
+            />
+            <div className="relative aspect-square w-full max-w-sm overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)] shadow-[0_30px_80px_-30px_rgba(99,102,241,0.35)]">
+              <Image
+                src={siteConfig.avatar}
+                alt={siteConfig.fullName}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 384px"
+                className="object-cover"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5"
+              />
+              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 border-t border-[var(--color-border)] bg-[var(--color-bg)]/80 px-3 py-2 backdrop-blur">
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  </span>
+                  live · github
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
+                  @mbangi66
                 </span>
               </div>
             </div>

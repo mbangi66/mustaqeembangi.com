@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Command, Menu, X } from "lucide-react";
 import { navItems, siteConfig } from "@/lib/data";
 import { ThemeToggle } from "./theme-toggle";
@@ -53,10 +54,17 @@ export function Nav() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a
           href="#top"
-          className="group flex items-center gap-2 text-sm font-semibold tracking-tight"
+          className="group flex items-center gap-2.5 text-sm font-semibold tracking-tight"
         >
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-brand-500 to-accent-500 font-mono text-[11px] font-bold text-white shadow-[0_0_0_1px_var(--color-border)]">
-            MB
+          <span className="relative inline-block h-8 w-8 overflow-hidden rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-subtle)] shadow-[0_0_0_2px_var(--color-bg),0_0_18px_-2px_rgba(99,102,241,0.45)] transition-shadow group-hover:shadow-[0_0_0_2px_var(--color-bg),0_0_24px_-1px_rgba(99,102,241,0.7)]">
+            <Image
+              src={siteConfig.avatar}
+              alt={siteConfig.fullName}
+              fill
+              sizes="32px"
+              className="object-cover"
+              priority
+            />
           </span>
           <span className="hidden sm:inline">
             {siteConfig.name.split(" ")[0]}.
