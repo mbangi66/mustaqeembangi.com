@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
 export function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const [variant, setVariant] = useState<"default" | "link" | "drag" | "hidden">("default");
+  const [variant, setVariant] = useState<"default" | "link" | "drag" | "hidden">("hidden");
   const [enabled, setEnabled] = useState(false);
+  const [moved, setMoved] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -18,14 +19,22 @@ export function Cursor() {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
-    let x = window.innerWidth / 2;
-    let y = window.innerHeight / 2;
-    let rx = x;
-    let ry = y;
+    let x = -100;
+    let y = -100;
+    let rx = -100;
+    let ry = -100;
+    let firstMove = false;
 
     const onMove = (e: MouseEvent) => {
       x = e.clientX;
       y = e.clientY;
+      if (!firstMove) {
+        firstMove = true;
+        rx = x;
+        ry = y;
+        setMoved(true);
+        setVariant("default");
+      }
       dot.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
       const t = e.target as HTMLElement | null;
       if (t?.closest("canvas")) setVariant("drag");
@@ -33,13 +42,17 @@ export function Cursor() {
       else setVariant("default");
     };
     const onLeave = () => setVariant("hidden");
-    const onEnter = () => setVariant("default");
+    const onEnter = () => {
+      if (firstMove) setVariant("default");
+    };
 
     let raf = 0;
     const tick = () => {
-      rx += (x - rx) * 0.18;
-      ry += (y - ry) * 0.18;
-      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      if (firstMove) {
+        rx += (x - rx) * 0.18;
+        ry += (y - ry) * 0.18;
+        ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -56,7 +69,7 @@ export function Cursor() {
     };
   }, []);
 
-  if (!enabled) return null;
+  if (!enabled || !moved) return null;
 
   const ringStyle = (() => {
     if (variant === "hidden") return { opacity: 0, width: 36, height: 36 };
