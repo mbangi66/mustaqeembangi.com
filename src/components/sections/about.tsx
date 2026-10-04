@@ -63,7 +63,7 @@ export function About() {
               <p>
                 I&apos;m Mustaqeem, a <span className="text-[var(--color-fg)]">Senior Laravel & Systems Engineer</span>{" "}
                 based in Kuwait City and originally from Maharashtra, India. I&apos;ve been building for the web since
-                2020, and today I lead engineering on a portfolio of live products for restaurants, retailers, clinics
+                2020, and today I lead engineering on 30+ live apps for restaurants, retailers, clinics, car dealers, schools
                 and fleet operators.
               </p>
               <p>

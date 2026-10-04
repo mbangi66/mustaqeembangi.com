@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import { Planet } from "@/components/planet";
 
 const pad = (n: number) => String(n).padStart(2, "0");
+const numberWords = ["No", "One", "Two", "Three", "Four", "Five", "Six"];
+const publicCount = numberWords[[...projects, ...moreProjects].filter((p) => p.href).length] ?? "Several";
 
 export function Projects() {
   return (
@@ -21,8 +23,8 @@ export function Projects() {
             Products in <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">orbit</span>.
           </h2>
           <p className="mt-5 max-w-2xl text-base text-[var(--color-fg-muted)] sm:text-lg">
-            {projects.length + moreProjects.length} products I designed, built and still run in production. Three have
-            public sites; the rest are client systems, so they are described without naming the client.
+            {projects.length + moreProjects.length} products I designed, built and keep running.{" "}
+            {publicCount} have public sites; the rest are client systems, so they are described without naming the client.
           </p>
         </div>
 
@@ -119,6 +121,40 @@ export function Projects() {
                     <Planet color={p.accent} className="w-[62%] max-w-[300px]" />
                   </div>
                 </div>
+
+                {p.caseStudy && (
+                  <div className="grid gap-6 border-t border-[var(--color-border)] bg-black/20 p-6 sm:p-10 lg:grid-cols-[1fr_1.6fr_1fr] lg:gap-10">
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
+                        The challenge
+                      </p>
+                      <p className="mt-3 text-sm leading-relaxed text-[var(--color-fg-muted)]">{p.caseStudy.challenge}</p>
+                    </div>
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
+                        What I built
+                      </p>
+                      <ul className="mt-3 space-y-2">
+                        {p.caseStudy.built.map((b) => (
+                          <li key={b} className="flex gap-2.5 text-sm leading-relaxed text-[var(--color-fg)]/85">
+                            <span
+                              aria-hidden
+                              className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full"
+                              style={{ background: p.accent, boxShadow: `0 0 8px ${p.accent}` }}
+                            />
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
+                        The result
+                      </p>
+                      <p className="mt-3 text-sm leading-relaxed text-[var(--color-fg)]">{p.caseStudy.outcome}</p>
+                    </div>
+                  </div>
+                )}
               </motion.article>
             );
           })}
@@ -129,15 +165,19 @@ export function Projects() {
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
             Also in production
           </div>
-          <ul className="mt-6 grid gap-5 sm:grid-cols-2">
+          <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {moreProjects.map((p, i) => (
               <motion.li
                 key={p.slug}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className="group relative isolate flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/70 p-6 backdrop-blur-sm transition-all hover:border-[color:var(--card-accent)] hover:shadow-[0_24px_60px_-24px_color-mix(in_srgb,var(--card-accent)_45%,transparent)] sm:p-8"
+                transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className={cn(
+                  "group relative isolate flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/70 p-6 backdrop-blur-sm transition-all hover:border-[color:var(--card-accent)] hover:shadow-[0_24px_60px_-24px_color-mix(in_srgb,var(--card-accent)_45%,transparent)] sm:p-8",
+                  // Seven cards: the last one fills its row on every layout.
+                  i === moreProjects.length - 1 && "sm:col-span-2 lg:col-span-3",
+                )}
                 style={{ ["--card-accent" as string]: p.accent } as React.CSSProperties}
               >
                 <Planet color={p.accent} className="pointer-events-none absolute -right-10 -top-10 -z-10 w-44 opacity-80 sm:w-52" />

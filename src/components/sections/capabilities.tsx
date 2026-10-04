@@ -3,6 +3,9 @@
 import { motion } from "motion/react";
 import {
   BrainCircuit,
+  Calculator,
+  CarFront,
+  GraduationCap,
   MessageCircle,
   Satellite,
   Server,
@@ -22,6 +25,9 @@ const icons: Record<string, LucideIcon> = {
   stethoscope: Stethoscope,
   satellite: Satellite,
   server: Server,
+  ledger: Calculator,
+  market: CarFront,
+  education: GraduationCap,
 };
 
 export function Capabilities() {
@@ -37,8 +43,8 @@ export function Capabilities() {
             What I build, <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">end to end</span>.
           </h2>
           <p className="mt-5 text-base text-[var(--color-fg-muted)] sm:text-lg">
-            Systems I have designed, shipped and keep running for businesses in Kuwait and the GCC. Every one of them
-            is bilingual, Arabic and English.
+            Ten kinds of systems I have designed, shipped and keep running for businesses in Kuwait and the GCC.
+            Every one of them is bilingual, Arabic and English.
           </p>
         </div>
 

@@ -147,3 +147,8 @@ html {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Fade a horizontal ticker in and out at its edges */
+.mask-fade {
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}

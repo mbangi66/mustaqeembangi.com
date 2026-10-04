@@ -9,6 +9,7 @@ import {
   Download,
   Home,
   Layers,
+  Zap,
   Mail,
   MessageSquare,
   Phone,
@@ -30,6 +31,8 @@ const navIcon = (label: string) => {
       return Sparkles;
     case "capabilities":
       return Layers;
+    case "highlights":
+      return Zap;
     case "contact":
       return MessageSquare;
     default:

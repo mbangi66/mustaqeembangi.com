@@ -1,0 +1,55 @@
+"use client";
+
+import { motion } from "motion/react";
+import { stackGroups } from "@/lib/data";
+
+export function Toolbox() {
+  return (
+    <section id="toolbox" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6">
+        <div className="grid gap-10 lg:grid-cols-[1fr_2.2fr] lg:gap-16">
+          <div>
+            <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
+              <span className="h-px w-8 bg-[var(--color-border-strong)]" />
+              Toolbox
+            </div>
+            <h2 className="mt-3 text-balance text-4xl font-extrabold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)] sm:mt-4 sm:text-5xl">
+              The whole <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">stack</span>, in
+              production.
+            </h2>
+            <p className="mt-5 text-base text-[var(--color-fg-muted)]">
+              Everything here runs in a live system I built or maintain today, not just a course I took.
+            </p>
+          </div>
+
+          <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {stackGroups.map((g, i) => (
+              <motion.div
+                key={g.title}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: (i % 3) * 0.06 }}
+              >
+                <h3 className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-violet-200">
+                  <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-violet-300 shadow-[0_0_10px_rgba(196,181,253,0.9)]" />
+                  {g.title}
+                </h3>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
+                  {g.items.map((t) => (
+                    <li
+                      key={t}
+                      className="rounded-md border border-[var(--color-border)] bg-white/[0.03] px-2.5 py-1 text-[13px] text-[var(--color-fg)]/85"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -170,10 +170,11 @@ export function Hero() {
           custom={0}
           className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-[var(--color-fg-muted)] sm:mt-10 sm:text-xl"
         >
-          Senior Laravel & Systems Engineer. I build and run production software for businesses across the GCC:{" "}
-          <span className="text-[var(--color-fg)]">restaurant & POS systems</span>,{" "}
-          <span className="whitespace-nowrap text-[var(--color-fg)]">e-commerce</span>,{" "}
-          <span className="text-[var(--color-fg)]">WhatsApp commerce</span> and{" "}
+          Senior Laravel & Systems Engineer. I build and run 30+ production apps for businesses across the GCC:{" "}
+          <span className="text-[var(--color-fg)]">ERP & POS systems</span>,{" "}
+          <span className="text-[var(--color-fg)]">WhatsApp platforms</span>,{" "}
+          <span className="text-[var(--color-fg)]">clinics</span>,{" "}
+          <span className="whitespace-nowrap text-[var(--color-fg)]">e-commerce</span> and{" "}
           <span className="whitespace-nowrap text-[var(--color-fg)]">AI-powered SaaS</span>. From the code to the servers.
         </motion.p>
 
