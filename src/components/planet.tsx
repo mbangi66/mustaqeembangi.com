@@ -11,7 +11,11 @@ export type PlanetName =
   | "mercury"
   | "saturn"
   | "ceres"
-  | "makemake";
+  | "makemake"
+  | "eris"
+  | "haumea"
+  | "venus-surface"
+  | "moon-far";
 
 /**
  * A real planet, pre-rendered from mission-based surface maps (see

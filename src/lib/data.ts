@@ -119,12 +119,12 @@ export const projects: Project[] = [
     slug: "gps-fleet",
     planet: "earth",
     name: "Fleet Telematics",
-    pitch: "Live GPS tracking for 7,000+ vehicles in Kuwait.",
+    pitch: "Live GPS tracking for 7,000+ vehicles in Kuwait, plus transport bookings and fuel control.",
     description:
-      "Live maps, alerts and reporting for fleet operators, fed by thousands of GPS devices reporting around the clock.",
+      "Live maps, alerts and reports for fleet operators, a transport booking system, and fuel tracking tied to real GPS mileage.",
     stack: ["Laravel", "Python", "Node.js", "PM2", "WebSockets", "MariaDB", "MSSQL"],
     role: "Primary developer",
-    href: "https://gps-majestic.com",
+    href: "https://fleet.majestic-kw.com",
     status: "Live",
     accent: "#3b82f6",
     caseStudy: {
@@ -135,13 +135,15 @@ export const projects: Project[] = [
         "A Node.js GPS listener running under PM2, monitored from the admin panel",
         "A WebSocket bridge that pushes positions to the browser as they arrive",
         "Excel reports with charts coloured by status, for fleet managers",
+        "Transport bookings: single trips, multiple pick ups and drops, monthly contracts that roll over holidays, and billing that adjusts for missed rides",
+        "Fuel tracking against GPS mileage, where drivers' helpers scan a QR code to request fuel within approved limits",
       ],
       outcome: "Operators watch 7,000+ vehicles move live and pull reports without touching the legacy system.",
     },
   },
   {
     slug: "whatsapp-platform",
-    planet: "neptune",
+    planet: "uranus",
     name: "WhatsApp Business Platform",
     pitch: "Ordering, bookings, clinics and campaigns, all run from WhatsApp.",
     description:
@@ -169,7 +171,7 @@ export const projects: Project[] = [
 export const moreProjects: Project[] = [
   {
     slug: "clinic-platform",
-    planet: "uranus",
+    planet: "eris",
     name: "Clinic Management",
     pitch: "Patients, doctors, visits and stock in one system.",
     description:
@@ -180,16 +182,53 @@ export const moreProjects: Project[] = [
     accent: "#14b8a6",
   },
   {
+    slug: "hospital-service",
+    planet: "moon-far",
+    name: "Hospital Food & Room Service",
+    pitch: "Patients order meals and call for help from their bed.",
+    description:
+      "Patients scan a QR code to order meals by type (VIP, special diet or standard), with kitchen approval and orders for companions too. Tablets in each room call a waiter, ask for food or send an alert. Cash or payment link, a daily meal closing report, and full Arabic and English.",
+    stack: ["Laravel", "Livewire", "QR codes", "MyFatoorah"],
+    role: "Developer",
+    status: "Live, private client system",
+    accent: "#cbd5e1",
+  },
+  {
     slug: "retail-platform",
     planet: "venus",
     name: "Retail & Warehouse",
     pitch: "Storefront, shop POS and warehouse on one inventory.",
     description:
-      "An online store, a POS at the counter, a mobile app and the warehouse, all working from the same stock count, with a full history of every stock movement and price change.",
+      "An online store, a POS at the counter, a mobile app and the warehouse, all on one stock count. Barcode scanning for purchases, exports, returns and stock transfers, items assigned to contracts, and automatic finance reports: cash flow, net profit and break even.",
     stack: ["Laravel", "Filament", "Livewire", "MySQL", "REST API"],
     role: "Lead engineer",
     status: "Live, private client system",
     accent: "#eab308",
+  },
+  {
+    slug: "desktop-pos",
+    planet: "haumea",
+    name: "Desktop POS",
+    pitch: "A till app that keeps selling when the internet drops.",
+    description:
+      "A Windows desktop POS built with Electron and React. Orders are stored locally in SQLite and sync when the connection comes back. It updates itself, and works in Arabic and English.",
+    stack: ["Electron", "React", "TypeScript", "SQLite", "Tailwind"],
+    role: "Developer",
+    href: "https://github.com/kdafar/pos-app",
+    status: "Code on GitHub",
+    accent: "#94a3b8",
+  },
+  {
+    slug: "print-agents",
+    planet: "venus-surface",
+    name: "Print & Backup Agents",
+    pitch: "Two Windows apps that run quietly on the shop and office PCs.",
+    description:
+      "A .NET print agent that pairs with a six digit code, collects kitchen tickets over HTTPS and prints each station on USB, shared or network printers, switching to a backup printer if one fails. A crash safe journal means a ticket never prints twice, even after a restart. Plus BackupTray, a tray app that shows the nightly NAS backup at a glance, alerts on problems and helps restore a site.",
+    stack: ["C#", ".NET 10", ".NET 8", "Windows Forms", "ESC/POS", "DPAPI"],
+    role: "Developer",
+    status: "Live, private client system",
+    accent: "#f59e0b",
   },
   {
     slug: "car-marketplace",
@@ -218,13 +257,13 @@ export const moreProjects: Project[] = [
   {
     slug: "e-learning",
     planet: "saturn",
-    name: "Online Learning Platforms",
-    pitch: "Course marketplaces with live classes.",
+    name: "Najeh & Online Learning",
+    pitch: "Course platforms with live classes, built for Gulf students.",
     description:
-      "Courses with progress tracking, live classes over Agora, Jitsi and Google Meet, instructor payouts, certificates, instalment payments, affiliates and forums. I customised them, connected the services, and host them.",
-    stack: ["Laravel", "Inertia", "Passport", "Stripe", "Agora"],
-    role: "Customisation & hosting",
-    status: "Client projects",
+      "Najeh, which I built: subject packages and bundles that unlock the right lessons for each student, live classes, ratings and reviews, a cart and MyFatoorah payments, in Arabic and English. I also customise and host other course platforms with instructor payouts, certificates and instalments.",
+    stack: ["Laravel", "Livewire", "Inertia", "MyFatoorah", "Agora"],
+    role: "Developer",
+    status: "Live, client projects",
     accent: "#a855f7",
   },
   {
@@ -263,9 +302,9 @@ export const highlights: Highlight[] = [
     body: "Merged four drifted copies of a restaurant system into a single Laravel 12 app, with module flags so each business turns on only what it uses.",
   },
   {
-    tag: "Migrations",
-    title: "Clean installs every time",
-    body: "Every new business gets a clean database with only the modules it needs, tested on a blank install before it goes live.",
+    tag: "Offline",
+    title: "Tills that keep selling offline",
+    body: "The desktop POS saves every order locally and syncs when the connection comes back, so a dropped line never stops a sale.",
   },
   {
     tag: "POS",
@@ -298,9 +337,9 @@ export const highlights: Highlight[] = [
     body: "A Python pipeline moves fleet data from legacy MSSQL into MariaDB continuously, so live maps and reports never query the old system.",
   },
   {
-    tag: "Real time",
-    title: "Thousands of devices, live",
-    body: "A Node.js listener under PM2 ingests GPS traffic around the clock and streams positions to the browser over WebSockets.",
+    tag: "Printing",
+    title: "Tickets never print twice",
+    body: "The kitchen print agent records every ticket in a crash safe journal before it reports back, so a restart or a dropped connection never sends the same order to the kitchen twice.",
   },
   {
     tag: "Payments",
@@ -315,7 +354,7 @@ export const highlights: Highlight[] = [
   {
     tag: "Ops",
     title: "Backups that can't be deleted",
-    body: "Every night an office NAS pulls a copy of the apps and databases. The server can't reach that copy, so even a hacked server can't wipe the backups.",
+    body: "Every night an office NAS pulls a copy of the apps and databases that the server can't reach. A tray app on the office PC shows how it went and can restore a site.",
   },
 ];
 
@@ -324,6 +363,7 @@ export type StackGroup = { title: string; items: string[] };
 export const stackGroups: StackGroup[] = [
   { title: "Backend", items: ["PHP 8.3", "Laravel 8 to 13", "Livewire", "Filament", "Sanctum & Passport", "Queues & schedulers", "Python", "Node.js"] },
   { title: "Frontend", items: ["Vue 3", "Inertia", "React", "Next.js", "TypeScript", "Tailwind", "three.js"] },
+  { title: "Desktop", items: ["Electron", "C# / .NET", "Windows Forms", "SQLite", "ESC/POS printing", "Auto updates"] },
   { title: "Data", items: ["MySQL 8", "MariaDB", "MSSQL", "Redis", "MongoDB", "SQLite"] },
   { title: "AI", items: ["Anthropic Claude", "OpenAI", "Batch processing", "Prompt & cost control"] },
   { title: "Integrations", items: ["WhatsApp Cloud API", "Meta Flows", "MyFatoorah", "Delivery platforms", "Google Maps", "Apify"] },
@@ -383,6 +423,11 @@ export const capabilities: Capability[] = [
     body: "Course marketplaces with live classes, instructor payouts, certificates, instalments, affiliates and forums.",
   },
   {
+    icon: "desktop",
+    title: "Desktop & Windows apps",
+    body: "Electron POS apps that keep working offline, and .NET agents on shop PCs that drive thermal and office printers and keep backups running.",
+  },
+  {
     icon: "satellite",
     title: "Live tracking, IoT & data",
     body: "Live GPS for thousands of vehicles, connected car wash machines, WebSocket dashboards and syncing millions of rows between databases.",
@@ -423,48 +468,57 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    company: "Majestic Information Technology",
-    role: "Senior Laravel & Systems Engineer",
+    company: "Majestic Company for Communications",
+    role: "Full Stack Laravel Developer",
     period: "Jul 2024 to now",
     location: "Kuwait City",
     summary:
-      "Lead engineer for a Kuwaiti software company. I design, build and run its products, and look after the servers all of them live on.",
+      "I design, build and run the company's products, and look after the servers all of them live on.",
     highlights: [
-      "Merged four restaurant codebases that had drifted apart for three years into one system, which now runs 14+ businesses",
-      "Designed and built a WhatsApp business platform for ordering, bookings, clinics and campaigns, with spam and cost controls",
-      "Built Social Hub on my own, from first idea to a live AI product for Gulf brands",
-      "Primary developer on fleet tracking for 7,000+ vehicles, including moving its data off a slow legacy database",
-      "Run 30+ live apps on our servers: deploys with no downtime, queue workers, DNS and mail, and nightly backups to an office NAS",
+      "Merged four restaurant codebases into one system that now runs 14+ businesses, with branches, menus, add ons and orders printed automatically in each kitchen",
+      "Built a WhatsApp ordering bot on the Cloud API: cuisine, restaurant, item and checkout, with carousels, a remembered cart and delivery by location",
+      "Built a hospital meal and room service system: QR ordering by meal type, kitchen approvals, and tablets that call a waiter",
+      "Built store and inventory management with barcode scanning, stock transfers and automatic cash flow, profit and break even reports",
+      "Built Najeh, an online learning platform with subject packages, live classes and MyFatoorah payments",
+      "Built fleet transport bookings with monthly contracts and missed ride billing, plus fuel tracking from GPS data",
+      "Run 30+ live apps: deploys with no downtime, queues, DNS and mail, and nightly backups to an office NAS",
     ],
-    stack: ["Laravel", "Livewire", "Filament", "Vue/Inertia", "Anthropic", "MariaDB", "Linux"],
+    stack: ["Laravel", "Livewire", "Filament", "Vue/Inertia", "MySQL", "WhatsApp Cloud API", "Linux"],
   },
   {
     company: "Freelance",
-    role: "Laravel Developer",
-    period: "Jul 2023 to Jul 2024",
-    location: "Remote",
+    role: "ASP.NET MVC Developer",
+    period: "Dec 2023 to Nov 2024",
+    location: "Kuwait, remote",
     summary:
-      "Worked directly with clients on Laravel projects: new builds, fixes and upgrades to systems already in use.",
-    stack: ["Laravel", "Livewire", "Vue", "MySQL", "Linux"],
+      "Led three ASP.NET MVC projects deployed on Azure with Docker: role based login and permissions, an admin dashboard with advanced search, staff records with leave and role management, and Azure SQL database migrations.",
+    stack: ["ASP.NET MVC", "ASP.NET Core", "C#", "Azure", "Docker", "Azure SQL"],
   },
   {
     company: "SerpElevator",
     role: "Web Developer",
     period: "Jun 2021 to Jul 2023",
-    location: "Mumbai",
+    location: "Mumbai, India",
     summary:
-      "Built 10+ MEAN stack and Laravel applications. REST APIs with Passport and Sanctum, MySQL schema design, deploys on AWS and Azure. Cut page load times by 40% and bugs by 15%.",
-    stack: ["Laravel", "MEAN", "MySQL", "AWS", "Azure"],
+      "Built and maintained 10+ web apps on the MEAN stack in a team of five. Responsive layouts, third party API integrations and code reviews; cut page load times by 40% and bugs by 15%.",
+    stack: ["MongoDB", "Express", "Angular", "Node.js", "Laravel"],
   },
   {
     company: "SerpClimber",
     role: "Web Designer",
-    period: "Mar 2020 to Jun 2021",
-    location: "Mumbai",
+    period: "Mar 2020 to May 2021",
+    location: "Mumbai, India",
     summary:
-      "Designed and maintained 10+ client websites with 99% uptime. WordPress, HTML/CSS/JS and SEO.",
-    stack: ["WordPress", "HTML/CSS/JS", "SEO"],
+      "Designed and looked after 10+ client websites with 99% uptime. WordPress, HTML, CSS and JavaScript, plus SEO content that grew site visits by 30%.",
+    stack: ["WordPress", "HTML", "CSS", "JavaScript", "SEO"],
   },
+];
+
+export type EducationItem = { school: string; course: string; period: string };
+
+export const education: EducationItem[] = [
+  { school: "SevenMentor", course: "Web Development and MEAN Stack", period: "Sep 2019 to Feb 2020" },
+  { school: "University of Mumbai", course: "Bachelor of Commerce", period: "2015 to 2018" },
 ];
 
 export type NavItem = { label: string; href: string };

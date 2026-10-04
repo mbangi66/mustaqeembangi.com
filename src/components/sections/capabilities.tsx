@@ -6,6 +6,7 @@ import {
   Calculator,
   CarFront,
   GraduationCap,
+  Monitor,
   MessageCircle,
   Satellite,
   Server,
@@ -28,6 +29,7 @@ const icons: Record<string, LucideIcon> = {
   ledger: Calculator,
   market: CarFront,
   education: GraduationCap,
+  desktop: Monitor,
 };
 
 export function Capabilities() {
@@ -51,7 +53,11 @@ export function Capabilities() {
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {capabilities.map((c, i) => {
             const Icon = icons[c.icon] ?? Server;
-            const wide = i === capabilities.length - 1;
+            // The last card stretches to fill whatever is left of its row.
+            const last = i === capabilities.length - 1;
+            const smSpan = last ? 2 - (i % 2) : 1;
+            const lgSpan = last ? 3 - (i % 3) : 1;
+            const wide = last && lgSpan === 3;
             return (
               <motion.li
                 key={c.title}
@@ -61,7 +67,10 @@ export function Capabilities() {
                 transition={{ duration: 0.5, delay: (i % 3) * 0.07 }}
                 className={cn(
                   "group relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/60 p-6 backdrop-blur-sm transition-colors hover:border-violet-400/40 sm:p-7",
-                  wide && "sm:col-span-2 lg:col-span-3",
+                  smSpan === 2 && "sm:col-span-2",
+                  lgSpan === 2 && "lg:col-span-2",
+                  lgSpan === 3 && "lg:col-span-3",
+                  smSpan === 2 && lgSpan === 1 && "lg:col-span-1",
                 )}
               >
                 {/* Glow that follows the card on hover */}

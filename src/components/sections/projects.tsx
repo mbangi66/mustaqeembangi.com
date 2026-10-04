@@ -27,7 +27,7 @@ export function Projects() {
             Products in <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">orbit</span>.
           </h2>
           <p className="mt-5 max-w-2xl text-base text-[var(--color-fg-muted)] sm:text-lg">
-            Here&apos;s what I&apos;ve built and still look after. {publicCount} have public websites. The rest belong to
+            Here&apos;s what I&apos;ve built and still look after. {publicCount} have public links. The rest belong to
             clients, so I describe what they do without saying who they are.
           </p>
         </div>
@@ -108,28 +108,42 @@ export function Projects() {
                         background: `radial-gradient(60% 55% at 50% 50%, color-mix(in srgb, ${p.accent} 22%, transparent), transparent 70%)`,
                       }}
                     />
-                    {p.image ? (
-                      <figure className="relative w-[88%] max-w-[560px] overflow-hidden rounded-xl border border-white/10 bg-[#0b0c14] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] transition-transform duration-700 group-hover:-translate-y-1">
-                        {/* Plain browser bar so it reads as a real site */}
-                        <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-2">
-                          <span className="h-2 w-2 rounded-full bg-white/20" />
-                          <span className="h-2 w-2 rounded-full bg-white/20" />
-                          <span className="h-2 w-2 rounded-full bg-white/20" />
-                          <span className="ml-3 truncate font-mono text-[10px] text-[var(--color-fg-subtle)]">
-                            {p.href?.replace(/^https?:\/\//, "")}
-                          </span>
-                        </div>
-                        <Image
-                          src={p.image}
-                          alt={`${p.name} home page`}
-                          width={1200}
-                          height={720}
-                          sizes="(max-width: 1024px) 88vw, 560px"
-                          className="block h-auto w-full"
-                        />
-                      </figure>
-                    ) : (
-                      <Planet name={p.planet} color={p.accent} className="w-[62%] max-w-[320px]" sizes="(max-width: 1024px) 62vw, 320px" />
+                    {/* Every card shows its planet. Where a real screenshot exists,
+                        hovering the card swaps the planet for the live site. */}
+                    <Planet
+                      name={p.planet}
+                      color={p.accent}
+                      className={cn(
+                        "w-[62%] max-w-[320px] transition-all duration-700",
+                        p.image && "[@media(hover:hover)]:group-hover:scale-75 [@media(hover:hover)]:group-hover:opacity-0",
+                      )}
+                      sizes="(max-width: 1024px) 62vw, 320px"
+                    />
+                    {p.image && (
+                      <>
+                        <figure className="pointer-events-none absolute left-1/2 top-1/2 w-[88%] max-w-[560px] -translate-x-1/2 -translate-y-[46%] overflow-hidden rounded-xl border border-white/10 bg-[#0b0c14] opacity-0 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] transition-all duration-700 [@media(hover:hover)]:group-hover:-translate-y-1/2 [@media(hover:hover)]:group-hover:opacity-100">
+                          {/* Plain browser bar so it reads as a real site */}
+                          <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-2">
+                            <span className="h-2 w-2 rounded-full bg-white/20" />
+                            <span className="h-2 w-2 rounded-full bg-white/20" />
+                            <span className="h-2 w-2 rounded-full bg-white/20" />
+                            <span className="ml-3 truncate font-mono text-[10px] text-[var(--color-fg-subtle)]">
+                              {p.href?.replace(/^https?:\/\//, "")}
+                            </span>
+                          </div>
+                          <Image
+                            src={p.image}
+                            alt={`${p.name} home page`}
+                            width={1200}
+                            height={720}
+                            sizes="(max-width: 1024px) 88vw, 560px"
+                            className="block h-auto w-full"
+                          />
+                        </figure>
+                        <span className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-fg-subtle)] transition-opacity duration-500 group-hover:opacity-0 [@media(hover:hover)]:inline">
+                          Hover for a look at the live site
+                        </span>
+                      </>
                     )}
                   </div>
                 </div>
@@ -187,8 +201,11 @@ export function Projects() {
                 transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className={cn(
                   "group relative isolate flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/70 p-6 backdrop-blur-sm transition-all hover:border-[color:var(--card-accent)] hover:shadow-[0_24px_60px_-24px_color-mix(in_srgb,var(--card-accent)_45%,transparent)] sm:p-8",
-                  // Seven cards: the last one fills its row on every layout.
-                  i === moreProjects.length - 1 && "sm:col-span-2 lg:col-span-3",
+                  // The last card stretches to fill whatever is left of its row.
+                  i === moreProjects.length - 1 && i % 2 === 0 && "sm:col-span-2",
+                  i === moreProjects.length - 1 && i % 3 === 0 && "lg:col-span-3",
+                  i === moreProjects.length - 1 && i % 3 === 1 && "lg:col-span-2",
+                  i === moreProjects.length - 1 && i % 3 === 2 && "lg:col-span-1",
                 )}
                 style={{ ["--card-accent" as string]: p.accent } as React.CSSProperties}
               >
@@ -204,10 +221,27 @@ export function Projects() {
                 <p className="mt-4 text-[13px] text-[var(--color-fg-subtle)]">
                   Built with <span className="text-[var(--color-fg-muted)]">{listOf(p.stack)}</span>.
                 </p>
-                <p className="mt-auto inline-flex items-center gap-2 pt-5 text-[13px] text-[var(--color-fg-muted)]">
-                  <Lock className="h-3.5 w-3.5 text-[var(--color-fg-subtle)]" />
-                  {p.role}, {p.status.toLowerCase()}
-                </p>
+                <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-5 text-[13px] text-[var(--color-fg-muted)]">
+                  <span className="inline-flex items-center gap-2">
+                    {p.href ? (
+                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: p.accent }} />
+                    ) : (
+                      <Lock className="h-3.5 w-3.5 text-[var(--color-fg-subtle)]" />
+                    )}
+                    {p.role}, {p.status.charAt(0).toLowerCase() + p.status.slice(1)}
+                  </span>
+                  {p.href && (
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-mono text-[12px] text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-4 hover:decoration-[color:var(--card-accent)]"
+                    >
+                      {p.href.replace(/^https?:\/\//, "")}
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
+                  )}
+                </div>
               </motion.li>
             ))}
           </ul>

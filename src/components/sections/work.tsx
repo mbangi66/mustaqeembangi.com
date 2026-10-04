@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { experience } from "@/lib/data";
+import { education, experience } from "@/lib/data";
 
 export function Work() {
   return (
@@ -77,6 +77,19 @@ export function Work() {
             </motion.li>
           ))}
         </ul>
+
+        <div className="mt-14 border-t border-[var(--color-border)] pt-10 sm:mt-16">
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-orange-200/80">Education</h3>
+          <ul className="mt-5 grid gap-6 sm:grid-cols-2">
+            {education.map((e) => (
+              <li key={e.school}>
+                <p className="text-base font-semibold text-[var(--color-fg)]">{e.course}</p>
+                <p className="mt-1 text-sm text-[var(--color-fg-muted)]">{e.school}</p>
+                <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-subtle)]">{e.period}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );
