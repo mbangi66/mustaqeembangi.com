@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 export function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const [variant, setVariant] = useState<"default" | "link" | "drag" | "hidden">("hidden");
+  const [variant, setVariant] = useState<"default" | "link" | "hidden">("hidden");
   const [enabled, setEnabled] = useState(false);
   const [moved, setMoved] = useState(false);
 
@@ -37,8 +37,7 @@ export function Cursor() {
       }
       dot.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
       const t = e.target as HTMLElement | null;
-      if (t?.closest("canvas")) setVariant("drag");
-      else if (t?.closest("a, button, [data-cursor='link']")) setVariant("link");
+      if (t?.closest("a, button, [data-cursor='link']")) setVariant("link");
       else setVariant("default");
     };
     const onLeave = () => setVariant("hidden");
@@ -73,8 +72,7 @@ export function Cursor() {
 
   const ringStyle = (() => {
     if (variant === "hidden") return { opacity: 0, width: 36, height: 36 };
-    if (variant === "link") return { opacity: 1, width: 64, height: 64, background: "rgba(99,102,241,0.18)" };
-    if (variant === "drag") return { opacity: 1, width: 80, height: 80, background: "rgba(99,102,241,0.06)", borderColor: "rgba(99,102,241,0.9)" };
+    if (variant === "link") return { opacity: 1, width: 64, height: 64, background: "rgba(251,146,60,0.14)" };
     return { opacity: 0.7, width: 36, height: 36, background: "transparent" };
   })();
 
@@ -96,15 +94,6 @@ export function Cursor() {
         className="pointer-events-none fixed left-0 top-0 z-[201] hidden h-1.5 w-1.5 rounded-full bg-white transition-opacity duration-150 md:block"
         style={{ mixBlendMode: "difference", opacity: variant === "hidden" ? 0 : 1 }}
       />
-      {variant === "drag" && (
-        <div
-          aria-hidden
-          className="pointer-events-none fixed z-[201] hidden -translate-x-1/2 translate-y-12 select-none rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/90 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-muted)] backdrop-blur md:block"
-          style={{ left: `${ringRef.current?.getBoundingClientRect().left ?? 0}px`, top: `${ringRef.current?.getBoundingClientRect().top ?? 0}px` }}
-        >
-          drag · spin
-        </div>
-      )}
     </>
   );
 }

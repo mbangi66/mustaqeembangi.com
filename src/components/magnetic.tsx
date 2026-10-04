@@ -2,6 +2,8 @@
 
 import { useRef, useEffect } from "react";
 
+const MAX_SHIFT = 6; // px
+
 export function Magnetic({
   children,
   strength = 0.3,
@@ -22,20 +24,23 @@ export function Magnetic({
       const rect = el.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) * strength;
-      const dy = (e.clientY - cy) * strength;
+      // Only nudge: never move far enough to overlap a neighbour.
+      const clamp = (v: number) => Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, v));
+      const dx = clamp((e.clientX - cx) * strength);
+      const dy = clamp((e.clientY - cy) * strength);
       el.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
     };
     const onLeave = () => {
       el.style.transform = "translate3d(0,0,0)";
     };
 
-    const parent = el.parentElement;
-    parent?.addEventListener("mousemove", onMove);
-    parent?.addEventListener("mouseleave", onLeave);
+    // Listen on the element itself, not its parent, so hovering one
+    // button never drags its neighbour across.
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
     return () => {
-      parent?.removeEventListener("mousemove", onMove);
-      parent?.removeEventListener("mouseleave", onLeave);
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
     };
   }, [strength]);
 
