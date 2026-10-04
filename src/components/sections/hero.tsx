@@ -119,7 +119,7 @@ export function Hero() {
             <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
             <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500" />
           </span>
-          <span>Open to new projects</span>
+          <span>Available for work</span>
           <span className="hidden h-3 w-px bg-[var(--color-border-strong)] sm:inline" />
           <span className="hidden sm:inline">{siteConfig.coordinates}</span>
           <span className="h-3 w-px bg-[var(--color-border-strong)]" />
@@ -127,7 +127,7 @@ export function Hero() {
         </motion.div>
 
         <h1 className="max-w-4xl font-sans text-[clamp(2.75rem,8.6vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
-          <span className="-mb-[0.14em] block overflow-hidden pb-[0.14em]">
+          <span className="-mb-[0.26em] block overflow-hidden pb-[0.26em]">
             <motion.span variants={lineUp} initial="hidden" animate="show" custom={0} className="inline-block">
               I&nbsp;ship&nbsp;
             </motion.span>
@@ -141,7 +141,7 @@ export function Hero() {
               Laravel
             </motion.span>
           </span>
-          <span className="-mb-[0.14em] block overflow-hidden pb-[0.16em]">
+          <span className="-mb-[0.26em] block overflow-hidden pb-[0.26em]">
             <motion.span
               variants={lineUp}
               initial="hidden"
@@ -170,12 +170,12 @@ export function Hero() {
           custom={0}
           className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-[var(--color-fg-muted)] sm:mt-10 sm:text-xl"
         >
-          Senior Laravel & Systems Engineer. I build and run 30+ production apps for businesses across the GCC:{" "}
-          <span className="text-[var(--color-fg)]">ERP & POS systems</span>,{" "}
-          <span className="text-[var(--color-fg)]">WhatsApp platforms</span>,{" "}
-          <span className="text-[var(--color-fg)]">clinics</span>,{" "}
-          <span className="whitespace-nowrap text-[var(--color-fg)]">e-commerce</span> and{" "}
-          <span className="whitespace-nowrap text-[var(--color-fg)]">AI-powered SaaS</span>. From the code to the servers.
+          I&apos;m a Laravel engineer in Kuwait. I build the software businesses here run on every day:{" "}
+          <span className="text-[var(--color-fg)]">restaurant tills</span>,{" "}
+          <span className="text-[var(--color-fg)]">clinic systems</span>,{" "}
+          <span className="text-[var(--color-fg)]">online stores</span>,{" "}
+          <span className="text-[var(--color-fg)]">WhatsApp ordering</span> and{" "}
+          <span className="text-[var(--color-fg)]">AI tools</span>. Then I look after the servers it runs on, too.
         </motion.p>
 
         <motion.div

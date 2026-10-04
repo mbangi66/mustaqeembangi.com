@@ -23,8 +23,8 @@ export function Projects() {
             Products in <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">orbit</span>.
           </h2>
           <p className="mt-5 max-w-2xl text-base text-[var(--color-fg-muted)] sm:text-lg">
-            {projects.length + moreProjects.length} products I designed, built and keep running.{" "}
-            {publicCount} have public sites; the rest are client systems, so they are described without naming the client.
+            Here&apos;s what I&apos;ve built and still look after. {publicCount} have public websites. The rest belong to
+            clients, so I describe what they do without saying who they are.
           </p>
         </div>
 

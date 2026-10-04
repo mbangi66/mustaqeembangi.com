@@ -49,15 +49,16 @@ export function Contact() {
         >
           <div className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
             <span className="h-px w-6 bg-[var(--color-border-strong)]" />
-            Open channel
+            Get in touch
           </div>
 
           <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight text-[var(--color-fg)] sm:text-5xl">
-            Have a Laravel platform that needs to stop breaking?
+            Let&apos;s build something, or fix what&apos;s broken.
           </h2>
 
           <p className="mt-5 max-w-2xl text-base text-[var(--color-fg-muted)] sm:text-lg">
-            {siteConfig.availability} If you run a business in the Gulf with a Laravel system you want built, fixed or kept running, send a short email. I read every one.
+            Hiring? Need a system built? Or have a Laravel app that keeps falling over? Send me a short email
+            about it. I read every one and reply myself.
           </p>
 
           <div className="mt-10 sm:mt-12">

@@ -67,9 +67,9 @@ export function About() {
                 and fleet operators.
               </p>
               <p>
-                I own the whole path: the Laravel code, the payment and WhatsApp integrations, the servers, the
-                deploys and the backups. Most of what I work on is already live and earning money, so how I work
-                matters as much as what I build.
+                I don&apos;t just write the code and hand it over. I set up the payments and WhatsApp, run the
+                servers, ship the updates and keep the backups. Most of what I work on is live and making money for
+                someone, so I&apos;m careful with it.
               </p>
             </div>
 

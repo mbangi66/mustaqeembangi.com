@@ -43,8 +43,8 @@ export function Capabilities() {
             What I build, <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">end to end</span>.
           </h2>
           <p className="mt-5 text-base text-[var(--color-fg-muted)] sm:text-lg">
-            Ten kinds of systems I have designed, shipped and keep running for businesses in Kuwait and the GCC.
-            Every one of them is bilingual, Arabic and English.
+            The kinds of systems I build. Each one is in use today somewhere in Kuwait or the Gulf, and all of them
+            work in both Arabic and English.
           </p>
         </div>
 

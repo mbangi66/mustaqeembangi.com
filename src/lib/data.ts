@@ -13,8 +13,8 @@ export const siteConfig = {
   phone: "+965 410 76750",
   cvPath: "/Mustaqeem_Bangi_CV.pdf",
   url: "https://mustaqeembangi.vercel.app",
-  availability: "Open to senior Laravel roles and 6–12 week SaaS projects.",
-  responsePromise: "I reply within 1 business day · GMT+3",
+  availability: "Open to full-time roles and freelance projects.",
+  responsePromise: "I usually reply within a day · Kuwait time, GMT+3",
 };
 
 export type SocialLink = { name: string; href: string; handle: string };
@@ -68,10 +68,10 @@ export const projects: Project[] = [
     name: "Business ERP & Restaurant Platform",
     pitch: "One ERP core running 14+ businesses: restaurants, retail, rentals and services.",
     description:
-      "Ordering, tablet POS, delivery-platform integrations, accounting, HR and payroll, contracts and fixed assets in one Laravel platform. Modules switch on per business, so the same core runs a single café, a multi-brand restaurant group or a storage-rental company.",
+      "Everything a business needs to run day to day, in one Laravel system: ordering, tablet tills, delivery apps, accounting, HR and payroll, contracts and assets. Each business switches on only the parts it needs, so the same system runs a single café, a group of restaurants or a storage-rental company.",
     stack: ["Laravel 12", "Livewire 3", "Sanctum", "MySQL", "MyFatoorah", "Spatie Permissions"],
     role: "Lead engineer",
-    status: "In production · client-private",
+    status: "Live · private client system",
     accent: "#f97316",
     caseStudy: {
       challenge:
@@ -138,10 +138,10 @@ export const projects: Project[] = [
     name: "WhatsApp Business Platform",
     pitch: "Ordering, bookings, clinics and campaigns, all run from WhatsApp.",
     description:
-      "A multi-workspace platform that runs entire businesses over WhatsApp: a versioned flow builder, Meta Flows, payment links, promotions, campaigns and AI replies, with full restaurant and clinic modules behind it. 126 models, in Arabic and English.",
+      "Lets a business run almost everything through WhatsApp: taking orders, booking tables and appointments, sending payment links, running offers and campaigns, and answering with AI. Full restaurant and clinic systems sit behind it, in Arabic and English.",
     stack: ["Laravel 12", "Filament", "Inertia", "WhatsApp Cloud API", "Meta Flows", "Horizon", "LLMs"],
     role: "Architect & lead developer",
-    status: "In production · runs inside clients' WhatsApp",
+    status: "Live inside clients' WhatsApp",
     accent: "#10b981",
     caseStudy: {
       challenge:
@@ -168,7 +168,7 @@ export const moreProjects: Project[] = [
       "Patient files, visits and packages, doctors' shifts and compensation ledgers, labs, medication, insurance and inpatient care, plus clinic stock, purchasing and payroll. Every patient-file access is logged. A new clinic is a new config, never a fork.",
     stack: ["Laravel 12", "Filament", "Inertia", "WhatsApp Cloud API"],
     role: "Lead engineer",
-    status: "In production · client-private",
+    status: "Live · private client system",
     accent: "#14b8a6",
   },
   {
@@ -179,7 +179,7 @@ export const moreProjects: Project[] = [
       "An online store, a shop-counter POS, a mobile app API, warehouse fulfilment tasks, inventory events and a full price-change history, sharing one stock ledger with local payment gateways.",
     stack: ["Laravel", "Filament", "Livewire", "MySQL", "REST API"],
     role: "Lead engineer",
-    status: "In production · client-private",
+    status: "Live · private client system",
     accent: "#eab308",
   },
   {
@@ -234,7 +234,7 @@ export const moreProjects: Project[] = [
       "A bilingual Bagisto storefront with right-to-left layouts, KWD pricing and MyFatoorah checkout, kept in step with upstream Bagisto releases.",
     stack: ["Bagisto", "Laravel 12", "Vue 3", "MyFatoorah"],
     role: "Developer",
-    status: "In production · client-private",
+    status: "Live · private client system",
     accent: "#ec4899",
   },
 ];
@@ -251,7 +251,7 @@ export const highlights: Highlight[] = [
   {
     tag: "Migrations",
     title: "Clean installs, every time",
-    body: "A migration generator that builds the schema with optional modules on or off, verified on fresh databases before any new business goes live.",
+    body: "Every new business gets a clean database with only the modules it needs, tested on a blank install before it goes live.",
   },
   {
     tag: "POS",
@@ -291,12 +291,12 @@ export const highlights: Highlight[] = [
   {
     tag: "Payments",
     title: "Money to the fils",
-    body: "KWD carries three decimals. Pricing, tax and MyFatoorah payments are built to keep every fils, with test and live modes kept strictly apart.",
+    body: "The Kuwaiti dinar has three decimals, and most software rounds to two. Mine keeps every fils, and test payments can never touch real money.",
   },
   {
     tag: "DevOps",
     title: "Deploys nobody notices",
-    body: "Route and config caching, queue restarts and SSR workers handled in order, so live products update without an outage.",
+    body: "Every live update follows the same careful order (caches, queues, workers), so customers keep using the app while it changes underneath them.",
   },
   {
     tag: "Ops",
@@ -319,10 +319,10 @@ export const stackGroups: StackGroup[] = [
 export type Step = { title: string; body: string };
 
 export const workSteps: Step[] = [
-  { title: "Audit", body: "I read the code, the data and the servers first, and tell you plainly what's risky and what's fine." },
-  { title: "Plan", body: "A short written plan: what we change, in what order, and how each step can be rolled back." },
-  { title: "Ship in slices", body: "Small releases behind feature flags, tested on a copy of real data before they reach customers." },
-  { title: "Run it", body: "Deploys, monitoring, backups and fixes after launch. I stay on the system, not just the project." },
+  { title: "Look first", body: "I go through your code, data and servers, then tell you honestly what's fine and what's a risk." },
+  { title: "Agree a plan", body: "A short plan in plain words: what changes, in what order, and how we undo it if something goes wrong." },
+  { title: "Ship in small steps", body: "Small updates, each tested on a copy of your real data before your customers ever see it." },
+  { title: "Stay with it", body: "After launch I keep watching it: updates, backups and fixes. You're not left on your own." },
 ];
 
 export type Capability = { icon: string; title: string; body: string };
@@ -384,16 +384,16 @@ export type Principle = { title: string; body: string };
 
 export const principles: Principle[] = [
   {
-    title: "Keep production working",
-    body: "Routes, API responses and database columns stay backward compatible. Customers should never notice a deploy.",
+    title: "Don't break what works",
+    body: "If people are using it, it keeps working. Updates go out quietly, and nobody should notice a deploy.",
   },
   {
-    title: "Small steps over rewrites",
-    body: "Feature flags, tests and incremental releases. A system that earns money today gets improved, not replaced.",
+    title: "Improve, don't rewrite",
+    body: "I'd rather ship ten small, safe changes than one big risky rewrite. A system that makes money gets better, not replaced.",
   },
   {
-    title: "Built for the region",
-    body: "Arabic and English, right-to-left layouts, KWD with three decimals, and local payment gateways from the start.",
+    title: "Made for the Gulf",
+    body: "Arabic and English from day one, right-to-left screens, prices in KWD to the fils, and the payment gateways people here actually use.",
   },
 ];
 
