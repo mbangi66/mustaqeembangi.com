@@ -32,7 +32,7 @@ export function Highlights() {
               className="group relative bg-[var(--color-bg)]/90 p-6 backdrop-blur-sm transition-colors hover:bg-[var(--color-bg-subtle)] sm:p-8"
             >
               <div className="flex items-center justify-between gap-3">
-                <span className="rounded-full border border-orange-300/25 bg-orange-400/[0.07] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-orange-200">
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-orange-200/80">
                   {h.tag}
                 </span>
                 <span className="font-mono text-xs text-[var(--color-fg-subtle)]">{String(i + 1).padStart(2, "0")}</span>

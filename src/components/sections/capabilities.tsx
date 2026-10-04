@@ -70,9 +70,7 @@ export function Capabilities() {
                   className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(167,139,250,0.28),transparent_65%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                 />
                 <div className={cn("relative", wide && "lg:flex lg:items-center lg:gap-8")}>
-                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-orange-400/10 text-violet-200 shadow-[0_0_24px_-6px_rgba(167,139,250,0.6)]">
-                    <Icon className="h-5 w-5" />
-                  </span>
+                  <Icon className="h-6 w-6 shrink-0 text-orange-200/80" strokeWidth={1.5} />
                   <div className={cn("mt-5", wide && "lg:mt-0")}>
                     <h3 className="text-lg font-semibold tracking-tight text-[var(--color-fg)] sm:text-xl">{c.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-[var(--color-fg-muted)] sm:text-[15px]">{c.body}</p>

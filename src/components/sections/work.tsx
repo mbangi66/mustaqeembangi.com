@@ -18,7 +18,7 @@ export function Work() {
               Mission log
             </div>
             <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-[var(--color-fg)] sm:text-4xl">
-              Where I&apos;ve shipped.
+              Where I&apos;ve worked.
             </h2>
           </div>
           <a
@@ -61,16 +61,7 @@ export function Work() {
                   <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--color-fg-muted)]">
                     {job.summary}
                   </p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {job.stack.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-md border border-violet-400/20 bg-violet-500/5 px-2 py-0.5 font-mono text-[10px] text-violet-200"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="mt-3 text-[13px] text-[var(--color-fg-subtle)]">{job.stack.join(", ")}</p>
                 </div>
               </div>
             </motion.li>

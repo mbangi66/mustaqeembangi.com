@@ -2,11 +2,27 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Billboard, Stars } from "@react-three/drei";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Suspense, useMemo, useRef } from "react";
 import * as THREE from "three";
 
+/*
+ * A black hole in the style of Interstellar's Gargantua:
+ *  - a pure black shadow,
+ *  - a thin accretion disk seen almost edge-on, crossing in front of it,
+ *  - the far side of that disk bent by gravity into a halo over the top
+ *    and (fainter) under the bottom of the shadow,
+ *  - a thin, bright photon ring hugging the edge,
+ *  - bloom so the hot gas glows instead of looking painted on.
+ */
+
+const HORIZON = 1; // radius of the black shadow
+const DISK_INNER = 1.1;
+const DISK_OUTER = 4.6;
+const TILT = 0.13; // radians above edge-on
+
 /* ------------------------------------------------------------------ */
-/* Shared GLSL: cheap 3D value noise + fbm                             */
+/* Shared GLSL: smooth value noise + fbm                               */
 /* ------------------------------------------------------------------ */
 
 const NOISE = /* glsl */ `
@@ -29,21 +45,25 @@ const NOISE = /* glsl */ `
   float fbm(vec3 p) {
     float v = 0.0;
     float a = 0.5;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 4; i++) {
       v += a * noise(p);
-      p *= 2.03;
+      p *= 2.02;
       a *= 0.5;
     }
     return v;
   }
+  // Blackbody-ish ramp: deep orange at the rim, near-white at the inner edge.
+  vec3 heat(float t) {
+    vec3 rim   = vec3(0.85, 0.30, 0.06);
+    vec3 warm  = vec3(1.00, 0.62, 0.22);
+    vec3 hot   = vec3(1.00, 0.90, 0.72);
+    return mix(mix(rim, warm, smoothstep(0.0, 0.55, t)), hot, smoothstep(0.55, 1.0, t));
+  }
 `;
 
 /* ------------------------------------------------------------------ */
-/* Accretion disk                                                      */
+/* Accretion disk (the part in front of / around the shadow)           */
 /* ------------------------------------------------------------------ */
-
-const DISK_INNER = 1.35;
-const DISK_OUTER = 4.4;
 
 const diskVertex = /* glsl */ `
   varying vec2 vPos;
@@ -64,47 +84,37 @@ const diskFragment = /* glsl */ `
     float a = atan(vPos.y, vPos.x);
     float t = clamp((r - uInner) / (uOuter - uInner), 0.0, 1.0);
 
-    // Inner gas orbits faster than outer gas (roughly Keplerian).
-    float swirl = a + uTime * 1.6 / pow(r, 1.5);
-    vec3 q = vec3(cos(swirl) * 1.7, sin(swirl) * 1.7, r * 5.0);
-    float n = fbm(q + vec3(0.0, 0.0, -uTime * 0.25));
-    float streaks = fbm(vec3(cos(swirl) * 6.0, sin(swirl) * 6.0, r * 14.0));
+    // Inner gas orbits faster than outer gas.
+    float swirl = a + uTime * 0.9 / pow(r, 1.5);
+    float gas = fbm(vec3(cos(swirl) * 2.2, sin(swirl) * 2.2, r * 2.4 - uTime * 0.08));
+    float fine = fbm(vec3(cos(swirl) * 5.0, sin(swirl) * 5.0, r * 7.0));
 
-    vec3 white  = vec3(1.0, 0.96, 0.88);
-    vec3 orange = vec3(1.0, 0.55, 0.18);
-    vec3 violet = vec3(0.55, 0.30, 1.0);
-    vec3 col = mix(white, orange, smoothstep(0.0, 0.32, t));
-    col = mix(col, violet, smoothstep(0.45, 0.95, t));
+    float heatT = 1.0 - t;
+    vec3 col = heat(heatT);
 
-    float body = pow(1.0 - t, 1.7) * (0.45 + 1.1 * n) * (0.75 + 0.5 * streaks);
-    float edges = smoothstep(0.0, 0.05, t) * (1.0 - smoothstep(0.72, 1.0, t));
+    float density = pow(1.0 - t, 1.8) * (0.5 + 0.8 * gas) * (0.8 + 0.35 * fine);
+    float edges = smoothstep(0.0, 0.015, t) * (1.0 - smoothstep(0.55, 1.0, t));
 
-    // Relativistic beaming: the side moving toward us is brighter.
-    float doppler = 1.0 + 0.65 * cos(a + 0.4);
+    // Relativistic beaming: the side coming toward us is much brighter.
+    float doppler = 0.55 + 0.75 * (0.5 + 0.5 * cos(a + 0.25));
 
-    float alpha = body * edges * doppler;
-    gl_FragColor = vec4(col * alpha * 1.7, alpha);
+    float alpha = density * edges * doppler;
+    gl_FragColor = vec4(col * alpha * 2.2, alpha);
   }
 `;
 
 function AccretionDisk() {
   const material = useRef<THREE.ShaderMaterial>(null);
   const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uInner: { value: DISK_INNER },
-      uOuter: { value: DISK_OUTER },
-    }),
+    () => ({ uTime: { value: 0 }, uInner: { value: DISK_INNER }, uOuter: { value: DISK_OUTER } }),
     [],
   );
-
   useFrame((_, dt) => {
-    if (material.current) material.current.uniforms.uTime.value += dt;
+    if (material.current) material.current.uniforms.uTime.value += Math.min(dt, 0.05);
   });
-
   return (
     <mesh renderOrder={2}>
-      <ringGeometry args={[DISK_INNER, DISK_OUTER, 256, 8]} />
+      <ringGeometry args={[DISK_INNER, DISK_OUTER, 256, 12]} />
       <shaderMaterial
         ref={material}
         uniforms={uniforms}
@@ -120,8 +130,7 @@ function AccretionDisk() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Lensed halo: photon ring + the far side of the disk bent over      */
-/* the top and under the bottom of the horizon. Always faces camera.  */
+/* Lensed far side + photon ring, always facing the camera             */
 /* ------------------------------------------------------------------ */
 
 const haloVertex = /* glsl */ `
@@ -137,42 +146,53 @@ const haloFragment = /* glsl */ `
   varying vec2 vUv;
   ${NOISE}
   void main() {
-    vec2 p = (vUv - 0.5) * 6.0;   // plane is 6 units wide, horizon radius = 1
+    vec2 p = (vUv - 0.5) * 8.0;   // plane is 8 units wide; shadow radius = 1
     float r = length(p);
     float a = atan(p.y, p.x);
+    float up = p.y / max(r, 1e-4);          // +1 straight up, -1 straight down
 
-    float photon = exp(-pow((r - 1.06) * 26.0, 2.0)) * 1.6;
+    // The far side of the disk, lifted over the top (thick, bright)
+    // and pulled under the bottom (thinner, dimmer).
+    float topW = 0.62, botW = 0.26;
+    float width = mix(botW, topW, smoothstep(-1.0, 1.0, up));
+    float inner = 1.05;
+    float band = smoothstep(inner, inner + 0.02, r) * (1.0 - smoothstep(inner + width * 0.55, inner + width, r));
+    // Fade out toward the left and right, where the real disk takes over.
+    float vertical = smoothstep(0.08, 0.6, abs(up));
+    // Streaks run along the arc, like the disk's own gas lanes.
+    float gas = fbm(vec3(a * 2.2 + uTime * 0.12, r * 16.0, 0.5));
+    gas = mix(gas, fbm(vec3(a * 6.0 - uTime * 0.2, r * 40.0, 2.0)), 0.35);
+    float lensed = band * vertical * (0.25 + 1.2 * gas * gas) * (up > 0.0 ? 1.0 : 0.55);
+    // Same beaming as the disk: brighter on the left.
+    lensed *= 0.6 + 0.6 * (0.5 - 0.5 * p.x / max(r, 1e-4));
 
-    float swirl = a + uTime * 0.9 / pow(r, 1.5);
-    float n = fbm(vec3(cos(swirl) * 2.0, sin(swirl) * 2.0, r * 7.0 - uTime * 0.2));
-    float band = smoothstep(1.02, 1.16, r) * (1.0 - smoothstep(1.25, 2.1, r));
-    // Lensed light is strongest above and below the horizon.
-    float arc = 0.35 + 0.65 * pow(abs(p.y) / max(r, 0.001), 1.4);
-    float lensed = band * arc * (0.45 + 1.5 * n);
+    float tLens = 1.0 - clamp((r - inner) / width, 0.0, 1.0);
+    vec3 lensCol = heat(0.35 + 0.65 * tLens);
 
-    float glow = exp(-(r - 1.0) * 1.9) * 0.22 * step(1.0, r);
+    // Photon ring: a razor-thin bright circle right at the edge of the shadow.
+    float photon = exp(-pow((r - 1.015) * 150.0, 2.0)) * (0.55 + 0.6 * (0.5 - 0.5 * p.x / max(r, 1e-4)));
 
-    vec3 hot = vec3(1.0, 0.78, 0.5);
-    vec3 cool = vec3(0.58, 0.42, 1.0);
-    vec3 col = hot * (photon + lensed) + cool * glow;
-    float alpha = clamp(photon + lensed + glow, 0.0, 1.0);
-    alpha *= 1.0 - smoothstep(2.4, 3.0, r);
-    gl_FragColor = vec4(col * alpha, alpha);
+    // Soft warm haze around everything.
+    float haze = exp(-(r - 1.0) * 1.6) * 0.05 * step(1.0, r);
+
+    vec3 col = lensCol * lensed * 1.45 + vec3(1.0, 0.78, 0.52) * photon + vec3(1.0, 0.55, 0.25) * haze;
+    float alpha = clamp(lensed + photon + haze, 0.0, 1.0);
+    alpha *= 1.0 - smoothstep(3.2, 4.0, r);
+    gl_FragColor = vec4(col, alpha);
   }
 `;
 
 function LensedHalo() {
   const material = useRef<THREE.ShaderMaterial>(null);
   const uniforms = useMemo(() => ({ uTime: { value: 0 } }), []);
-
   useFrame((_, dt) => {
-    if (material.current) material.current.uniforms.uTime.value += dt;
+    if (material.current) material.current.uniforms.uTime.value += Math.min(dt, 0.05);
   });
-
   return (
     <Billboard>
-      <mesh renderOrder={1}>
-        <planeGeometry args={[6, 6]} />
+      {/* Sit just behind the shadow so the black disc covers the centre. */}
+      <mesh renderOrder={1} position={[0, 0, -0.01]}>
+        <planeGeometry args={[8, 8]} />
         <shaderMaterial
           ref={material}
           uniforms={uniforms}
@@ -188,7 +208,7 @@ function LensedHalo() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Infalling particles                                                 */
+/* A few bright motes drifting inward: subtle, not grainy               */
 /* ------------------------------------------------------------------ */
 
 function softDotTexture() {
@@ -198,7 +218,7 @@ function softDotTexture() {
   const ctx = canvas.getContext("2d")!;
   const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
   g.addColorStop(0, "rgba(255,255,255,1)");
-  g.addColorStop(0.35, "rgba(255,255,255,0.45)");
+  g.addColorStop(0.3, "rgba(255,255,255,0.35)");
   g.addColorStop(1, "rgba(255,255,255,0)");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, size, size);
@@ -221,26 +241,26 @@ function createDust(count: number): Dust {
   const height = new Float32Array(count);
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
-  const warm = new THREE.Color("#ffb070");
-  const cool = new THREE.Color("#a78bfa");
+  const warm = new THREE.Color("#ffc58a");
+  const hot = new THREE.Color("#fff1dc");
   for (let i = 0; i < count; i++) {
-    radius[i] = DISK_INNER + Math.random() * (DISK_OUTER + 1.5 - DISK_INNER);
+    radius[i] = DISK_INNER + Math.random() * (DISK_OUTER - DISK_INNER);
     angle[i] = Math.random() * Math.PI * 2;
-    height[i] = (Math.random() - 0.5) * 0.12;
-    const c = warm.clone().lerp(cool, Math.random() * 0.8);
+    height[i] = (Math.random() - 0.5) * 0.05;
+    const c = warm.clone().lerp(hot, Math.random());
     colors.set([c.r, c.g, c.b], i * 3);
   }
   return { radius, angle, height, positions, colors };
 }
 
-/** Advance every particle one step: orbit faster near the hole, drift inward, respawn at the rim. */
+/** Advance every mote: orbit faster near the hole, drift inward, respawn at the rim. */
 function stepDust(d: Dust, dt: number) {
   for (let i = 0; i < d.radius.length; i++) {
     const r = d.radius[i];
-    d.angle[i] += (1.4 / Math.pow(r, 1.5)) * dt;
-    d.radius[i] -= (0.05 + 0.25 / r) * dt;
-    if (d.radius[i] < 1.05) {
-      d.radius[i] = DISK_OUTER + Math.random() * 1.5;
+    d.angle[i] += (0.9 / Math.pow(r, 1.5)) * dt;
+    d.radius[i] -= (0.03 + 0.12 / r) * dt;
+    if (d.radius[i] < DISK_INNER) {
+      d.radius[i] = DISK_OUTER - Math.random() * 0.6;
       d.angle[i] = Math.random() * Math.PI * 2;
     }
     d.positions[i * 3] = Math.cos(d.angle[i]) * d.radius[i];
@@ -267,11 +287,11 @@ function InfallingDust({ count }: { count: number }) {
         <bufferAttribute attach="attributes-color" args={[state.colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.06}
+        size={0.035}
         map={texture}
         vertexColors
         transparent
-        opacity={0.85}
+        opacity={0.55}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
         sizeAttenuation
@@ -293,39 +313,42 @@ function BlackHole({ particles }: { particles: number }) {
   const position: [number, number, number] = wide
     ? [viewport.width * 0.27, 0.1, 0]
     : [0, viewport.height * 0.24, 0];
-  const scale = wide ? Math.min(0.82, viewport.width / 15.5) : Math.min(0.62, viewport.width / 9.5);
+  const scale = wide ? Math.min(0.78, viewport.width / 16.5) : Math.min(0.5, viewport.width / 11.5);
 
   useFrame((state) => {
     if (!group.current) return;
-    // Gentle parallax toward the pointer.
-    const tx = state.pointer.y * 0.06;
-    const ty = state.pointer.x * 0.1;
+    // Gentle parallax toward the pointer; never tips far from edge-on.
+    const tx = state.pointer.y * 0.03;
+    const ty = state.pointer.x * 0.08;
     group.current.rotation.x += (tx - group.current.rotation.x) * 0.04;
     group.current.rotation.y += (ty - group.current.rotation.y) * 0.04;
   });
 
   return (
     <group ref={group} position={position} scale={scale}>
-      {/* Event horizon: pure black, writes depth so it hides what's behind. */}
-      <mesh renderOrder={0}>
-        <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color="#000000" />
-      </mesh>
+      {/* Shadow: a flat black disc that always faces the camera, so it lines up
+          exactly with the photon ring. It writes depth, so the far half of the
+          accretion disk hides behind it while the near half crosses in front. */}
+      <Billboard>
+        <mesh renderOrder={0}>
+          <circleGeometry args={[HORIZON, 128]} />
+          <meshBasicMaterial color="#000000" />
+        </mesh>
+      </Billboard>
 
       <LensedHalo />
 
-      <group rotation={[-Math.PI / 2 + 0.3, 0, 0.14]}>
+      <group rotation={[-Math.PI / 2 + TILT, 0, 0.06]}>
         <AccretionDisk />
         <InfallingDust count={particles} />
       </group>
-
     </group>
   );
 }
 
 export function BlackHoleScene({
   active,
-  particles = 1400,
+  particles = 500,
 }: {
   active: boolean;
   particles?: number;
@@ -333,14 +356,16 @@ export function BlackHoleScene({
   return (
     <Canvas
       frameloop={active ? "always" : "never"}
-      camera={{ position: [0, 0.6, 9.5], fov: 42 }}
+      camera={{ position: [0, 0.25, 9.5], fov: 42 }}
       dpr={[1, 1.6]}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
     >
       <Suspense fallback={null}>
-
-        <Stars radius={60} depth={40} count={2500} factor={3} saturation={0.4} fade speed={0.4} />
+        <Stars radius={60} depth={40} count={1400} factor={2.5} saturation={0.2} fade speed={0.3} />
         <BlackHole particles={particles} />
+        <EffectComposer multisampling={4}>
+          <Bloom intensity={0.55} luminanceThreshold={0.62} luminanceSmoothing={0.2} mipmapBlur radius={0.42} />
+        </EffectComposer>
       </Suspense>
     </Canvas>
   );

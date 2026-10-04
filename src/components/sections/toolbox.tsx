@@ -31,20 +31,8 @@ export function Toolbox() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: (i % 3) * 0.06 }}
               >
-                <h3 className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-violet-200">
-                  <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-violet-300 shadow-[0_0_10px_rgba(196,181,253,0.9)]" />
-                  {g.title}
-                </h3>
-                <ul className="mt-3 flex flex-wrap gap-1.5">
-                  {g.items.map((t) => (
-                    <li
-                      key={t}
-                      className="rounded-md border border-[var(--color-border)] bg-white/[0.03] px-2.5 py-1 text-[13px] text-[var(--color-fg)]/85"
-                    >
-                      {t}
-                    </li>
-                  ))}
-                </ul>
+                <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-orange-200/80">{g.title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-[var(--color-fg)]/85">{g.items.join(", ")}</p>
               </motion.div>
             ))}
           </div>

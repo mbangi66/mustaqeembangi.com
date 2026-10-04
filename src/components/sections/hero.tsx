@@ -86,7 +86,7 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.6, delay: 0.2 }}
         >
-          <BlackHoleScene active={visible} particles={narrow ? 600 : 1400} />
+          <BlackHoleScene active={visible} particles={narrow ? 250 : 500} />
         </motion.div>
       )}
 
@@ -129,7 +129,7 @@ export function Hero() {
         <h1 className="max-w-4xl font-sans text-[clamp(2.75rem,8.6vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
           <span className="-mb-[0.26em] block overflow-hidden pb-[0.26em]">
             <motion.span variants={lineUp} initial="hidden" animate="show" custom={0} className="inline-block">
-              I&nbsp;ship&nbsp;
+              From&nbsp;
             </motion.span>
             <motion.span
               variants={lineUp}
@@ -138,7 +138,7 @@ export function Hero() {
               custom={1}
               className="inline-block bg-gradient-to-br from-amber-200 via-orange-400 to-fuchsia-500 bg-clip-text text-transparent"
             >
-              Laravel
+              first&nbsp;idea
             </motion.span>
           </span>
           <span className="-mb-[0.26em] block overflow-hidden pb-[0.26em]">
@@ -158,7 +158,7 @@ export function Hero() {
               custom={3}
               className="inline-block bg-gradient-to-tr from-violet-400 via-brand-400 to-sky-300 bg-clip-text text-transparent"
             >
-              production.
+              full&nbsp;orbit.
             </motion.span>
           </span>
         </h1>
@@ -170,12 +170,12 @@ export function Hero() {
           custom={0}
           className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-[var(--color-fg-muted)] sm:mt-10 sm:text-xl"
         >
-          I&apos;m a Laravel engineer in Kuwait. I build the software businesses here run on every day:{" "}
-          <span className="text-[var(--color-fg)]">restaurant tills</span>,{" "}
-          <span className="text-[var(--color-fg)]">clinic systems</span>,{" "}
+          I&apos;m a Laravel engineer in Kuwait. I take business ideas from a sketch to a live system:{" "}
+          <span className="text-[var(--color-fg)]">restaurants</span>,{" "}
+          <span className="text-[var(--color-fg)]">clinics</span>,{" "}
           <span className="text-[var(--color-fg)]">online stores</span>,{" "}
-          <span className="text-[var(--color-fg)]">WhatsApp ordering</span> and{" "}
-          <span className="text-[var(--color-fg)]">AI tools</span>. Then I look after the servers it runs on, too.
+          <span className="text-[var(--color-fg)]">WhatsApp</span> and{" "}
+          <span className="text-[var(--color-fg)]">AI</span>. Then I keep them flying.
         </motion.p>
 
         <motion.div

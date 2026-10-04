@@ -1,4 +1,4 @@
-# Mustaqeem Bangi — Portfolio
+# Mustaqeem Bangi: Portfolio
 
 Personal portfolio for **Mustaqeem Abdullah Bangi**, Senior Laravel & Systems Engineer.
 Live at **https://mustaqeembangi.vercel.app**.

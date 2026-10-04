@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
 
   title: {
-    default: `${siteConfig.name} — ${siteConfig.title}`,
-    template: `%s — ${siteConfig.name}`,
+    default: `${siteConfig.name} | ${siteConfig.title}`,
+    template: `%s | ${siteConfig.name}`,
   },
 
   description: siteConfig.bio,
@@ -76,13 +76,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — ${siteConfig.title}`,
+    title: `${siteConfig.name} | ${siteConfig.title}`,
     description: siteConfig.bio,
   },
 
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.title}`,
+    title: `${siteConfig.name} | ${siteConfig.title}`,
     description: siteConfig.bio,
     creator: "@Mustaqeembangi",
   },

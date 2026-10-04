@@ -89,7 +89,7 @@ export default function Image() {
           </div>
           <div style={{ marginTop: 22, fontSize: 38, color: "#fdba74" }}>{siteConfig.title}</div>
           <div style={{ marginTop: 34, fontSize: 26, lineHeight: 1.4, color: "#b4b2c8" }}>
-            ERP & POS · WhatsApp platforms · Clinics · E-commerce · AI SaaS · 30+ apps in production
+            ERP & POS, WhatsApp platforms, clinics, online stores and AI. 30+ apps live.
           </div>
           <div style={{ marginTop: "auto", fontSize: 24, color: "#a78bfa" }}>mustaqeembangi.vercel.app</div>
         </div>

@@ -57,7 +57,7 @@ export function About() {
               About
             </div>
             <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight text-[var(--color-fg)] sm:text-5xl">
-              I build production <span className="font-serif font-normal italic">Laravel</span> for the Gulf.
+              I build the systems Gulf businesses <span className="font-serif font-normal italic">run on</span>.
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-lg">
               <p>

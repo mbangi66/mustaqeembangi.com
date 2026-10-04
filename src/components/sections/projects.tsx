@@ -7,6 +7,9 @@ import { cn } from "@/lib/utils";
 import { Planet } from "@/components/planet";
 
 const pad = (n: number) => String(n).padStart(2, "0");
+/** "A, B and C" */
+const listOf = (items: string[]) =>
+  items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
 const numberWords = ["No", "One", "Two", "Three", "Four", "Five", "Six"];
 const publicCount = numberWords[[...projects, ...moreProjects].filter((p) => p.href).length] ?? "Several";
 
@@ -17,7 +20,7 @@ export function Projects() {
         <div className="mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
-            Selected work · 2024 — now
+            Selected work since 2024
           </div>
           <h2 className="mt-3 max-w-3xl text-balance text-4xl font-extrabold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)] sm:mt-4 sm:text-6xl md:text-7xl">
             Products in <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">orbit</span>.
@@ -61,30 +64,16 @@ export function Projects() {
                       {p.description}
                     </p>
 
-                    <div className="mt-7 flex flex-wrap items-center gap-2">
-                      {p.stack.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-[var(--color-border)] bg-black/30 px-3 py-1 font-mono text-[11px] text-[var(--color-fg-muted)]"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="mt-7 max-w-xl text-sm text-[var(--color-fg-subtle)]">
+                      Built with <span className="text-[var(--color-fg-muted)]">{listOf(p.stack)}</span>.
+                    </p>
 
-                    <div className="mt-8 flex flex-wrap items-center gap-4">
-                      <span
-                        className="inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px]"
-                        style={{
-                          borderColor: `color-mix(in srgb, ${p.accent} 35%, transparent)`,
-                          background: `color-mix(in srgb, ${p.accent} 10%, transparent)`,
-                          color: `color-mix(in srgb, ${p.accent} 55%, white)`,
-                        }}
-                      >
+                    <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+                      <span className="inline-flex items-center gap-2 text-sm text-[var(--color-fg-muted)]">
                         {live ? (
-                          <span className="h-1.5 w-1.5 rounded-full" style={{ background: p.accent, boxShadow: `0 0 10px ${p.accent}` }} />
+                          <span className="h-1.5 w-1.5 rounded-full" style={{ background: p.accent }} />
                         ) : (
-                          <Lock className="h-3 w-3" />
+                          <Lock className="h-3.5 w-3.5 text-[var(--color-fg-subtle)]" />
                         )}
                         {p.status}
                       </span>
@@ -189,27 +178,13 @@ export function Projects() {
                 </h3>
                 <p className="mt-2 max-w-[75%] text-[15px] text-[var(--color-fg)]/90">{p.pitch}</p>
                 <p className="mt-4 text-sm leading-relaxed text-[var(--color-fg-muted)]">{p.description}</p>
-                <div className="mt-5 flex flex-wrap gap-1.5">
-                  {p.stack.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-[var(--color-border)] bg-black/30 px-2.5 py-0.5 font-mono text-[10px] text-[var(--color-fg-muted)]"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <span
-                  className="mt-6 inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[10px]"
-                  style={{
-                    borderColor: `color-mix(in srgb, ${p.accent} 35%, transparent)`,
-                    background: `color-mix(in srgb, ${p.accent} 10%, transparent)`,
-                    color: `color-mix(in srgb, ${p.accent} 55%, white)`,
-                  }}
-                >
-                  <Lock className="h-3 w-3" />
-                  {p.role} · {p.status}
-                </span>
+                <p className="mt-4 text-[13px] text-[var(--color-fg-subtle)]">
+                  Built with <span className="text-[var(--color-fg-muted)]">{listOf(p.stack)}</span>.
+                </p>
+                <p className="mt-auto inline-flex items-center gap-2 pt-5 text-[13px] text-[var(--color-fg-muted)]">
+                  <Lock className="h-3.5 w-3.5 text-[var(--color-fg-subtle)]" />
+                  {p.role}, {p.status.toLowerCase()}
+                </p>
               </motion.li>
             ))}
           </ul>
