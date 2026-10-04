@@ -61,6 +61,16 @@ export function Work() {
                   <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--color-fg-muted)]">
                     {job.summary}
                   </p>
+                  {job.highlights && (
+                    <ul className="mt-4 max-w-2xl space-y-2">
+                      {job.highlights.map((h) => (
+                        <li key={h} className="flex gap-3 text-sm leading-relaxed text-[var(--color-fg)]/85">
+                          <span aria-hidden className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-orange-300/80" />
+                          {h}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                   <p className="mt-3 text-[13px] text-[var(--color-fg-subtle)]">{job.stack.join(", ")}</p>
                 </div>
               </div>

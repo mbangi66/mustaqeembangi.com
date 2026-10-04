@@ -37,7 +37,7 @@ export function Contact() {
       className="relative isolate scroll-mt-24 overflow-hidden border-t border-[var(--color-border)] py-20 sm:py-40"
     >
       {/* Moonrise behind the closing section */}
-      <Moon className="pointer-events-none absolute -bottom-[12%] -right-[38%] -z-10 w-[72vw] opacity-45 sm:-bottom-[30%] sm:-right-[8%] sm:w-[min(52vw,620px)] sm:opacity-80" />
+      <Moon className="pointer-events-none absolute -bottom-[12%] -right-[38%] -z-10 w-[72vw] opacity-45 sm:-bottom-[30%] sm:-right-[8%] sm:w-[min(52vw,620px)] sm:opacity-95" />
 
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <motion.div

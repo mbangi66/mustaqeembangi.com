@@ -1,100 +1,59 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-/** Elliptical ring band (with a small gap, like Saturn's) for one planet colour. */
-const ringBand = (color: string) =>
-  `radial-gradient(closest-side, transparent 66%, color-mix(in srgb, ${color} 55%, white 20%) 68%, color-mix(in srgb, ${color} 70%, white 45%) 78%, transparent 80%, transparent 82%, color-mix(in srgb, ${color} 60%, white 15%) 84%, transparent 92%)`;
+export type PlanetName =
+  | "jupiter"
+  | "earth"
+  | "neptune"
+  | "uranus"
+  | "venus"
+  | "mars"
+  | "mercury"
+  | "saturn"
+  | "ceres"
+  | "makemake";
 
 /**
- * A CSS-only planet with a full tilted ring. The ring is drawn twice:
- * once behind the planet, and once in front with its top half clipped
- * away, so it reads as one continuous ring wrapping the planet.
+ * A real planet, pre-rendered from mission-based surface maps (see
+ * public/planets). A soft glow in the card's colour sits behind it.
  */
-export function Planet({ color, className }: { color: string; className?: string }) {
-  const ring = "absolute left-1/2 top-1/2 h-[30%] w-[138%] -translate-x-1/2 -translate-y-1/2 -rotate-[16deg]";
+export function Planet({
+  name,
+  color,
+  className,
+  sizes = "300px",
+}: {
+  name: PlanetName;
+  color: string;
+  className?: string;
+  sizes?: string;
+}) {
   return (
     <div aria-hidden className={cn("relative aspect-square", className)}>
-      {/* Atmosphere glow */}
       <div
-        className="absolute inset-[8%] rounded-full blur-2xl transition-opacity duration-700 group-hover:opacity-100"
-        style={{ background: `color-mix(in srgb, ${color} 55%, transparent)`, opacity: 0.55 }}
+        className="absolute inset-[14%] rounded-full blur-3xl transition-opacity duration-700 group-hover:opacity-70"
+        style={{ background: color, opacity: 0.35 }}
       />
-
-      {/* Ring, far side (hidden behind the planet in the middle) */}
-      <div className={ring} style={{ background: ringBand(color), opacity: 0.7 }} />
-
-      {/* Planet body */}
-      <div
-        className="absolute inset-[22%] overflow-hidden rounded-full transition-transform duration-700 group-hover:scale-[1.04]"
-        style={{
-          background: `radial-gradient(circle at 32% 28%, color-mix(in srgb, ${color} 35%, white) 0%, ${color} 28%, color-mix(in srgb, ${color} 45%, #05060d) 62%, #03040a 100%)`,
-          boxShadow: `inset -18px -14px 40px rgba(0,0,0,0.75), 0 0 60px -10px ${color}`,
-        }}
-      >
-        {/* Cloud bands */}
-        <div
-          className="absolute inset-0 opacity-40 mix-blend-overlay"
-          style={{
-            background:
-              "repeating-linear-gradient(-16deg, transparent 0 9%, rgba(255,255,255,0.35) 9% 11%, transparent 11% 19%, rgba(0,0,0,0.35) 19% 23%)",
-          }}
-        />
-      </div>
-
-      {/* Ring, near side (crosses in front of the planet) */}
-      <div
-        className={cn(ring, "[clip-path:inset(50%_0_0_0)]")}
-        style={{ background: ringBand(color), filter: `drop-shadow(0 0 6px ${color})` }}
+      <Image
+        src={`/planets/${name}.webp`}
+        alt=""
+        fill
+        sizes={sizes}
+        className="object-contain transition-transform duration-[1.2s] ease-out group-hover:rotate-[4deg] group-hover:scale-[1.03]"
       />
     </div>
   );
 }
 
 /**
- * A large CSS moon: grey disc, maria and craters, lit from the upper left
- * with a soft terminator. Used as a backdrop, not part of any orbit.
+ * The Moon, rendered from NASA's Lunar Reconnaissance Orbiter colour map
+ * (public domain), lit as a waxing gibbous.
  */
 export function Moon({ className }: { className?: string }) {
-  const craters = [
-    [28, 34, 9], [58, 22, 6], [70, 48, 11], [40, 62, 7], [22, 70, 5], [62, 74, 8],
-    [48, 40, 4], [80, 30, 4], [34, 18, 3], [12, 48, 4], [54, 88, 4], [86, 62, 3],
-  ];
   return (
-    <div aria-hidden className={cn("relative aspect-square rounded-full", className)}>
-      {/* Halo */}
-      <div className="absolute -inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(226,232,240,0.18)_40%,transparent_70%)] blur-2xl" />
-      <div
-        className="absolute inset-0 overflow-hidden rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle at 34% 30%, #f1f1f4 0%, #c9c8d0 30%, #8f8d99 62%, #55535f 100%)",
-        }}
-      >
-        {/* Maria: darker, smoother plains */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(22% 18% at 38% 42%, rgba(80,78,92,0.45), transparent 70%), radial-gradient(18% 22% at 62% 34%, rgba(80,78,92,0.4), transparent 70%), radial-gradient(26% 16% at 54% 64%, rgba(80,78,92,0.35), transparent 70%)",
-          }}
-        />
-        {/* Craters: dark floor, light rim on the sun side */}
-        {craters.map(([x, y, r], i) => (
-          <span
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: `${x - r / 2}%`,
-              top: `${y - r / 2}%`,
-              width: `${r}%`,
-              height: `${r}%`,
-              background: "rgba(92,90,104,0.28)",
-              boxShadow: "inset 3px 3px 4px rgba(40,38,48,0.35), inset -1px -1px 1px rgba(255,255,255,0.18)",
-            }}
-          />
-        ))}
-        {/* Night side */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,transparent_52%,rgba(3,4,10,0.55)_72%,rgba(3,4,10,0.92)_100%)]" />
-      </div>
+    <div aria-hidden className={cn("relative aspect-square", className)}>
+      <div className="absolute inset-[6%] rounded-full bg-[radial-gradient(circle,rgba(226,232,240,0.16)_45%,transparent_72%)] blur-2xl" />
+      <Image src="/moon.webp" alt="" fill sizes="(max-width: 640px) 72vw, 620px" className="object-contain" />
     </div>
   );
 }

@@ -101,6 +101,12 @@ export function Footer() {
           </p>
           <p>
             Built with <span className="text-[var(--color-fg-muted)]">Next.js</span> + <span className="text-[var(--color-fg-muted)]">Tailwind</span>. Designed in Kuwait.
+            <br />
+            Planet maps by{" "}
+            <a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noopener noreferrer" className="underline decoration-[var(--color-border-strong)] underline-offset-2 hover:text-[var(--color-fg-muted)]">
+              Solar System Scope
+            </a>{" "}
+            (CC BY 4.0). Moon from NASA&apos;s Lunar Reconnaissance Orbiter.
           </p>
         </div>
       </div>

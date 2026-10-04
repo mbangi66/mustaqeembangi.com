@@ -57,7 +57,9 @@ export type Project = {
   role: string;
   href?: string;
   status: string;
-  accent: string; // planet colour on the card
+  accent: string; // glow colour on the card
+  planet: import("@/components/planet").PlanetName;
+  image?: string; // real screenshot; replaces the planet when present
   caseStudy?: CaseStudy;
 };
 
@@ -65,6 +67,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "erp-platform",
+    planet: "jupiter",
     name: "Business ERP & Restaurant Platform",
     pitch: "One system running 14+ businesses: restaurants, shops, rentals and services.",
     description:
@@ -89,6 +92,7 @@ export const projects: Project[] = [
   },
   {
     slug: "social-hub",
+    planet: "neptune",
     name: "Social Hub",
     pitch: "AI competitor tracking and social media management for Gulf brands.",
     description:
@@ -98,6 +102,7 @@ export const projects: Project[] = [
     href: "https://social-hub.net",
     status: "Live",
     accent: "#8b5cf6",
+    image: "/work/social-hub.webp",
     caseStudy: {
       challenge:
         "Marketing teams in the Gulf were tracking competitors by hand across websites, Instagram and TikTok, with no way to ask questions of the data.",
@@ -112,6 +117,7 @@ export const projects: Project[] = [
   },
   {
     slug: "gps-fleet",
+    planet: "earth",
     name: "Fleet Telematics",
     pitch: "Live GPS tracking for 7,000+ vehicles in Kuwait.",
     description:
@@ -135,6 +141,7 @@ export const projects: Project[] = [
   },
   {
     slug: "whatsapp-platform",
+    planet: "neptune",
     name: "WhatsApp Business Platform",
     pitch: "Ordering, bookings, clinics and campaigns, all run from WhatsApp.",
     description:
@@ -162,6 +169,7 @@ export const projects: Project[] = [
 export const moreProjects: Project[] = [
   {
     slug: "clinic-platform",
+    planet: "uranus",
     name: "Clinic Management",
     pitch: "Patients, doctors, visits and stock in one system.",
     description:
@@ -173,6 +181,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "retail-platform",
+    planet: "venus",
     name: "Retail & Warehouse",
     pitch: "Storefront, shop POS and warehouse on one inventory.",
     description:
@@ -184,6 +193,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "car-marketplace",
+    planet: "mars",
     name: "Car Marketplace",
     pitch: "Buy, sell and rent cars, with dealers on board.",
     description:
@@ -195,6 +205,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "automotive",
+    planet: "mercury",
     name: "Smart Car Wash & Parking",
     pitch: "Connected car wash machines, parking lots and service billing.",
     description:
@@ -206,6 +217,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "e-learning",
+    planet: "saturn",
     name: "Online Learning Platforms",
     pitch: "Course marketplaces with live classes.",
     description:
@@ -217,6 +229,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "site-builder",
+    planet: "ceres",
     name: "Website Builder SaaS",
     pitch: "Customers launch their own sites from themes.",
     description:
@@ -228,6 +241,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "luxury-store",
+    planet: "makemake",
     name: "Luxury Online Store",
     pitch: "An online store for a premium brand, built Arabic first.",
     description:
@@ -403,6 +417,7 @@ export type ExperienceItem = {
   period: string;
   location: string;
   summary: string;
+  highlights?: string[];
   stack: string[];
 };
 
@@ -413,8 +428,24 @@ export const experience: ExperienceItem[] = [
     period: "Jul 2024 to now",
     location: "Kuwait City",
     summary:
-      "Lead engineer across 30+ live apps: an ERP running 14+ businesses, a WhatsApp business platform, clinic, retail and online store systems, AI products and fleet tracking. I also run the servers they live on, from deploys to backups.",
+      "Lead engineer for a Kuwaiti software company. I design, build and run its products, and look after the servers all of them live on.",
+    highlights: [
+      "Merged four restaurant codebases that had drifted apart for three years into one system, which now runs 14+ businesses",
+      "Designed and built a WhatsApp business platform for ordering, bookings, clinics and campaigns, with spam and cost controls",
+      "Built Social Hub on my own, from first idea to a live AI product for Gulf brands",
+      "Primary developer on fleet tracking for 7,000+ vehicles, including moving its data off a slow legacy database",
+      "Run 30+ live apps on our servers: deploys with no downtime, queue workers, DNS and mail, and nightly backups to an office NAS",
+    ],
     stack: ["Laravel", "Livewire", "Filament", "Vue/Inertia", "Anthropic", "MariaDB", "Linux"],
+  },
+  {
+    company: "Freelance",
+    role: "Laravel Developer",
+    period: "Jul 2023 to Jul 2024",
+    location: "Remote",
+    summary:
+      "Worked directly with clients on Laravel projects: new builds, fixes and upgrades to systems already in use.",
+    stack: ["Laravel", "Livewire", "Vue", "MySQL", "Linux"],
   },
   {
     company: "SerpElevator",

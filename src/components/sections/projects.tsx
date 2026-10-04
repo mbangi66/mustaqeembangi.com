@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowUpRight, Lock } from "lucide-react";
 import { moreProjects, projects } from "@/lib/data";
@@ -107,7 +108,29 @@ export function Projects() {
                         background: `radial-gradient(60% 55% at 50% 50%, color-mix(in srgb, ${p.accent} 22%, transparent), transparent 70%)`,
                       }}
                     />
-                    <Planet color={p.accent} className="w-[62%] max-w-[300px]" />
+                    {p.image ? (
+                      <figure className="relative w-[88%] max-w-[560px] overflow-hidden rounded-xl border border-white/10 bg-[#0b0c14] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] transition-transform duration-700 group-hover:-translate-y-1">
+                        {/* Plain browser bar so it reads as a real site */}
+                        <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-2">
+                          <span className="h-2 w-2 rounded-full bg-white/20" />
+                          <span className="h-2 w-2 rounded-full bg-white/20" />
+                          <span className="h-2 w-2 rounded-full bg-white/20" />
+                          <span className="ml-3 truncate font-mono text-[10px] text-[var(--color-fg-subtle)]">
+                            {p.href?.replace(/^https?:\/\//, "")}
+                          </span>
+                        </div>
+                        <Image
+                          src={p.image}
+                          alt={`${p.name} home page`}
+                          width={1200}
+                          height={720}
+                          sizes="(max-width: 1024px) 88vw, 560px"
+                          className="block h-auto w-full"
+                        />
+                      </figure>
+                    ) : (
+                      <Planet name={p.planet} color={p.accent} className="w-[62%] max-w-[320px]" sizes="(max-width: 1024px) 62vw, 320px" />
+                    )}
                   </div>
                 </div>
 
@@ -169,7 +192,7 @@ export function Projects() {
                 )}
                 style={{ ["--card-accent" as string]: p.accent } as React.CSSProperties}
               >
-                <Planet color={p.accent} className="pointer-events-none absolute -right-10 -top-10 -z-10 w-44 opacity-80 sm:w-52" />
+                <Planet name={p.planet} color={p.accent} className="pointer-events-none absolute -right-8 -top-8 -z-10 w-40 sm:w-48" sizes="192px" />
                 <span className="font-mono text-xs text-[var(--color-fg-subtle)]">
                   {pad(projects.length + i + 1)} / {pad(projects.length + moreProjects.length)}
                 </span>
