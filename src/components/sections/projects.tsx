@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { ArrowUpRight, Lock } from "lucide-react";
-import { projects } from "@/lib/data";
+import { moreProjects, projects } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Planet } from "@/components/planet";
 
@@ -21,8 +21,8 @@ export function Projects() {
             Products in <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">orbit</span>.
           </h2>
           <p className="mt-5 max-w-2xl text-base text-[var(--color-fg-muted)] sm:text-lg">
-            Three products I designed, built and still run in production. Most of my client work is private, so the
-            full range is under <a href="#capabilities" className="text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-4 hover:decoration-white">capabilities</a>.
+            {projects.length + moreProjects.length} products I designed, built and still run in production. Three have
+            public sites; the rest are client systems, so they are described without naming the client.
           </p>
         </div>
 
@@ -44,7 +44,7 @@ export function Projects() {
                   <div className={cn("relative p-6 sm:p-12", reversed && "lg:order-2")}>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                       <span className="font-mono text-xs text-[var(--color-fg-subtle)]">
-                        {pad(i + 1)} / {pad(projects.length)}
+                        {pad(i + 1)} / {pad(projects.length + moreProjects.length)}
                       </span>
                       <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
                         {p.role}
@@ -122,6 +122,57 @@ export function Projects() {
               </motion.article>
             );
           })}
+        </div>
+
+        <div className="mt-20 sm:mt-28">
+          <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
+            <span className="h-px w-8 bg-[var(--color-border-strong)]" />
+            Also in production
+          </div>
+          <ul className="mt-6 grid gap-5 sm:grid-cols-2">
+            {moreProjects.map((p, i) => (
+              <motion.li
+                key={p.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative isolate flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/70 p-6 backdrop-blur-sm transition-all hover:border-[color:var(--card-accent)] hover:shadow-[0_24px_60px_-24px_color-mix(in_srgb,var(--card-accent)_45%,transparent)] sm:p-8"
+                style={{ ["--card-accent" as string]: p.accent } as React.CSSProperties}
+              >
+                <Planet color={p.accent} className="pointer-events-none absolute -right-10 -top-10 -z-10 w-44 opacity-80 sm:w-52" />
+                <span className="font-mono text-xs text-[var(--color-fg-subtle)]">
+                  {pad(projects.length + i + 1)} / {pad(projects.length + moreProjects.length)}
+                </span>
+                <h3 className="mt-4 max-w-[70%] text-2xl font-extrabold tracking-[-0.02em] text-[var(--color-fg)] sm:text-3xl">
+                  {p.name}
+                </h3>
+                <p className="mt-2 max-w-[75%] text-[15px] text-[var(--color-fg)]/90">{p.pitch}</p>
+                <p className="mt-4 text-sm leading-relaxed text-[var(--color-fg-muted)]">{p.description}</p>
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {p.stack.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full border border-[var(--color-border)] bg-black/30 px-2.5 py-0.5 font-mono text-[10px] text-[var(--color-fg-muted)]"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <span
+                  className="mt-6 inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[10px]"
+                  style={{
+                    borderColor: `color-mix(in srgb, ${p.accent} 35%, transparent)`,
+                    background: `color-mix(in srgb, ${p.accent} 10%, transparent)`,
+                    color: `color-mix(in srgb, ${p.accent} 55%, white)`,
+                  }}
+                >
+                  <Lock className="h-3 w-3" />
+                  {p.role} · {p.status}
+                </span>
+              </motion.li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

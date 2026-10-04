@@ -6,6 +6,7 @@ import { ArrowUpRight, Check, Copy, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { siteConfig, socials } from "@/lib/data";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "@/components/brand-icons";
+import { Moon } from "@/components/planet";
 
 const socialIcon = (name: string) => {
   switch (name.toLowerCase()) {
@@ -33,8 +34,11 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 overflow-hidden border-t border-[var(--color-border)] py-20 sm:py-40"
+      className="relative isolate scroll-mt-24 overflow-hidden border-t border-[var(--color-border)] py-20 sm:py-40"
     >
+      {/* Moonrise behind the closing section */}
+      <Moon className="pointer-events-none absolute -bottom-[12%] -right-[38%] -z-10 w-[72vw] opacity-45 sm:-bottom-[30%] sm:-right-[8%] sm:w-[min(52vw,620px)] sm:opacity-80" />
+
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 12 }}

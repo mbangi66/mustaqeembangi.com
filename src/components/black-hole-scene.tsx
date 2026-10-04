@@ -281,93 +281,6 @@ function InfallingDust({ count }: { count: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Moon with procedurally painted craters                              */
-/* ------------------------------------------------------------------ */
-
-function moonTexture() {
-  const w = 1024;
-  const h = 512;
-  const canvas = document.createElement("canvas");
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext("2d")!;
-
-  // Seeded RNG so the moon looks the same on every visit.
-  let seed = 7;
-  const rand = () => {
-    seed = (seed * 16807) % 2147483647;
-    return (seed - 1) / 2147483646;
-  };
-
-  ctx.fillStyle = "#8d8a94";
-  ctx.fillRect(0, 0, w, h);
-
-  // Maria: large soft dark patches.
-  for (let i = 0; i < 14; i++) {
-    const x = rand() * w;
-    const y = h * 0.2 + rand() * h * 0.6;
-    const r = 40 + rand() * 120;
-    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, "rgba(60,58,70,0.55)");
-    g.addColorStop(1, "rgba(60,58,70,0)");
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  // Fine grain.
-  for (let i = 0; i < 9000; i++) {
-    const v = 110 + rand() * 70;
-    ctx.fillStyle = `rgba(${v},${v},${v + 6},0.08)`;
-    ctx.fillRect(rand() * w, rand() * h, 2, 2);
-  }
-
-  // Craters: dark floor, bright rim on one side.
-  for (let i = 0; i < 260; i++) {
-    const x = rand() * w;
-    const y = rand() * h;
-    const r = Math.pow(rand(), 2.4) * 26 + 2;
-    ctx.fillStyle = "rgba(40,38,48,0.45)";
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = "rgba(225,222,232,0.35)";
-    ctx.lineWidth = Math.max(1, r * 0.18);
-    ctx.beginPath();
-    ctx.arc(x, y, r, Math.PI * 0.9, Math.PI * 1.9);
-    ctx.stroke();
-  }
-
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.wrapS = THREE.RepeatWrapping;
-  return tex;
-}
-
-function Moon() {
-  const orbit = useRef<THREE.Group>(null);
-  const body = useRef<THREE.Mesh>(null);
-  const texture = useMemo(() => moonTexture(), []);
-
-  useFrame((_, dt) => {
-    if (orbit.current) orbit.current.rotation.y += dt * 0.11;
-    if (body.current) body.current.rotation.y += dt * 0.05;
-  });
-
-  return (
-    <group rotation={[0.38, 0, -0.18]}>
-      <group ref={orbit} rotation={[0, 2.1, 0]}>
-        <mesh ref={body} position={[4.9, 0, 0]}>
-          <sphereGeometry args={[0.55, 64, 64]} />
-          <meshStandardMaterial map={texture} bumpMap={texture} bumpScale={0.6} roughness={1} metalness={0} />
-        </mesh>
-      </group>
-    </group>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /* Scene                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -406,9 +319,6 @@ function BlackHole({ particles }: { particles: number }) {
         <InfallingDust count={particles} />
       </group>
 
-      {/* Warm glow from the disk rims the moon. */}
-      <pointLight intensity={18} distance={14} decay={1.5} color="#ff9a4a" />
-      <Moon />
     </group>
   );
 }
@@ -428,9 +338,6 @@ export function BlackHoleScene({
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
     >
       <Suspense fallback={null}>
-        {/* Distant "sun" lights the moon from one side so it shows a terminator. */}
-        <directionalLight position={[-4, 3, 8]} intensity={4.5} color="#ffffff" />
-        <ambientLight intensity={0.18} />
 
         <Stars radius={60} depth={40} count={2500} factor={3} saturation={0.4} fade speed={0.4} />
         <BlackHole particles={particles} />

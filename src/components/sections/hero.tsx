@@ -127,7 +127,7 @@ export function Hero() {
         </motion.div>
 
         <h1 className="max-w-4xl font-sans text-[clamp(2.75rem,8.6vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
-          <span className="block overflow-hidden pb-[0.04em]">
+          <span className="-mb-[0.14em] block overflow-hidden pb-[0.14em]">
             <motion.span variants={lineUp} initial="hidden" animate="show" custom={0} className="inline-block">
               I&nbsp;ship&nbsp;
             </motion.span>
@@ -141,7 +141,7 @@ export function Hero() {
               Laravel
             </motion.span>
           </span>
-          <span className="block overflow-hidden pb-[0.06em]">
+          <span className="-mb-[0.14em] block overflow-hidden pb-[0.16em]">
             <motion.span
               variants={lineUp}
               initial="hidden"
@@ -172,9 +172,9 @@ export function Hero() {
         >
           Senior Laravel & Systems Engineer. I build and run production software for businesses across the GCC:{" "}
           <span className="text-[var(--color-fg)]">restaurant & POS systems</span>,{" "}
-          <span className="text-[var(--color-fg)]">e-commerce</span>,{" "}
+          <span className="whitespace-nowrap text-[var(--color-fg)]">e-commerce</span>,{" "}
           <span className="text-[var(--color-fg)]">WhatsApp commerce</span> and{" "}
-          <span className="text-[var(--color-fg)]">AI-powered SaaS</span>. From the code to the servers.
+          <span className="whitespace-nowrap text-[var(--color-fg)]">AI-powered SaaS</span>. From the code to the servers.
         </motion.p>
 
         <motion.div

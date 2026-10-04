@@ -3,7 +3,7 @@
 Personal portfolio for **Mustaqeem Abdullah Bangi**, Senior Laravel & Systems Engineer.
 Live at **https://mustaqeembangi.vercel.app**.
 
-Space-themed: a real-time WebGL black hole with an orbiting moon in the hero, a
+Space-themed: a real-time WebGL black hole in the hero, a rising moon behind the contact section, a
 starfield behind every page, and CSS planets for each project.
 
 Built with Next.js 16 (App Router, Turbopack), React 19, Tailwind v4, three.js
@@ -34,9 +34,9 @@ src/
 │   ├── opengraph-image.tsx    # Generated share image (LinkedIn, WhatsApp, X)
 │   └── globals.css            # Tailwind v4 theme tokens
 ├── components/
-│   ├── black-hole-scene.tsx   # WebGL black hole, accretion disk, moon
+│   ├── black-hole-scene.tsx   # WebGL black hole + accretion disk
 │   ├── space-backdrop.tsx     # Fixed canvas starfield + shooting stars
-│   ├── planet.tsx             # CSS planet + CSS black hole fallback
+│   ├── planet.tsx             # CSS planet, CSS moon, CSS black hole fallback
 │   ├── nav.tsx, footer.tsx, command-palette.tsx (⌘K), cursor.tsx
 │   └── sections/
 │       ├── hero.tsx, projects.tsx, capabilities.tsx,

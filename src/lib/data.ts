@@ -29,7 +29,7 @@ export const socials: SocialLink[] = [
 export type Kpi = { value: string; label: string };
 export const kpis: Kpi[] = [
   { value: "2020", label: "shipping for the web since" },
-  { value: "6", label: "product areas live in production" },
+  { value: "7", label: "products live in production" },
   { value: "7K+", label: "vehicles tracked in real time" },
   { value: "AR·EN", label: "bilingual by default" },
 ];
@@ -46,6 +46,7 @@ export type Project = {
   accent: string; // planet colour on the card
 };
 
+// Featured: the three products with a public face.
 export const projects: Project[] = [
   {
     slug: "social-hub",
@@ -81,6 +82,54 @@ export const projects: Project[] = [
     role: "Architect & developer",
     status: "In production · runs inside clients' WhatsApp",
     accent: "#10b981",
+  },
+];
+
+// Also in production: client systems, described without naming the client.
+export const moreProjects: Project[] = [
+  {
+    slug: "restaurant-platform",
+    name: "Restaurant Platform",
+    pitch: "One platform running several restaurant brands and branches.",
+    description:
+      "Online ordering, admin back office, tablet POS with kitchen station printing, delivery-platform integrations, accounting and HR. I merged four codebases that had drifted apart into one, and added a partner API for outside ordering channels.",
+    stack: ["Laravel 12", "Livewire 3", "Sanctum", "MySQL"],
+    role: "Lead engineer",
+    status: "In production · client-private",
+    accent: "#f97316",
+  },
+  {
+    slug: "retail-platform",
+    name: "Retail & Warehouse",
+    pitch: "Storefront, in-store POS and warehouse in one system.",
+    description:
+      "An online store, a POS for the shop counter, a mobile app API and warehouse stock management that all share one inventory, with local payment gateways.",
+    stack: ["Laravel", "Vue", "MySQL", "REST API"],
+    role: "Lead engineer",
+    status: "In production · client-private",
+    accent: "#eab308",
+  },
+  {
+    slug: "clinic-platform",
+    name: "Clinic Platform",
+    pitch: "One codebase that serves every clinic.",
+    description:
+      "Appointments, patient records and WhatsApp reminders. A new clinic is a new configuration and database, never a fork, so every fix reaches every clinic at once.",
+    stack: ["Laravel 12", "Tailwind", "Vite", "WhatsApp Cloud API"],
+    role: "Lead engineer",
+    status: "In production · client-private",
+    accent: "#14b8a6",
+  },
+  {
+    slug: "luxury-store",
+    name: "Luxury E-commerce",
+    pitch: "An Arabic-first online store for a premium brand.",
+    description:
+      "A bilingual Bagisto storefront with right-to-left layouts, KWD pricing and MyFatoorah checkout, kept in step with upstream Bagisto releases.",
+    stack: ["Bagisto", "Laravel 12", "Vue 3", "MyFatoorah"],
+    role: "Developer",
+    status: "In production · client-private",
+    accent: "#ec4899",
   },
 ];
 
