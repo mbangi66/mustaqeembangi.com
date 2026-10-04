@@ -33,7 +33,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 border-t border-[var(--color-border)] bg-[var(--color-bg)] py-20 sm:py-40"
+      className="relative scroll-mt-24 overflow-hidden border-t border-[var(--color-border)] py-20 sm:py-40"
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <motion.div
@@ -45,7 +45,7 @@ export function Contact() {
         >
           <div className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
             <span className="h-px w-6 bg-[var(--color-border-strong)]" />
-            Get in touch
+            Open channel
           </div>
 
           <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight text-[var(--color-fg)] sm:text-5xl">
@@ -53,15 +53,15 @@ export function Contact() {
           </h2>
 
           <p className="mt-5 max-w-2xl text-base text-[var(--color-fg-muted)] sm:text-lg">
-            {siteConfig.capacity} If you&apos;re a Gulf founder or agency with a production Laravel system you want shipped or stabilised, send a short email — I read every one.
+            {siteConfig.availability} If you run a business in the Gulf with a Laravel system you want built, fixed or kept running, send a short email. I read every one.
           </p>
 
           <div className="mt-10 sm:mt-12">
             <a
               href={`mailto:${siteConfig.email}`}
-              className="group inline-flex flex-wrap items-center gap-x-3 gap-y-1 break-all font-mono text-xl tracking-[-0.02em] text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-[6px] transition-colors hover:decoration-brand-400 sm:gap-3 sm:text-4xl sm:underline-offset-[8px] md:text-5xl"
+              className="group inline-flex flex-wrap items-center gap-x-3 gap-y-1 break-all font-mono text-xl tracking-[-0.02em] text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-[6px] transition-colors hover:decoration-orange-300 sm:gap-3 sm:text-4xl sm:underline-offset-[8px] md:text-5xl"
             >
-              <Mail className="h-5 w-5 shrink-0 text-brand-400 sm:h-8 sm:w-8" />
+              <Mail className="h-5 w-5 shrink-0 text-orange-300 sm:h-8 sm:w-8" />
               <span className="break-all">{siteConfig.email}</span>
               <ArrowUpRight className="hidden h-5 w-5 self-center opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 sm:inline-block sm:h-7 sm:w-7" />
             </a>

@@ -12,6 +12,7 @@ import { Footer } from "@/components/footer";
 import { CommandPalette } from "@/components/command-palette";
 import { Cursor } from "@/components/cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { SpaceBackdrop } from "@/components/space-backdrop";
 import { siteConfig } from "@/lib/data";
 
 import "./globals.css";
@@ -55,6 +56,9 @@ export const metadata: Metadata = {
     "Vue.js",
     "Next.js",
     "Kuwait developer",
+    "restaurant POS",
+    "WhatsApp commerce",
+    "Laravel Kuwait",
     "Mustaqeem Bangi",
   ],
 
@@ -74,22 +78,13 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name} — ${siteConfig.title}`,
     description: siteConfig.bio,
-    images: [
-      {
-        url: siteConfig.avatar,
-        width: 460,
-        height: 460,
-        alt: siteConfig.fullName,
-      },
-    ],
   },
 
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: `${siteConfig.name} — ${siteConfig.title}`,
     description: siteConfig.bio,
     creator: "@Mustaqeembangi",
-    images: [siteConfig.avatar],
   },
 
   icons: {
@@ -108,16 +103,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    {
-      media: "(prefers-color-scheme: light)",
-      color: "#ffffff",
-    },
-    {
-      media: "(prefers-color-scheme: dark)",
-      color: "#05080f",
-    },
-  ],
+  themeColor: "#03040a",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -129,10 +116,11 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${jakarta.variable} ${jetbrains.variable} ${serif.variable}`}
+      className={`dark ${jakarta.variable} ${jetbrains.variable} ${serif.variable}`}
     >
       <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)] antialiased">
         <Providers>
+          <SpaceBackdrop />
           <ScrollProgress />
           <Cursor />
           <Nav />

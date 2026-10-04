@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion } from "motion/react";
 import dynamic from "next/dynamic";
-import { ArrowRight, Mail, MoveDown, MousePointer2 } from "lucide-react";
+import { ArrowRight, Download, MoveDown } from "lucide-react";
 import { kpis, siteConfig } from "@/lib/data";
 import { Magnetic } from "@/components/magnetic";
+import { CssBlackHole } from "@/components/planet";
 
-const InteractiveScene = dynamic(
-  () => import("@/components/interactive-scene").then((m) => m.InteractiveScene),
+const BlackHoleScene = dynamic(
+  () => import("@/components/black-hole-scene").then((m) => m.BlackHoleScene),
   { ssr: false },
 );
 
@@ -30,38 +31,73 @@ const fadeUp = {
   }),
 };
 
-export function Hero() {
-  const [showScene, setShowScene] = useState(false);
+let webglSupport: boolean | undefined;
+function supportsWebGL() {
+  if (webglSupport === undefined) {
+    try {
+      const c = document.createElement("canvas");
+      webglSupport = !!(c.getContext("webgl2") || c.getContext("webgl"));
+    } catch {
+      webglSupport = false;
+    }
+  }
+  return webglSupport;
+}
 
+const REDUCE = "(prefers-reduced-motion: reduce)";
+const NARROW = "(max-width: 767px)";
+
+function subscribeMedia(onChange: () => void) {
+  const queries = [REDUCE, NARROW].map((q) => window.matchMedia(q));
+  queries.forEach((mq) => mq.addEventListener("change", onChange));
+  return () => queries.forEach((mq) => mq.removeEventListener("change", onChange));
+}
+
+type SceneMode = "pending" | "webgl" | "css";
+
+export function Hero() {
+  const section = useRef<HTMLElement>(null);
+  const mode = useSyncExternalStore<SceneMode>(
+    subscribeMedia,
+    () => (!window.matchMedia(REDUCE).matches && supportsWebGL() ? "webgl" : "css"),
+    () => "pending",
+  );
+  const narrow = useSyncExternalStore(
+    subscribeMedia,
+    () => window.matchMedia(NARROW).matches,
+    () => false,
+  );
+  const [visible, setVisible] = useState(true);
+
+  // Stop rendering the 3D scene once the hero scrolls out of view.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mqDesktop = window.matchMedia("(min-width: 768px)");
-    const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setShowScene(mqDesktop.matches && !mqReduce.matches);
-    update();
-    mqDesktop.addEventListener("change", update);
-    mqReduce.addEventListener("change", update);
-    return () => {
-      mqDesktop.removeEventListener("change", update);
-      mqReduce.removeEventListener("change", update);
-    };
+    if (!section.current) return;
+    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0 });
+    io.observe(section.current);
+    return () => io.disconnect();
   }, []);
 
   return (
-    <section
-      id="top"
-      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-[var(--color-bg)]"
-    >
-      {showScene && <InteractiveScene />}
+    <section ref={section} id="top" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden">
+      {mode === "webgl" && (
+        <motion.div
+          className="absolute inset-0 -z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.6, delay: 0.2 }}
+        >
+          <BlackHoleScene active={visible} particles={narrow ? 600 : 1400} />
+        </motion.div>
+      )}
 
-      {/* layered atmospherics — visible on all viewports */}
+      {mode === "css" && (
+        <CssBlackHole className="absolute left-1/2 top-[8%] -z-10 w-[min(80vw,340px)] -translate-x-1/2 md:left-auto md:right-[6%] md:top-1/2 md:w-[min(38vw,520px)] md:translate-x-0 md:-translate-y-1/2" />
+      )}
+
+      {/* Keep text readable over the scene */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-[5] bg-[radial-gradient(70%_55%_at_50%_0%,rgba(99,102,241,0.18),transparent_70%),radial-gradient(45%_35%_at_85%_80%,rgba(6,182,212,0.10),transparent_70%),radial-gradient(40%_30%_at_15%_70%,rgba(59,130,246,0.12),transparent_70%)]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-[5] bg-dot-grid opacity-30 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]"
+        className="pointer-events-none absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(3,4,10,0.85)_0%,rgba(3,4,10,0.45)_45%,transparent_70%)] max-md:bg-[linear-gradient(180deg,transparent_0%,transparent_30%,rgba(3,4,10,0.75)_52%,rgba(3,4,10,0.9)_100%)]"
       />
       <div
         aria-hidden
@@ -69,6 +105,9 @@ export function Hero() {
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-24 pb-16 sm:px-6 sm:pt-32 sm:pb-24">
+        {/* On phones the black hole sits above the headline */}
+        <div aria-hidden className="h-[30svh] md:hidden" />
+
         {/* eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 6 }}
@@ -80,28 +119,45 @@ export function Hero() {
             <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
             <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500" />
           </span>
-          <span>Available · Q3 2026</span>
+          <span>Open to new projects</span>
           <span className="hidden h-3 w-px bg-[var(--color-border-strong)] sm:inline" />
-          <span className="hidden sm:inline">Senior Laravel & Systems Engineer</span>
-          <span className="hidden h-3 w-px bg-[var(--color-border-strong)] sm:inline" />
+          <span className="hidden sm:inline">{siteConfig.coordinates}</span>
+          <span className="h-3 w-px bg-[var(--color-border-strong)]" />
           <span>Kuwait · GMT+3</span>
         </motion.div>
 
-        {/* huge mixed-type headline */}
-        <h1 className="font-sans text-[clamp(2.75rem,11vw,11rem)] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
-          <span className="block overflow-hidden">
+        <h1 className="max-w-4xl font-sans text-[clamp(2.75rem,8.6vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
+          <span className="block overflow-hidden pb-[0.04em]">
             <motion.span variants={lineUp} initial="hidden" animate="show" custom={0} className="inline-block">
               I&nbsp;ship&nbsp;
             </motion.span>
-            <motion.span variants={lineUp} initial="hidden" animate="show" custom={1} className="inline-block bg-gradient-to-br from-brand-300 via-brand-500 to-accent-500 bg-clip-text text-transparent">
+            <motion.span
+              variants={lineUp}
+              initial="hidden"
+              animate="show"
+              custom={1}
+              className="inline-block bg-gradient-to-br from-amber-200 via-orange-400 to-fuchsia-500 bg-clip-text text-transparent"
+            >
               Laravel
             </motion.span>
           </span>
-          <span className="block overflow-hidden">
-            <motion.span variants={lineUp} initial="hidden" animate="show" custom={2} className="inline-block font-serif italic font-normal text-[var(--color-fg-muted)]">
+          <span className="block overflow-hidden pb-[0.06em]">
+            <motion.span
+              variants={lineUp}
+              initial="hidden"
+              animate="show"
+              custom={2}
+              className="inline-block font-serif font-normal italic text-[var(--color-fg-muted)]"
+            >
               to&nbsp;
             </motion.span>
-            <motion.span variants={lineUp} initial="hidden" animate="show" custom={3} className="inline-block bg-gradient-to-tr from-accent-400 via-brand-500 to-cyan-400 bg-clip-text text-transparent">
+            <motion.span
+              variants={lineUp}
+              initial="hidden"
+              animate="show"
+              custom={3}
+              className="inline-block bg-gradient-to-tr from-violet-400 via-brand-400 to-sky-300 bg-clip-text text-transparent"
+            >
               production.
             </motion.span>
           </span>
@@ -112,10 +168,13 @@ export function Hero() {
           initial="hidden"
           animate="show"
           custom={0}
-          className="mt-8 max-w-2xl text-pretty text-base leading-relaxed text-[var(--color-fg-muted)] sm:mt-10 sm:text-xl"
+          className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-[var(--color-fg-muted)] sm:mt-10 sm:text-xl"
         >
-          I architect and ship production SaaS for the GCC — <span className="text-[var(--color-fg)]">competitive intelligence</span>, <span className="text-[var(--color-fg)]">fleet telematics</span>, <span className="text-[var(--color-fg)]">WhatsApp commerce</span>. Backward compatible from day one.
-          {showScene && <span className="hidden md:inline"> Drag the scene above.</span>}
+          Senior Laravel & Systems Engineer. I build and run production software for businesses across the GCC:{" "}
+          <span className="text-[var(--color-fg)]">restaurant & POS systems</span>,{" "}
+          <span className="text-[var(--color-fg)]">e-commerce</span>,{" "}
+          <span className="text-[var(--color-fg)]">WhatsApp commerce</span> and{" "}
+          <span className="text-[var(--color-fg)]">AI-powered SaaS</span>. From the code to the servers.
         </motion.p>
 
         <motion.div
@@ -131,27 +190,27 @@ export function Hero() {
               data-cursor="link"
               className="group relative inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-[var(--color-fg)] px-6 text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-bg)] sm:h-14 sm:w-auto sm:px-7"
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10 flex items-center gap-2 transition-colors group-hover:text-white">
                 See the work
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </span>
               <span
                 aria-hidden
-                className="absolute inset-0 z-0 translate-y-full bg-gradient-to-tr from-brand-500 via-brand-400 to-accent-400 transition-transform duration-500 group-hover:translate-y-0"
+                className="absolute inset-0 z-0 translate-y-full bg-gradient-to-tr from-orange-500 via-fuchsia-500 to-violet-500 transition-transform duration-500 group-hover:translate-y-0"
               />
             </a>
           </Magnetic>
 
           <Magnetic strength={0.22}>
             <a
-              href={`mailto:${siteConfig.email}`}
+              href={siteConfig.cvPath}
+              target="_blank"
+              rel="noopener noreferrer"
               data-cursor="link"
-              aria-label={`Email ${siteConfig.email}`}
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/60 px-6 font-mono text-sm text-[var(--color-fg)] backdrop-blur-md transition-colors hover:border-[var(--color-border-strong)] hover:bg-[var(--color-bg-muted)] sm:h-14 sm:w-auto sm:px-7"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] px-6 font-mono text-sm text-[var(--color-fg)] backdrop-blur-md transition-colors hover:border-white/40 hover:bg-white/[0.07] sm:h-14 sm:w-auto sm:px-7"
             >
-              <Mail className="h-4 w-4" />
-              <span className="hidden sm:inline">{siteConfig.email}</span>
-              <span className="sm:hidden">Email me</span>
+              <Download className="h-4 w-4" />
+              Download CV
             </a>
           </Magnetic>
         </motion.div>
@@ -162,34 +221,21 @@ export function Hero() {
           initial="hidden"
           animate="show"
           custom={2}
-          className="mt-16 grid grid-cols-2 gap-x-5 gap-y-8 border-t border-[var(--color-border)] pt-8 sm:mt-20 sm:grid-cols-4 sm:gap-x-10 sm:gap-y-10 sm:pt-10"
+          className="mt-16 grid max-w-4xl grid-cols-2 gap-x-5 gap-y-8 border-t border-[var(--color-border)] pt-8 sm:mt-20 sm:grid-cols-4 sm:gap-x-10 sm:pt-10"
         >
           {kpis.map((k) => (
-            <div key={k.label}>
-              <dt className="font-sans text-3xl font-extrabold tracking-[-0.04em] text-[var(--color-fg)] sm:text-5xl md:text-6xl">
-                <span className="bg-gradient-to-br from-[var(--color-fg)] to-[var(--color-fg-muted)] bg-clip-text text-transparent">
-                  {k.value}
-                </span>
-              </dt>
-              <dd className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] sm:mt-2 sm:text-[11px] sm:tracking-[0.18em]">
+            <div key={k.label} className="flex flex-col-reverse">
+              <dt className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] sm:mt-2 sm:text-[11px] sm:tracking-[0.18em]">
                 {k.label}
+              </dt>
+              <dd className="font-sans text-3xl font-extrabold tracking-[-0.04em] text-[var(--color-fg)] sm:text-5xl">
+                {k.value}
               </dd>
             </div>
           ))}
         </motion.dl>
       </div>
 
-      {/* corner: drag hint — desktop only */}
-      {showScene && (
-        <div className="pointer-events-none absolute right-6 top-28 hidden flex-col items-end gap-1 text-right md:flex">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-muted)] backdrop-blur-md">
-            <MousePointer2 className="h-3 w-3" />
-            drag the scene
-          </span>
-        </div>
-      )}
-
-      {/* scroll cue — desktop only (mobile users already know how to scroll) */}
       <motion.a
         href="#work"
         initial={{ opacity: 0 }}

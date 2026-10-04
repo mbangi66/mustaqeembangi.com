@@ -41,14 +41,14 @@
 }
 
 .dark {
-  --color-bg: #05080f;
-  --color-bg-subtle: #0b1020;
-  --color-bg-muted: #131829;
-  --color-fg: #f4f4f5;
-  --color-fg-muted: #a1a1aa;
-  --color-fg-subtle: #71717a;
-  --color-border: #1f2937;
-  --color-border-strong: #334155;
+  --color-bg: #03040a;
+  --color-bg-subtle: #0a0b1a;
+  --color-bg-muted: #141530;
+  --color-fg: #f5f3ff;
+  --color-fg-muted: #b4b2c8;
+  --color-fg-subtle: #8a88a3;
+  --color-border: rgb(255 255 255 / 0.08);
+  --color-border-strong: rgb(255 255 255 / 0.16);
 }
 
 html {
@@ -69,7 +69,7 @@ body {
 }
 
 ::selection {
-  background: rgb(99 102 241 / 0.25);
+  background: rgb(251 146 60 / 0.35);
   color: var(--color-fg);
 }
 

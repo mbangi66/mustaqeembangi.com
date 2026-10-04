@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Command, Menu, X } from "lucide-react";
 import { navItems, siteConfig } from "@/lib/data";
-import { ThemeToggle } from "./theme-toggle";
 import { TimeWidget } from "./time-widget";
 import { cn } from "@/lib/utils";
 
@@ -106,7 +105,6 @@ export function Nav() {
               <Command className="h-2.5 w-2.5" />K
             </kbd>
           </button>
-          <ThemeToggle className="h-10 w-10" />
           <a
             href="#contact"
             className="hidden h-10 items-center rounded-md bg-[var(--color-fg)] px-3.5 text-sm font-medium text-[var(--color-bg)] transition-opacity hover:opacity-90 sm:inline-flex"

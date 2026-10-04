@@ -8,16 +8,14 @@ import {
   Copy,
   Download,
   Home,
+  Layers,
   Mail,
   MessageSquare,
-  Moon,
   Phone,
   Sparkles,
-  Sun,
   Terminal as TerminalIcon,
   User,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import { navItems, projects, siteConfig, socials } from "@/lib/data";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "./brand-icons";
@@ -30,6 +28,8 @@ const navIcon = (label: string) => {
       return Briefcase;
     case "work":
       return Sparkles;
+    case "capabilities":
+      return Layers;
     case "contact":
       return MessageSquare;
     default:
@@ -53,7 +53,6 @@ const socialIcon = (name: string) => {
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [easter, setEaster] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -242,17 +241,6 @@ export function CommandPalette() {
                 <Phone className="h-4 w-4" />
                 Call
                 <span className="ml-auto font-mono text-xs text-[var(--color-fg-subtle)]">{siteConfig.phone}</span>
-              </Command.Item>
-              <Command.Item
-                onSelect={() => {
-                  setTheme(resolvedTheme === "dark" ? "light" : "dark");
-                  close();
-                }}
-                value="toggle theme dark light"
-                className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-[var(--color-fg-muted)] aria-selected:bg-[var(--color-bg-muted)] aria-selected:text-[var(--color-fg)]"
-              >
-                {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                Toggle theme
               </Command.Item>
               <Command.Item
                 onSelect={() => {
