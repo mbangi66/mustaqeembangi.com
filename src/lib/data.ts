@@ -8,7 +8,7 @@ export const siteConfig = {
   avatar: "https://avatars.githubusercontent.com/u/37992013?v=4",
   tagline: "From first idea to full orbit, and I keep it flying.",
   bio:
-    "Senior Laravel & Systems Engineer in Kuwait City. I build and run 30+ production apps for GCC businesses: ERP and POS systems, WhatsApp platforms, clinics, online stores, AI products and live fleet tracking.",
+    "I build and run 30+ live apps for Gulf businesses: ERP and POS, WhatsApp ordering, clinics, online stores and AI.",
   email: "mbangi66@gmail.com",
   phone: "+965 410 76750",
   cvPath: "/Mustaqeem_Bangi_CV.pdf",
@@ -80,7 +80,7 @@ export const projects: Project[] = [
       challenge:
         "Four copies of the same restaurant system had drifted apart over three years. Every fix had to be made four times, and the copies disagreed about data.",
       built: [
-        "Merged all four into one system (177 database tables), where each business turns on only the parts it uses",
+        "Merged all four into one system with 177 database tables and a single release for every business",
         "Accounting: chart of accounts, cost centres, vouchers and balance sheets",
         "HR & payroll: attendance, shifts, leave, loans, payslips and staff documents",
         "Contracts with a full history of every change, plus fixed assets, drivers and delivery",
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     pitch: "AI competitor tracking and social media management for Gulf brands.",
     description:
       "Tracks competitors across the web and social platforms, manages publishing, and answers questions about the market in plain words using Anthropic models. Built for many client accounts from day one.",
-    stack: ["Laravel", "Vue 3", "Inertia SSR", "Anthropic", "Apify", "Queues"],
+    stack: ["Laravel", "Vue 3", "Inertia SSR", "Anthropic", "Apify", "Laravel queues"],
     role: "Sole developer & product lead",
     href: "https://social-hub.net",
     status: "Live",
@@ -200,7 +200,7 @@ export const moreProjects: Project[] = [
     pitch: "Storefront, shop POS and warehouse on one inventory.",
     description:
       "An online store, a POS at the counter, a mobile app and the warehouse, all on one stock count. Barcode scanning for purchases, exports, returns and stock transfers, items assigned to contracts, and automatic finance reports: cash flow, net profit and break even.",
-    stack: ["Laravel", "Filament", "Livewire", "MySQL", "REST API"],
+    stack: ["Laravel", "Filament", "Livewire", "MySQL", "a REST API"],
     role: "Lead engineer",
     status: "Live, private client system",
     accent: "#eab308",
@@ -354,7 +354,7 @@ export const highlights: Highlight[] = [
   {
     tag: "Ops",
     title: "Backups that can't be deleted",
-    body: "Every night an office NAS pulls a copy of the apps and databases that the server can't reach. A tray app on the office PC shows how it went and can restore a site.",
+    body: "Every night an office NAS pulls a copy of every app and database. The server has no way to reach that copy, so even a hacked server can't delete it. A tray app on the office PC shows how each night went and can restore a site.",
   },
 ];
 
@@ -415,7 +415,7 @@ export const capabilities: Capability[] = [
   {
     icon: "market",
     title: "Marketplaces & bookings",
-    body: "Car sales and rentals, dealer agencies, deal pipelines, reservations with holds and blackouts, subscriptions and price alerts.",
+    body: "Car sales and rentals, dealers and their teams, deals tracked to payment, bookings that respect holidays and capacity, paid plans and price alerts.",
   },
   {
     icon: "education",
