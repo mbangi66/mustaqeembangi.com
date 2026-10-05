@@ -13,7 +13,7 @@ import { CommandPalette } from "@/components/command-palette";
 import { Cursor } from "@/components/cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { SpaceBackdrop } from "@/components/space-backdrop";
-import { siteConfig } from "@/lib/data";
+import { siteConfig, socials } from "@/lib/data";
 
 import "./globals.css";
 
@@ -39,6 +39,7 @@ const serif = Instrument_Serif({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  alternates: { canonical: "/" },
 
   title: {
     default: `${siteConfig.name} | ${siteConfig.title}`,
@@ -87,19 +88,31 @@ export const metadata: Metadata = {
     creator: "@Mustaqeembangi",
   },
 
-  icons: {
-    icon: [
-      {
-        url: siteConfig.avatar,
-        sizes: "any",
-      },
-    ],
-  },
 
   robots: {
     index: true,
     follow: true,
   },
+};
+
+
+// Structured data so search engines know who this page is about.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: siteConfig.fullName,
+  alternateName: siteConfig.name,
+  jobTitle: siteConfig.title,
+  description: siteConfig.bio,
+  url: siteConfig.url,
+  image: siteConfig.avatar,
+  email: `mailto:${siteConfig.email}`,
+  worksFor: { "@type": "Organization", name: "Majestic Company for Communications" },
+  address: { "@type": "PostalAddress", addressLocality: "Kuwait City", addressCountry: "KW" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "University of Mumbai" },
+  knowsAbout: ["Laravel", "PHP", "Livewire", "React", "Next.js", "ASP.NET", "POS systems", "ERP", "WhatsApp Business API", "AI products"],
+  knowsLanguage: ["en", "ar"],
+  sameAs: socials.map((s) => s.href),
 };
 
 export const viewport: Viewport = {
@@ -119,6 +132,10 @@ export default function RootLayout({
       className={`dark ${jakarta.variable} ${jetbrains.variable} ${serif.variable}`}
     >
       <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)] antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+        />
         <Providers>
           <SpaceBackdrop />
           <ScrollProgress />

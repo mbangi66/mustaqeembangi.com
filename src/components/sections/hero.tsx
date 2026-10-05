@@ -121,12 +121,14 @@ export function Hero() {
           </span>
           <span>Available for work</span>
           <span className="hidden h-3 w-px bg-[var(--color-border-strong)] sm:inline" />
-          <span className="hidden sm:inline">{siteConfig.coordinates}</span>
-          <span className="h-3 w-px bg-[var(--color-border-strong)]" />
-          <span>Kuwait · GMT+3</span>
+          {/* The page's real heading for search engines and screen readers:
+              who this is and what he does. The big line below is the slogan. */}
+          <h1 className="font-[inherit] text-[length:inherit] font-normal tracking-[inherit] text-[var(--color-fg-muted)]">
+            {siteConfig.name}, {siteConfig.title} in Kuwait
+          </h1>
         </motion.div>
 
-        <h1 className="max-w-4xl font-sans text-[clamp(2.75rem,8.6vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
+        <p className="max-w-4xl font-sans text-[clamp(2.75rem,8.6vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
           <span className="-mb-[0.26em] block overflow-hidden pb-[0.26em]">
             <motion.span variants={lineUp} initial="hidden" animate="show" custom={0} className="inline-block">
               From&nbsp;
@@ -161,7 +163,7 @@ export function Hero() {
               full&nbsp;orbit.
             </motion.span>
           </span>
-        </h1>
+        </p>
 
         <motion.p
           variants={fadeUp}
