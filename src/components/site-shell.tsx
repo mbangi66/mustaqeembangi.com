@@ -37,6 +37,7 @@ export function buildMetadata(locale: Locale): Metadata {
   const s = content[locale].siteConfig;
   const path = locale === "ar" ? "/ar" : "/";
   const title = `${s.name} | ${s.title}`;
+  const shareAlt = `${en.siteConfig.name}, ${en.siteConfig.title} in Kuwait. From first idea to full orbit.`;
   return {
     metadataBase: new URL(base),
     alternates: {
@@ -67,8 +68,17 @@ export function buildMetadata(locale: Locale): Metadata {
       siteName: s.name,
       title,
       description: s.bio,
+      // Set explicitly: with one root layout per language, Next no longer
+      // attaches app/opengraph-image.jpg on its own.
+      images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630, alt: shareAlt, type: "image/jpeg" }],
     },
-    twitter: { card: "summary_large_image", title, description: s.bio, creator: "@Mustaqeembangi" },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: s.bio,
+      creator: "@Mustaqeembangi",
+      images: [{ url: "/twitter-image.jpg", width: 1200, height: 630, alt: shareAlt }],
+    },
     robots: { index: true, follow: true },
   };
 }
