@@ -9,7 +9,7 @@ export const siteConfig = {
   tagline: "From first idea to full orbit, and I keep it flying.",
   bio:
     "I build and run 30+ live apps for Gulf businesses: ERP and POS, WhatsApp ordering, clinics, online stores and AI.",
-  email: "mbangi66@gmail.com",
+  email: "mustaqeemabangi@gmail.com",
   phone: "+965 410 76750",
   whatsapp: "https://wa.me/96541076750",
   cvPath: "/Mustaqeem_Bangi_CV.pdf",
