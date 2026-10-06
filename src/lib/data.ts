@@ -21,7 +21,7 @@ export const siteConfig = {
 export type SocialLink = { name: string; href: string; handle: string };
 
 export const socials: SocialLink[] = [
-  { name: "GitHub", href: "https://github.com/mbangi66", handle: "@mbangi66" },
+  { name: "GitHub", href: "https://github.com/mustaqeembangi", handle: "@mustaqeembangi" },
   { name: "LinkedIn", href: "https://www.linkedin.com/in/mustaqeembangi/", handle: "/in/mustaqeembangi" },
   { name: "Twitter", href: "https://twitter.com/Mustaqeembangi", handle: "@Mustaqeembangi" },
 ];
