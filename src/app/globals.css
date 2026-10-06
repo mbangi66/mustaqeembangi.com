@@ -152,3 +152,24 @@ html {
 .mask-fade {
   mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
 }
+
+/* Page columns. They grow on big screens so wide monitors aren't mostly empty.
+   The black hole scene mirrors these widths (see black-hole-scene.tsx). */
+.shell {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem; /* 1280px */
+}
+.shell-narrow {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 72rem; /* 1152px */
+}
+@media (min-width: 1800px) {
+  .shell { max-width: 100rem; }        /* 1600px */
+  .shell-narrow { max-width: 90rem; }  /* 1440px */
+}
+@media (min-width: 2400px) {
+  .shell { max-width: 118.75rem; }     /* 1900px */
+  .shell-narrow { max-width: 105rem; } /* 1680px */
+}

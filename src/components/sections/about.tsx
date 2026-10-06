@@ -8,7 +8,7 @@ import { principles, siteConfig } from "@/lib/data";
 export function About() {
   return (
     <section id="about" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-32">
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+      <div className="shell-narrow px-5 sm:px-6">
         <div className="grid items-start gap-14 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <motion.div
             initial={{ opacity: 0, y: 8 }}

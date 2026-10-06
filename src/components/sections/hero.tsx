@@ -104,7 +104,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-40 bg-gradient-to-b from-transparent to-[var(--color-bg)]"
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-24 pb-16 sm:px-6 sm:pt-32 sm:pb-24">
+      <div className="shell relative z-10 flex flex-1 flex-col justify-center px-5 pt-24 pb-16 sm:px-6 sm:pt-32 sm:pb-24">
         {/* On phones the black hole sits above the headline */}
         <div aria-hidden className="h-[30svh] md:hidden" />
 
@@ -128,7 +128,7 @@ export function Hero() {
           </h1>
         </motion.div>
 
-        <p className="max-w-4xl font-sans text-[clamp(2.75rem,8.6vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
+        <p className="max-w-4xl min-[1800px]:max-w-[66rem] min-[2400px]:max-w-[78rem] font-sans text-[clamp(2.75rem,8.6vw,8rem)] min-[1800px]:text-[10rem] min-[2400px]:text-[11.5rem] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
           <span className="-mb-[0.26em] block overflow-hidden pb-[0.26em]">
             <motion.span variants={lineUp} initial="hidden" animate="show" custom={0} className="inline-block">
               From&nbsp;
@@ -170,7 +170,7 @@ export function Hero() {
           initial="hidden"
           animate="show"
           custom={0}
-          className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-[var(--color-fg-muted)] sm:mt-10 sm:text-xl"
+          className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-[var(--color-fg-muted)] sm:mt-10 sm:text-xl min-[1800px]:max-w-2xl min-[1800px]:text-2xl"
         >
           I&apos;m a Laravel engineer in Kuwait. I take business ideas from a sketch to a live system:{" "}
           <span className="text-[var(--color-fg)]">restaurants</span>,{" "}
@@ -224,7 +224,7 @@ export function Hero() {
           initial="hidden"
           animate="show"
           custom={2}
-          className="mt-16 grid max-w-4xl grid-cols-2 gap-x-5 gap-y-8 border-t border-[var(--color-border)] pt-8 sm:mt-20 sm:grid-cols-4 sm:gap-x-10 sm:pt-10"
+          className="mt-16 grid max-w-4xl min-[1800px]:max-w-5xl grid-cols-2 gap-x-5 gap-y-8 border-t border-[var(--color-border)] pt-8 sm:mt-20 sm:grid-cols-4 sm:gap-x-10 sm:pt-10"
         >
           {kpis.map((k) => (
             <div key={k.label} className="flex flex-col-reverse">

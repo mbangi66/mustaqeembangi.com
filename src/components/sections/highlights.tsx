@@ -6,7 +6,7 @@ import { highlights } from "@/lib/data";
 export function Highlights() {
   return (
     <section id="highlights" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6">
+      <div className="shell px-5 sm:px-6">
         <div className="mb-10 max-w-3xl sm:mb-14">
           <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />

@@ -10,7 +10,7 @@ export function Work() {
       id="experience"
       className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-32"
     >
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+      <div className="shell-narrow px-5 sm:px-6">
         <div className="mb-10 flex items-baseline justify-between gap-4 sm:mb-12">
           <div>
             <div className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.18em]">

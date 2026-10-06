@@ -22,7 +22,7 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="relative border-t border-[var(--color-border)] bg-black/40 backdrop-blur-sm">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+      <div className="shell px-4 py-12 sm:px-6">
         <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr] md:gap-8">
           <div>
             <div className="flex items-center gap-2.5 text-base font-semibold">

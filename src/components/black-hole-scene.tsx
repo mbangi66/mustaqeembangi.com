@@ -309,11 +309,19 @@ function BlackHole({ particles }: { particles: number }) {
   const { viewport, size } = useThree();
   const wide = size.width / size.height > 1.05;
 
-  // Desktop: sit to the right of the headline. Narrow: sit above it.
+  // Desktop: sit to the right of the headline, inside the page column (the
+  // same widths as .shell in globals.css), so wide monitors don't push it to
+  // the far edge. Narrow: sit above the headline.
+  const W = size.width;
+  const column = W >= 2400 ? 1900 : W >= 1800 ? 1600 : Math.min(W, 1280);
+  const pxPerUnit = W / viewport.width;
+  const centreX = (W - column) / 2 + column * 0.8; // 80% across the column
+  // Disk radius about a third of the column wide, but never taller than the screen allows.
+  const wideScale = Math.min((column * 0.34) / (4.6 * pxPerUnit), (size.height * 0.3) / pxPerUnit);
   const position: [number, number, number] = wide
-    ? [viewport.width * 0.27, 0.1, 0]
+    ? [(centreX - W / 2) / pxPerUnit, 0.1, 0]
     : [0, viewport.height * 0.24, 0];
-  const scale = wide ? Math.min(0.78, viewport.width / 16.5) : Math.min(0.5, viewport.width / 11.5);
+  const scale = wide ? wideScale : Math.min(0.5, viewport.width / 11.5);
 
   useFrame((state) => {
     if (!group.current) return;

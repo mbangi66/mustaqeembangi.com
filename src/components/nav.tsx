@@ -50,7 +50,7 @@ export function Nav() {
           : "bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+      <div className="shell flex h-16 items-center justify-between px-4 sm:px-6">
         <a
           href="#top"
           className="group flex items-center gap-2.5 text-sm font-semibold tracking-tight"
@@ -124,7 +124,7 @@ export function Nav() {
 
       {open && (
         <div className="border-t border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-xl md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-3 sm:px-6">
+          <div className="shell flex flex-col gap-1 px-5 py-3 sm:px-6">
             {navItems.map((item) => (
               <a
                 key={item.href}

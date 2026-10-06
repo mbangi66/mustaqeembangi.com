@@ -6,7 +6,7 @@ import { stackGroups } from "@/lib/data";
 export function Toolbox() {
   return (
     <section id="toolbox" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6">
+      <div className="shell px-5 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1fr_2.2fr] lg:gap-16">
           <div>
             <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
