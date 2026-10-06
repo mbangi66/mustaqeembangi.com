@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { WhatsappIcon } from "./brand-icons";
-import { navItems, siteConfig } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 import { TimeWidget } from "./time-widget";
 import { cn } from "@/lib/utils";
 
 export function Nav() {
+  const { c, t, locale } = useLocale();
+  const { navItems, siteConfig } = c;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("");
@@ -36,7 +38,7 @@ export function Nav() {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [navItems]);
 
   return (
     <header
@@ -94,21 +96,31 @@ export function Nav() {
             href={siteConfig.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Message me on WhatsApp"
-            title="Message me on WhatsApp"
+            aria-label={t.whatsappLabel}
+            title={t.whatsappLabel}
             className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-[var(--color-fg-muted)] transition-colors hover:border-emerald-400/50 hover:text-emerald-300"
           >
             <WhatsappIcon className="h-4.5 w-4.5" />
+          </a>
+          {/* Language switch: a full page load, since each language has its own document */}
+          <a
+            href={t.switchHref}
+            hrefLang={locale === "en" ? "ar" : "en"}
+            lang={locale === "en" ? "ar" : "en"}
+            title={t.switchLabel}
+            className="inline-flex h-10 items-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] px-3 text-sm font-medium text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-border-strong)] hover:text-[var(--color-fg)]"
+          >
+            {t.switchTo}
           </a>
           <a
             href="#contact"
             className="hidden h-10 items-center rounded-md bg-[var(--color-fg)] px-3.5 text-sm font-medium text-[var(--color-bg)] transition-opacity hover:opacity-90 sm:inline-flex"
           >
-            Hire me
+            {t.hireMe}
           </a>
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={t.toggleMenu}
             onClick={() => setOpen((v) => !v)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] md:hidden"
           >
@@ -135,7 +147,7 @@ export function Nav() {
               onClick={() => setOpen(false)}
               className="mt-2 inline-flex h-12 items-center justify-center rounded-md bg-[var(--color-fg)] text-sm font-semibold text-[var(--color-bg)]"
             >
-              Hire me
+              {t.hireMe}
             </a>
             <a
               href={siteConfig.whatsapp}
@@ -144,7 +156,7 @@ export function Nav() {
               className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-[var(--color-border-strong)] text-sm font-semibold text-[var(--color-fg)]"
             >
               <WhatsappIcon className="h-4 w-4" />
-              Message on WhatsApp
+              {t.whatsappShort}
             </a>
           </div>
         </div>

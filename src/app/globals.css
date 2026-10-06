@@ -3,9 +3,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
-  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+  /* Arabic letters fall through to IBM Plex Sans Arabic in every stack. */
+  --font-sans: var(--font-jakarta), var(--font-arabic, ui-sans-serif), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), var(--font-arabic, ui-monospace), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-serif: var(--font-serif), var(--font-arabic, ui-serif), ui-serif, Georgia, serif;
 
   --color-bg: #ffffff;
   --color-bg-subtle: #fafafa;
@@ -172,4 +173,30 @@ html {
 @media (min-width: 2400px) {
   .shell { max-width: 118.75rem; }     /* 1900px */
   .shell-narrow { max-width: 105rem; } /* 1680px */
+}
+
+
+/* ---------- Arabic ---------- */
+/* Arabic letters join up; spacing them out (or squeezing them) breaks the words. */
+:lang(ar) * {
+  letter-spacing: 0 !important;
+}
+/* Arabic has taller letters above and below the line; give it room. */
+:lang(ar) .leading-\[0\.92\],
+:lang(ar) .leading-\[0\.88\],
+:lang(ar) .leading-\[0\.95\],
+:lang(ar) .leading-none {
+  line-height: 1.25 !important;
+}
+/* No all-caps on Latin words inside Arabic text. */
+:lang(ar) .uppercase {
+  text-transform: none;
+}
+/* Mono labels read better as normal text in Arabic. */
+:lang(ar) .font-mono {
+  font-family: var(--font-sans);
+}
+/* The industries ticker scrolls the same way in both languages. */
+.ticker-ltr {
+  direction: ltr;
 }

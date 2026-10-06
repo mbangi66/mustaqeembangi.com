@@ -526,3 +526,24 @@ export const navItems: NavItem[] = [
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];
+
+// Everything above, bundled, so each language can supply its own copy.
+export const en = {
+  siteConfig,
+  socials,
+  kpis,
+  industries,
+  projectFilters,
+  projects,
+  moreProjects,
+  highlights,
+  stackGroups,
+  workSteps,
+  capabilities,
+  principles,
+  experience,
+  education,
+  navItems,
+};
+
+export type SiteContent = typeof en;

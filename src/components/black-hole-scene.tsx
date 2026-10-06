@@ -304,7 +304,7 @@ function InfallingDust({ count }: { count: number }) {
 /* Scene                                                               */
 /* ------------------------------------------------------------------ */
 
-function BlackHole({ particles }: { particles: number }) {
+function BlackHole({ particles, rtl }: { particles: number; rtl: boolean }) {
   const group = useRef<THREE.Group>(null);
   const { viewport, size } = useThree();
   const wide = size.width / size.height > 1.05;
@@ -315,7 +315,8 @@ function BlackHole({ particles }: { particles: number }) {
   const W = size.width;
   const column = W >= 2400 ? 1900 : W >= 1800 ? 1600 : Math.min(W, 1280);
   const pxPerUnit = W / viewport.width;
-  const centreX = (W - column) / 2 + column * 0.8; // 80% across the column
+  // 80% across the column, or 20% when the page reads right to left.
+  const centreX = (W - column) / 2 + column * (rtl ? 0.2 : 0.8);
   // Disk radius about a third of the column wide, but never taller than the screen allows.
   const wideScale = Math.min((column * 0.34) / (4.6 * pxPerUnit), (size.height * 0.3) / pxPerUnit);
   const position: [number, number, number] = wide
@@ -358,9 +359,12 @@ export function BlackHoleScene({
   active,
   particles = 500,
   bloom = true,
+  rtl = false,
 }: {
   active: boolean;
   particles?: number;
+  /** Mirror the layout: sit left of the headline instead of right. */
+  rtl?: boolean;
   /** The glow pass is the heaviest part; phones skip it. */
   bloom?: boolean;
 }) {
@@ -373,7 +377,7 @@ export function BlackHoleScene({
     >
       <Suspense fallback={null}>
         <Stars radius={60} depth={40} count={1400} factor={2.5} saturation={0.2} fade speed={0.3} />
-        <BlackHole particles={particles} />
+        <BlackHole particles={particles} rtl={rtl} />
         {bloom && (
         <EffectComposer multisampling={4}>
           <Bloom intensity={0.55} luminanceThreshold={0.62} luminanceSmoothing={0.2} mipmapBlur radius={0.42} />

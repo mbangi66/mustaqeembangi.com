@@ -4,22 +4,21 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowUpRight, ChevronDown, Lock } from "lucide-react";
-import { moreProjects, projectFilters, projects, type Category, type Project } from "@/lib/data";
+import type { Category, Project } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
+import { BdiList } from "@/components/bidi-list";
 import { cn } from "@/lib/utils";
 import { Planet } from "@/components/planet";
 
 const pad = (n: number) => String(n).padStart(2, "0");
-/** "A, B and C" */
-const listOf = (items: string[]) =>
-  items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
-const numberWords = ["No", "One", "Two", "Three", "Four", "Five", "Six"];
-const publicCount = numberWords[[...projects, ...moreProjects].filter((p) => p.href).length] ?? "Several";
-
-const total = projects.length + moreProjects.length;
-const numberOf = (p: Project) =>
-  projects.includes(p) ? projects.indexOf(p) + 1 : projects.length + moreProjects.indexOf(p) + 1;
 
 export function Projects() {
+  const { c, t } = useLocale();
+  const { projects, moreProjects, projectFilters } = c;
+  const publicCount = t.numberWords[[...projects, ...moreProjects].filter((p) => p.href).length] ?? "";
+  const total = projects.length + moreProjects.length;
+  const numberOf = (p: Project) =>
+    projects.includes(p) ? projects.indexOf(p) + 1 : projects.length + moreProjects.indexOf(p) + 1;
   const [filter, setFilter] = useState<Category | "all">("all");
   const [openCase, setOpenCase] = useState<string | null>(null);
   const matches = (p: Project) => filter === "all" || p.categories.includes(filter);
@@ -32,18 +31,17 @@ export function Projects() {
         <div className="mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
-            Selected work since 2024
+            {t.workEyebrow}
           </div>
           <h2 className="mt-3 max-w-3xl text-balance text-4xl font-extrabold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)] sm:mt-4 sm:text-6xl md:text-7xl">
-            Products in <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">orbit</span>.
+            {t.workTitle.a} <span className="font-serif font-normal italic text-[var(--color-fg-muted)] rtl:not-italic">{t.workTitle.b}</span>.
           </h2>
           <p className="mt-5 max-w-2xl text-base text-[var(--color-fg-muted)] sm:text-lg">
-            Here&apos;s what I&apos;ve built and still look after. {publicCount} have public links. The rest belong to
-            clients, so I describe what they do without saying who they are.
+            {t.workIntro(publicCount)}
           </p>
 
           {/* Filters: plain text tabs, the active one underlined */}
-          <div role="tablist" aria-label="Filter projects" className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-b border-[var(--color-border)]">
+          <div role="tablist" aria-label={t.filterLabel} className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-b border-[var(--color-border)]">
             {projectFilters.map((f) => {
               const count = f.id === "all" ? total : [...projects, ...moreProjects].filter((p) => p.categories.includes(f.id as Category)).length;
               const active = filter === f.id;
@@ -103,7 +101,7 @@ export function Projects() {
                     </p>
 
                     <p className="mt-7 max-w-xl text-sm text-[var(--color-fg-subtle)]">
-                      Built with <span className="text-[var(--color-fg-muted)]">{listOf(p.stack)}</span>.
+                      {t.builtWith} <span className="text-[var(--color-fg-muted)]"><BdiList items={p.stack} withAnd /></span>.
                     </p>
 
                     <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -124,7 +122,7 @@ export function Projects() {
                           className="inline-flex items-center gap-1.5 font-mono text-sm text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-[6px] transition-colors hover:decoration-[color:var(--card-accent)]"
                         >
                           {p.href!.replace(/^https?:\/\//, "")}
-                          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:-scale-x-100" />
                         </a>
                       )}
                     </div>
@@ -133,8 +131,8 @@ export function Projects() {
                   {/* Planet panel */}
                   <div
                     className={cn(
-                      "relative flex min-h-[240px] items-center justify-center overflow-hidden border-t border-[var(--color-border)] sm:min-h-[320px] lg:min-h-[460px] lg:border-l lg:border-t-0",
-                      reversed && "lg:order-1 lg:border-l-0 lg:border-r",
+                      "relative flex min-h-[240px] items-center justify-center overflow-hidden border-t border-[var(--color-border)] sm:min-h-[320px] lg:min-h-[460px] lg:border-s lg:border-t-0",
+                      reversed && "lg:order-1 lg:border-s-0 lg:border-e",
                     )}
                   >
                     <div
@@ -163,13 +161,13 @@ export function Projects() {
                             <span className="h-2 w-2 rounded-full bg-white/20" />
                             <span className="h-2 w-2 rounded-full bg-white/20" />
                             <span className="h-2 w-2 rounded-full bg-white/20" />
-                            <span className="ml-3 truncate font-mono text-xs text-[var(--color-fg-subtle)]">
+                            <span className="ms-3 truncate font-mono text-xs text-[var(--color-fg-subtle)]">
                               {p.href?.replace(/^https?:\/\//, "")}
                             </span>
                           </div>
                           <Image
                             src={p.image}
-                            alt={`${p.name} home page`}
+                            alt={t.homePageAlt(p.name)}
                             width={1200}
                             height={720}
                             sizes="(max-width: 1024px) 88vw, 560px"
@@ -177,7 +175,7 @@ export function Projects() {
                           />
                         </figure>
                         <span className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-fg-subtle)] transition-opacity duration-500 group-hover:opacity-0 [@media(hover:hover)]:inline">
-                          Hover for a look at the live site
+                          {t.hoverPreview}
                         </span>
                       </>
                     )}
@@ -191,9 +189,9 @@ export function Projects() {
                     aria-expanded={openCase === p.slug}
                     aria-controls={`case-${p.slug}`}
                     onClick={() => setOpenCase(openCase === p.slug ? null : p.slug)}
-                    className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left text-sm font-medium text-[var(--color-fg)] transition-colors hover:bg-white/[0.03] sm:px-10"
+                    className="flex w-full items-center justify-between gap-4 px-6 py-4 text-start text-sm font-medium text-[var(--color-fg)] transition-colors hover:bg-white/[0.03] sm:px-10"
                   >
-                    {openCase === p.slug ? "Hide the case study" : "Read the case study: the challenge, what I built and the result"}
+                    {openCase === p.slug ? t.hideCase : t.readCase}
                     <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform duration-300", openCase === p.slug && "rotate-180")} />
                   </button>
                   {/* Kept in the page (for search engines), just folded away */}
@@ -208,13 +206,13 @@ export function Projects() {
                   <div className="grid gap-6 px-6 pb-8 pt-2 sm:px-10 sm:pb-10 lg:grid-cols-[1fr_1.6fr_1fr] lg:gap-10">
                     <div>
                       <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
-                        The challenge
+                        {t.challenge}
                       </p>
                       <p className="mt-3 text-sm leading-relaxed text-[var(--color-fg-muted)]">{p.caseStudy.challenge}</p>
                     </div>
                     <div>
                       <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
-                        What I built
+                        {t.whatIBuilt}
                       </p>
                       <ul className="mt-3 space-y-2">
                         {p.caseStudy.built.map((b) => (
@@ -231,7 +229,7 @@ export function Projects() {
                     </div>
                     <div>
                       <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
-                        The result
+                        {t.result}
                       </p>
                       <p className="mt-3 text-sm leading-relaxed text-[var(--color-fg)]">{p.caseStudy.outcome}</p>
                     </div>
@@ -250,7 +248,7 @@ export function Projects() {
         <div className={cn(featured.length > 0 && "mt-20 sm:mt-28")}>
           <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
-            Also in production
+            {t.alsoInProduction}
           </div>
           <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {more.map((p, i) => (
@@ -270,7 +268,7 @@ export function Projects() {
                 )}
                 style={{ ["--card-accent" as string]: p.accent } as React.CSSProperties}
               >
-                <Planet name={p.planet} color={p.accent} className="pointer-events-none absolute -right-8 -top-8 -z-10 w-40 sm:w-48" sizes="192px" />
+                <Planet name={p.planet} color={p.accent} className="pointer-events-none absolute -end-8 -top-8 -z-10 w-40 sm:w-48" sizes="192px" />
                 <span className="font-mono text-xs text-[var(--color-fg-subtle)]">
                   {pad(numberOf(p))} / {pad(total)}
                 </span>
@@ -280,7 +278,7 @@ export function Projects() {
                 <p className="mt-2 max-w-[75%] text-[15px] text-[var(--color-fg)]/90">{p.pitch}</p>
                 <p className="mt-4 text-sm leading-relaxed text-[var(--color-fg-muted)]">{p.description}</p>
                 <p className="mt-4 text-[13px] text-[var(--color-fg-subtle)]">
-                  Built with <span className="text-[var(--color-fg-muted)]">{listOf(p.stack)}</span>.
+                  {t.builtWith} <span className="text-[var(--color-fg-muted)]"><BdiList items={p.stack} withAnd /></span>.
                 </p>
                 <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-5 text-[13px] text-[var(--color-fg-muted)]">
                   <span className="inline-flex items-center gap-2">
@@ -299,7 +297,7 @@ export function Projects() {
                       className="inline-flex items-center gap-1 font-mono text-[12px] text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-4 hover:decoration-[color:var(--card-accent)]"
                     >
                       {p.href.replace(/^https?:\/\//, "")}
-                      <ArrowUpRight className="h-3.5 w-3.5" />
+                      <ArrowUpRight className="h-3.5 w-3.5 rtl:-scale-x-100" />
                     </a>
                   )}
                 </div>

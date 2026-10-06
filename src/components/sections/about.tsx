@@ -3,9 +3,12 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import { Download, MapPin } from "lucide-react";
-import { principles, siteConfig } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 
 export function About() {
+  const { c, t } = useLocale();
+  const { principles, siteConfig } = c;
+  const p1 = t.aboutP1(siteConfig.title);
   return (
     <section id="about" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-32">
       <div className="shell-narrow px-5 sm:px-6">
@@ -24,7 +27,7 @@ export function About() {
             </div>
             <div aria-hidden className="pointer-events-none absolute -inset-6 rounded-full border border-dashed sm:-inset-10 border-white/[0.05]" />
             <div aria-hidden className="pointer-events-none absolute -inset-6 motion-safe:animate-[spin_40s_linear_infinite_reverse] sm:-inset-10">
-              <span className="absolute bottom-[14%] left-[6%] h-2 w-2 rounded-full bg-violet-300 shadow-[0_0_12px_3px_rgba(167,139,250,0.7)]" />
+              <span className="absolute bottom-[14%] start-[6%] h-2 w-2 rounded-full bg-violet-300 shadow-[0_0_12px_3px_rgba(167,139,250,0.7)]" />
             </div>
 
             <div className="relative aspect-square w-full overflow-hidden rounded-full border border-white/10 shadow-[0_0_90px_-20px_rgba(139,92,246,0.7)]">
@@ -54,22 +57,17 @@ export function About() {
           >
             <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
               <span className="h-px w-8 bg-[var(--color-border-strong)]" />
-              About
+              {t.aboutEyebrow}
             </div>
             <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight text-[var(--color-fg)] sm:text-5xl">
-              I build the systems Gulf businesses <span className="font-serif font-normal italic">run on</span>.
+              {t.aboutTitle.a} <span className="font-serif font-normal italic rtl:not-italic">{t.aboutTitle.b}</span>.
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-lg">
               <p>
-                I&apos;m Mustaqeem, a <span className="text-[var(--color-fg)]">Senior Laravel & Systems Engineer</span>{" "}
-                based in Kuwait City and originally from Maharashtra, India. I&apos;ve been building for the web since
-                2020, and today I lead engineering on 30+ live apps for restaurants, shops, clinics, hospitals, car dealers, learning platforms
-                and fleet operators.
+                {p1[0]}<span className="text-[var(--color-fg)]">{p1[1]}</span>{p1[2]}
               </p>
               <p>
-                I don&apos;t just write the code and hand it over. I set up the payments and WhatsApp, run the
-                servers, ship the updates and keep the backups. Most of what I work on is live and making money for
-                someone, so I&apos;m careful with it.
+                {t.aboutP2}
               </p>
             </div>
 
@@ -93,7 +91,7 @@ export function About() {
                 className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-white/[0.04] px-5 text-sm font-medium text-[var(--color-fg)] transition-colors hover:bg-white/[0.08]"
               >
                 <Download className="h-4 w-4" />
-                Download CV
+                {t.downloadCv}
               </a>
               <span className="font-mono text-xs text-[var(--color-fg-subtle)]">{siteConfig.availability}</span>
             </div>

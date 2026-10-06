@@ -2,9 +2,12 @@
 
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { education, experience } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
+import { BdiList } from "@/components/bidi-list";
 
 export function Work() {
+  const { c, t } = useLocale();
+  const { education, experience } = c;
   return (
     <section
       id="experience"
@@ -15,10 +18,10 @@ export function Work() {
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.18em]">
               <span className="h-px w-6 bg-[var(--color-border-strong)]" />
-              Mission log
+              {t.experienceEyebrow}
             </div>
             <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-[var(--color-fg)] sm:text-4xl">
-              Where I&apos;ve worked.
+              {t.experienceTitle}
             </h2>
           </div>
           <a
@@ -27,12 +30,12 @@ export function Work() {
             rel="noopener noreferrer"
             className="hidden items-center gap-1.5 font-mono text-xs text-[var(--color-fg-muted)] underline decoration-[var(--color-border-strong)] underline-offset-4 hover:text-[var(--color-fg)] sm:inline-flex"
           >
-            full résumé
-            <ArrowUpRight className="h-3 w-3" />
+            {t.fullResume}
+            <ArrowUpRight className="h-3 w-3 rtl:-scale-x-100" />
           </a>
         </div>
 
-        <ul className="group/list relative before:absolute before:bottom-4 before:left-[7px] before:top-4 before:w-px before:bg-gradient-to-b before:from-orange-400/60 before:via-violet-500/40 before:to-transparent lg:before:hidden">
+        <ul className="group/list relative before:absolute before:bottom-4 before:start-[7px] before:top-4 before:w-px before:bg-gradient-to-b before:from-orange-400/60 before:via-violet-500/40 before:to-transparent lg:before:hidden">
           {experience.map((job, i) => (
             <motion.li
               key={`${job.company}-${i}`}
@@ -42,8 +45,8 @@ export function Work() {
               transition={{ duration: 0.45, delay: i * 0.06 }}
               className="group/item relative"
             >
-              <span aria-hidden className="absolute left-0 top-6 h-[15px] w-[15px] rounded-full border border-orange-300/60 bg-[var(--color-bg)] shadow-[0_0_12px_rgba(251,146,60,0.6)] lg:hidden" />
-              <div className="relative grid grid-cols-12 items-baseline gap-4 rounded-lg p-4 pl-8 lg:pl-4 transition-all duration-300 hover:!opacity-100 hover:bg-white/[0.03] lg:gap-6 lg:group-hover/list:opacity-50">
+              <span aria-hidden className="absolute start-0 top-6 h-[15px] w-[15px] rounded-full border border-orange-300/60 bg-[var(--color-bg)] shadow-[0_0_12px_rgba(251,146,60,0.6)] lg:hidden" />
+              <div className="relative grid grid-cols-12 items-baseline gap-4 rounded-lg p-4 ps-8 lg:ps-4 transition-all duration-300 hover:!opacity-100 hover:bg-white/[0.03] lg:gap-6 lg:group-hover/list:opacity-50">
                 <div className="col-span-12 lg:col-span-3">
                   <p className="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-fg-subtle)]">
                     {job.period}
@@ -71,7 +74,7 @@ export function Work() {
                       ))}
                     </ul>
                   )}
-                  <p className="mt-3 text-[13px] text-[var(--color-fg-subtle)]">{job.stack.join(", ")}</p>
+                  <p className="mt-3 text-[13px] text-[var(--color-fg-subtle)]"><BdiList items={job.stack} /></p>
                 </div>
               </div>
             </motion.li>
@@ -79,7 +82,7 @@ export function Work() {
         </ul>
 
         <div className="mt-14 border-t border-[var(--color-border)] pt-10 sm:mt-16">
-          <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-orange-200/80">Education</h3>
+          <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-orange-200/80">{t.education}</h3>
           <ul className="mt-5 grid gap-6 sm:grid-cols-2">
             {education.map((e) => (
               <li key={e.school}>

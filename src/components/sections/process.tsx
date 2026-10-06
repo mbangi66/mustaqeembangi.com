@@ -1,19 +1,21 @@
 "use client";
 
 import { motion } from "motion/react";
-import { workSteps } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 
 export function Process() {
+  const { c, t } = useLocale();
+  const { workSteps } = c;
   return (
     <section id="process" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-28">
       <div className="shell px-5 sm:px-6">
         <div className="mb-10 max-w-3xl sm:mb-14">
           <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
-            Flight plan
+            {t.processEyebrow}
           </div>
           <h2 className="mt-3 text-balance text-4xl font-extrabold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)] sm:mt-4 sm:text-5xl">
-            How we&apos;d <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">work together</span>.
+            {t.processTitle.a} <span className="font-serif font-normal italic text-[var(--color-fg-muted)] rtl:not-italic">{t.processTitle.b}</span>.
           </h2>
         </div>
 
@@ -21,7 +23,7 @@ export function Process() {
           {/* Trajectory line connecting the steps on wide screens */}
           <span
             aria-hidden
-            className="pointer-events-none absolute left-0 right-0 top-[18px] hidden h-px bg-gradient-to-r from-orange-400/60 via-fuchsia-400/40 to-violet-500/10 lg:block"
+            className="pointer-events-none absolute left-0 right-0 top-[18px] hidden h-px bg-gradient-to-r rtl:bg-gradient-to-l from-orange-400/60 via-fuchsia-400/40 to-violet-500/10 lg:block"
           />
           {workSteps.map((step, i) => (
             <motion.li

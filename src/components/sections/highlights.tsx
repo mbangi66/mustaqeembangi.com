@@ -1,23 +1,24 @@
 "use client";
 
 import { motion } from "motion/react";
-import { highlights } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 
 export function Highlights() {
+  const { c, t } = useLocale();
+  const { highlights } = c;
   return (
     <section id="highlights" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-32">
       <div className="shell px-5 sm:px-6">
         <div className="mb-10 max-w-3xl sm:mb-14">
           <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
-            Engineering highlights
+            {t.highlightsEyebrow}
           </div>
           <h2 className="mt-3 text-balance text-4xl font-extrabold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)] sm:mt-4 sm:text-6xl">
-            Hard problems, <span className="font-serif font-normal italic text-[var(--color-fg-muted)]">solved</span>.
+            {t.highlightsTitle.a} <span className="font-serif font-normal italic text-[var(--color-fg-muted)] rtl:not-italic">{t.highlightsTitle.b}</span>.
           </h2>
           <p className="mt-5 text-base text-[var(--color-fg-muted)] sm:text-lg">
-            The parts of the work that don&apos;t show up in a screenshot, but decide whether a system survives real
-            customers.
+            {t.highlightsIntro}
           </p>
         </div>
 

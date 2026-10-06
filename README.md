@@ -1,7 +1,7 @@
 # Mustaqeem Bangi: Portfolio
 
 Personal portfolio for **Mustaqeem Abdullah Bangi**, Senior Laravel & Systems Engineer.
-Live at **https://mustaqeembangi.vercel.app**.
+Live at **https://mustaqeembangi.vercel.app** (English) and **/ar** (Arabic, right to left).
 
 Space-themed: a real-time WebGL black hole in the hero, a rising moon behind the contact section, a
 starfield behind every page, and CSS planets for each project.
@@ -17,6 +17,21 @@ npm run dev
 ```
 
 Then open http://localhost:3000. No environment variables are needed.
+
+## Two languages
+
+English lives at `/` and Arabic at `/ar`. Each has its own root layout
+(`src/app/(en)` and `src/app/(ar)/ar`), both built from
+`src/components/site-shell.tsx`, so `<html lang dir>` is right for each.
+
+- Content: English in `src/lib/data.ts`, Arabic in `src/lib/content-ar.ts`.
+  The Arabic file only holds words; links, tech names and planets come from
+  the English one, and the build fails if a translation is missing.
+- Interface wording (buttons, headings): `src/lib/ui.ts`.
+- Components read both through `useLocale()` from `src/lib/i18n.tsx`.
+- Use logical classes (`ms-`, `ps-`, `start-`, `end-`, `border-s`) rather than
+  left/right ones, so layouts mirror in Arabic. `<BdiList>` keeps English tech
+  names in the right order inside Arabic text.
 
 ## Editing content
 

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion } from "motion/react";
 import dynamic from "next/dynamic";
 import { ArrowRight, Download, MoveDown } from "lucide-react";
-import { kpis, siteConfig } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 import { Magnetic } from "@/components/magnetic";
 import { CssBlackHole } from "@/components/planet";
 
@@ -57,6 +57,9 @@ type SceneMode = "pending" | "webgl" | "css";
 
 export function Hero() {
   const section = useRef<HTMLElement>(null);
+  const { c, t, dir } = useLocale();
+  const { siteConfig, kpis } = c;
+  const rtl = dir === "rtl";
   const mode = useSyncExternalStore<SceneMode>(
     subscribeMedia,
     () => (!window.matchMedia(REDUCE).matches && supportsWebGL() ? "webgl" : "css"),
@@ -86,18 +89,18 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.6, delay: 0.2 }}
         >
-          <BlackHoleScene active={visible} particles={narrow ? 250 : 500} bloom={!narrow} />
+          <BlackHoleScene active={visible} particles={narrow ? 250 : 500} bloom={!narrow} rtl={rtl} />
         </motion.div>
       )}
 
       {mode === "css" && (
-        <CssBlackHole className="absolute left-1/2 top-[8%] -z-10 w-[min(80vw,340px)] -translate-x-1/2 md:left-auto md:right-[6%] md:top-1/2 md:w-[min(38vw,520px)] md:translate-x-0 md:-translate-y-1/2" />
+        <CssBlackHole className="absolute left-1/2 top-[8%] -z-10 w-[min(80vw,340px)] -translate-x-1/2 md:left-auto md:right-[6%] md:rtl:left-[6%] md:rtl:right-auto md:top-1/2 md:w-[min(38vw,520px)] md:translate-x-0 md:-translate-y-1/2" />
       )}
 
       {/* Keep text readable over the scene */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(3,4,10,0.85)_0%,rgba(3,4,10,0.45)_45%,transparent_70%)] max-md:bg-[linear-gradient(180deg,transparent_0%,transparent_30%,rgba(3,4,10,0.75)_52%,rgba(3,4,10,0.9)_100%)]"
+        className="pointer-events-none absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(3,4,10,0.85)_0%,rgba(3,4,10,0.45)_45%,transparent_70%)] rtl:bg-[linear-gradient(270deg,rgba(3,4,10,0.85)_0%,rgba(3,4,10,0.45)_45%,transparent_70%)] max-md:bg-[linear-gradient(180deg,transparent_0%,transparent_30%,rgba(3,4,10,0.75)_52%,rgba(3,4,10,0.9)_100%)]"
       />
       <div
         aria-hidden
@@ -119,19 +122,19 @@ export function Hero() {
             <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
             <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500" />
           </span>
-          <span>Available for work</span>
+          <span>{t.available}</span>
           <span className="hidden h-3 w-px bg-[var(--color-border-strong)] sm:inline" />
           {/* The page's real heading for search engines and screen readers:
               who this is and what he does. The big line below is the slogan. */}
           <h1 className="font-[inherit] text-[length:inherit] font-normal tracking-[inherit] text-[var(--color-fg-muted)]">
-            {siteConfig.name}, {siteConfig.title} in Kuwait
+            {t.heroH1(siteConfig.name, siteConfig.title)}
           </h1>
         </motion.div>
 
         <p className="max-w-4xl min-[1800px]:max-w-[66rem] min-[2400px]:max-w-[78rem] font-sans text-[clamp(2.75rem,8.6vw,8rem)] min-[1800px]:text-[10rem] min-[2400px]:text-[11.5rem] font-extrabold leading-[0.92] tracking-[-0.045em] sm:leading-[0.88]">
           <span className="-mb-[0.26em] block overflow-hidden pb-[0.26em]">
             <motion.span variants={lineUp} initial="hidden" animate="show" custom={0} className="inline-block">
-              From&nbsp;
+              {t.headline.a}&nbsp;
             </motion.span>
             <motion.span
               variants={lineUp}
@@ -140,7 +143,7 @@ export function Hero() {
               custom={1}
               className="inline-block bg-gradient-to-br from-amber-200 via-orange-400 to-fuchsia-500 bg-clip-text text-transparent"
             >
-              first&nbsp;idea
+              {t.headline.b}
             </motion.span>
           </span>
           <span className="-mb-[0.26em] block overflow-hidden pb-[0.26em]">
@@ -149,9 +152,9 @@ export function Hero() {
               initial="hidden"
               animate="show"
               custom={2}
-              className="inline-block font-serif font-normal italic text-[var(--color-fg-muted)]"
+              className="inline-block font-serif font-normal italic text-[var(--color-fg-muted)] rtl:not-italic"
             >
-              to&nbsp;
+              {t.headline.to}&nbsp;
             </motion.span>
             <motion.span
               variants={lineUp}
@@ -160,7 +163,7 @@ export function Hero() {
               custom={3}
               className="inline-block bg-gradient-to-tr from-violet-400 via-brand-400 to-sky-300 bg-clip-text text-transparent"
             >
-              full&nbsp;orbit.
+              {t.headline.c}
             </motion.span>
           </span>
         </p>
@@ -172,12 +175,16 @@ export function Hero() {
           custom={0}
           className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-[var(--color-fg-muted)] sm:mt-10 sm:text-xl min-[1800px]:max-w-2xl min-[1800px]:text-2xl"
         >
-          I&apos;m a Laravel engineer in Kuwait. I take business ideas from a sketch to a live system:{" "}
-          <span className="text-[var(--color-fg)]">restaurants</span>,{" "}
-          <span className="text-[var(--color-fg)]">clinics</span>,{" "}
-          <span className="text-[var(--color-fg)]">online stores</span>,{" "}
-          <span className="text-[var(--color-fg)]">WhatsApp</span> and{" "}
-          <span className="text-[var(--color-fg)]">AI</span>. Then I keep them flying.
+          {t.heroIntro.lead}{" "}
+          {t.heroIntro.items.map((item, i, all) => (
+            <span key={item}>
+              {i > 0 && (i === all.length - 1 ? ` ${t.heroIntro.and}` : rtl ? "، " : ", ")}
+              {i === all.length - 1 && (rtl ? "" : " ")}
+              <span className="text-[var(--color-fg)]">{item}</span>
+            </span>
+          ))}
+          {". "}
+          {t.heroIntro.tail}
         </motion.p>
 
         <motion.div
@@ -193,8 +200,8 @@ export function Hero() {
               className="group relative inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-[var(--color-fg)] px-6 text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-bg)] sm:h-14 sm:w-auto sm:px-7"
             >
               <span className="relative z-10 flex items-center gap-2 transition-colors group-hover:text-white">
-                See the work
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                {t.seeWork}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" />
               </span>
               <span
                 aria-hidden
@@ -211,7 +218,7 @@ export function Hero() {
               className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] px-6 font-mono text-sm text-[var(--color-fg)] backdrop-blur-md transition-colors hover:border-white/40 hover:bg-white/[0.07] sm:h-14 sm:w-auto sm:px-7"
             >
               <Download className="h-4 w-4" />
-              Download CV
+              {t.downloadCv}
             </a>
           </Magnetic>
         </motion.div>
@@ -230,7 +237,7 @@ export function Hero() {
                 {k.label}
               </dt>
               <dd className="font-sans text-3xl font-extrabold tracking-[-0.04em] text-[var(--color-fg)] sm:text-5xl">
-                {k.value}
+                <bdi dir="ltr">{k.value}</bdi>
               </dd>
             </div>
           ))}
@@ -244,7 +251,7 @@ export function Hero() {
         transition={{ delay: 1.3, duration: 0.8 }}
         className="group absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)] md:flex"
       >
-        <span className="font-mono text-xs uppercase tracking-[0.3em]">scroll</span>
+        <span className="font-mono text-xs uppercase tracking-[0.3em]">{t.scroll}</span>
         <MoveDown className="h-3.5 w-3.5 motion-safe:animate-bounce" />
       </motion.a>
     </section>

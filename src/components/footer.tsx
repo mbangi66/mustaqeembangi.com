@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import { navItems, siteConfig, socials } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 import { Mail } from "lucide-react";
 import { GithubIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from "./brand-icons";
 
@@ -19,6 +21,8 @@ const socialIcon = (name: string) => {
 };
 
 export function Footer() {
+  const { c, t } = useLocale();
+  const { navItems, siteConfig, socials } = c;
   const year = new Date().getFullYear();
   return (
     <footer className="relative border-t border-[var(--color-border)] bg-black/40 backdrop-blur-sm">
@@ -51,7 +55,7 @@ export function Footer() {
 
           <div>
             <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-fg-subtle)]">
-              Navigate
+              {t.navigate}
             </h3>
             <ul className="mt-3 space-y-2">
               {navItems.map((item) => (
@@ -69,7 +73,7 @@ export function Footer() {
 
           <div>
             <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-fg-subtle)]">
-              Elsewhere
+              {t.elsewhere}
             </h3>
             <ul className="mt-3 flex flex-wrap gap-2">
               {socials.map((s) => {
@@ -96,17 +100,15 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-[var(--color-border)] pt-6 text-xs text-[var(--color-fg-subtle)] sm:flex-row sm:items-center">
+          <p>{t.rights(year)}</p>
           <p>
-            © {year} {siteConfig.fullName}. All rights reserved.
-          </p>
-          <p>
-            Built with <span className="text-[var(--color-fg-muted)]">Next.js</span> + <span className="text-[var(--color-fg-muted)]">Tailwind</span>. Designed in Kuwait.
+            {t.builtWithFooter}
             <br />
-            Planet maps by{" "}
+            {t.credits.a}{" "}
             <a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noopener noreferrer" className="underline decoration-[var(--color-border-strong)] underline-offset-2 hover:text-[var(--color-fg-muted)]">
               Solar System Scope
             </a>{" "}
-            (CC BY 4.0). Moon from NASA&apos;s Lunar Reconnaissance Orbiter.
+            {t.credits.b}
           </p>
         </div>
       </div>

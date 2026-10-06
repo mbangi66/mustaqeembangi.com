@@ -9,7 +9,8 @@ import { Process } from "@/components/sections/process";
 import { Work } from "@/components/sections/work";
 import { Contact } from "@/components/sections/contact";
 
-export default function Home() {
+/** The single page, shared by every language. */
+export function Home() {
   return (
     <>
       <Hero />

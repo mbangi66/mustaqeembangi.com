@@ -18,7 +18,7 @@ import {
   User,
 } from "lucide-react";
 import { toast } from "sonner";
-import { navItems, projects, siteConfig, socials } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "./brand-icons";
 
 const navIcon = (label: string) => {
@@ -54,6 +54,9 @@ const socialIcon = (name: string) => {
 };
 
 export function CommandPalette() {
+  const { c, t } = useLocale();
+  const { navItems, projects, siteConfig, socials } = c;
+  const pt = t.palette;
   const [open, setOpen] = useState(false);
   const [easter, setEaster] = useState(false);
 
@@ -92,7 +95,7 @@ export function CommandPalette() {
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(siteConfig.email);
-    toast.success("Email copied to clipboard");
+    toast.success(pt.emailCopied);
     close();
   };
 
@@ -105,6 +108,7 @@ export function CommandPalette() {
         onClick={() => setEaster(false)}
       >
         <div
+          dir="ltr"
           className="w-full max-w-xl overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)] font-mono text-sm shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
@@ -154,7 +158,7 @@ export function CommandPalette() {
           <div className="flex items-center gap-2 border-b border-[var(--color-border)] px-3">
             <Command.Input
               autoFocus
-              placeholder="Search projects, jump to section, copy email…"
+              placeholder={pt.placeholder}
               className="h-12 flex-1 bg-transparent text-sm text-[var(--color-fg)] placeholder:text-[var(--color-fg-subtle)] outline-none"
             />
             <kbd className="hidden rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs text-[var(--color-fg-subtle)] sm:inline">
@@ -164,11 +168,11 @@ export function CommandPalette() {
 
           <Command.List className="max-h-96 overflow-y-auto p-2">
             <Command.Empty className="px-3 py-6 text-center text-sm text-[var(--color-fg-subtle)]">
-              No results found.
+              {pt.empty}
             </Command.Empty>
 
             <Command.Group
-              heading="Case studies"
+              heading={pt.projects}
               className="mb-1 px-1 text-xs font-medium text-[var(--color-fg-subtle)] [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5"
             >
               {projects.map((p) => (
@@ -188,7 +192,7 @@ export function CommandPalette() {
             </Command.Group>
 
             <Command.Group
-              heading="Navigate"
+              heading={pt.navigate}
               className="mb-1 px-1 text-xs font-medium text-[var(--color-fg-subtle)] [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5"
             >
               {navItems.map((item) => {
@@ -208,7 +212,7 @@ export function CommandPalette() {
             </Command.Group>
 
             <Command.Group
-              heading="Actions"
+              heading={pt.actions}
               className="mb-1 px-1 text-xs font-medium text-[var(--color-fg-subtle)] [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5"
             >
               <Command.Item
@@ -217,8 +221,8 @@ export function CommandPalette() {
                 className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-[var(--color-fg-muted)] aria-selected:bg-[var(--color-bg-muted)] aria-selected:text-[var(--color-fg)]"
               >
                 <Copy className="h-4 w-4" />
-                Copy email
-                <span className="ml-auto font-mono text-xs text-[var(--color-fg-subtle)]">{siteConfig.email}</span>
+                {pt.copyEmail}
+                <span className="ms-auto font-mono text-xs text-[var(--color-fg-subtle)]">{siteConfig.email}</span>
               </Command.Item>
               <Command.Item
                 onSelect={() => go(`mailto:${siteConfig.email}`)}
@@ -226,7 +230,7 @@ export function CommandPalette() {
                 className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-[var(--color-fg-muted)] aria-selected:bg-[var(--color-bg-muted)] aria-selected:text-[var(--color-fg)]"
               >
                 <Mail className="h-4 w-4" />
-                Send me email
+                {pt.sendEmail}
               </Command.Item>
               <Command.Item
                 onSelect={() => go(siteConfig.cvPath)}
@@ -234,7 +238,7 @@ export function CommandPalette() {
                 className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-[var(--color-fg-muted)] aria-selected:bg-[var(--color-bg-muted)] aria-selected:text-[var(--color-fg)]"
               >
                 <Download className="h-4 w-4" />
-                Open résumé (PDF)
+                {pt.openCv}
               </Command.Item>
               <Command.Item
                 onSelect={() => go(`tel:${siteConfig.phone.replace(/\s/g, "")}`)}
@@ -242,8 +246,8 @@ export function CommandPalette() {
                 className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-[var(--color-fg-muted)] aria-selected:bg-[var(--color-bg-muted)] aria-selected:text-[var(--color-fg)]"
               >
                 <Phone className="h-4 w-4" />
-                Call
-                <span className="ml-auto font-mono text-xs text-[var(--color-fg-subtle)]">{siteConfig.phone}</span>
+                {pt.call}
+                <span className="ms-auto font-mono text-xs text-[var(--color-fg-subtle)]">{siteConfig.phone}</span>
               </Command.Item>
               <Command.Item
                 onSelect={() => {
@@ -255,12 +259,12 @@ export function CommandPalette() {
               >
                 <TerminalIcon className="h-4 w-4" />
                 SSH to demo box
-                <span className="ml-auto font-mono text-xs text-[var(--color-fg-subtle)]">just kidding</span>
+                <span className="ms-auto font-mono text-xs text-[var(--color-fg-subtle)]">just kidding</span>
               </Command.Item>
             </Command.Group>
 
             <Command.Group
-              heading="Elsewhere"
+              heading={pt.elsewhere}
               className="px-1 text-xs font-medium text-[var(--color-fg-subtle)] [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5"
             >
               {socials.map((s) => {
@@ -274,7 +278,7 @@ export function CommandPalette() {
                   >
                     <Icon className="h-4 w-4" />
                     {s.name}
-                    <span className="ml-auto font-mono text-xs text-[var(--color-fg-subtle)]">{s.handle}</span>
+                    <span className="ms-auto font-mono text-xs text-[var(--color-fg-subtle)]"><bdi dir="ltr">{s.handle}</bdi></span>
                   </Command.Item>
                 );
               })}
@@ -284,8 +288,8 @@ export function CommandPalette() {
           <div className="flex items-center justify-between border-t border-[var(--color-border)] px-3 py-2 text-xs text-[var(--color-fg-subtle)]">
             <span className="font-mono">cmdk</span>
             <div className="flex items-center gap-3">
-              <span>↑↓ navigate</span>
-              <span>↵ select</span>
+              <span>{pt.keysNavigate}</span>
+              <span>{pt.keysSelect}</span>
             </div>
           </div>
         </Command>
