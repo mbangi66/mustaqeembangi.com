@@ -13,7 +13,7 @@ export const siteConfig = {
   phone: "+965 410 76750",
   whatsapp: "https://wa.me/96541076750",
   cvPath: "/Mustaqeem_Bangi_CV.pdf",
-  url: "https://mustaqeembangi.vercel.app",
+  url: "https://mustaqeem.is-a.dev",
   availability: "Open to full time roles and freelance projects.",
   responsePromise: "I usually reply within a day · Kuwait time, GMT+3",
 };

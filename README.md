@@ -1,7 +1,7 @@
 # Mustaqeem Bangi: Portfolio
 
 Personal portfolio for **Mustaqeem Abdullah Bangi**, Senior Laravel & Systems Engineer.
-Live at **https://mustaqeembangi.vercel.app** (English) and **/ar** (Arabic, right to left).
+Live at **https://mustaqeem.is-a.dev** (English) and **/ar** (Arabic, right to left).
 
 Space-themed: a real-time WebGL black hole in the hero, a rising moon behind the contact section, a
 starfield behind every page, and CSS planets for each project.

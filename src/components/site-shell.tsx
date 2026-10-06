@@ -76,8 +76,8 @@ export function buildMetadata(locale: Locale): Metadata {
 function personJsonLd(locale: Locale) {
   const s = content[locale].siteConfig;
   return {
-    "@context": "https://schema.org",
     "@type": "Person",
+    "@id": `${base}/#person`,
     name: en.siteConfig.fullName,
     alternateName: [en.siteConfig.name, ar.siteConfig.fullName],
     jobTitle: s.title,
@@ -94,6 +94,28 @@ function personJsonLd(locale: Locale) {
   };
 }
 
+/**
+ * Structured data: the site (so Google shows "Mustaqeem Bangi" as the site
+ * name instead of the host) and the person it is about.
+ */
+function jsonLd(locale: Locale) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${base}/#website`,
+        name: en.siteConfig.name,
+        alternateName: [en.siteConfig.fullName, "Mustaqeem Bangi Portfolio", ar.siteConfig.name],
+        url: `${base}/`,
+        inLanguage: ["en", "ar"],
+        publisher: { "@id": `${base}/#person` },
+      },
+      personJsonLd(locale),
+    ],
+  };
+}
+
 /** The whole document for one language: <html>, fonts, chrome around the page. */
 export function SiteShell({ locale, children }: { locale: Locale; children: React.ReactNode }) {
   return (
@@ -106,7 +128,7 @@ export function SiteShell({ locale, children }: { locale: Locale; children: Reac
       <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)] antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(locale)).replace(/</g, "\\u003c") }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(locale)).replace(/</g, "\\u003c") }}
         />
         <LocaleProvider locale={locale}>
           <Providers>
