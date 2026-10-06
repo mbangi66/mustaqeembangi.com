@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowUpRight, Lock } from "lucide-react";
-import { moreProjects, projects } from "@/lib/data";
+import { ArrowUpRight, ChevronDown, Lock } from "lucide-react";
+import { moreProjects, projectFilters, projects, type Category, type Project } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Planet } from "@/components/planet";
 
@@ -14,12 +15,22 @@ const listOf = (items: string[]) =>
 const numberWords = ["No", "One", "Two", "Three", "Four", "Five", "Six"];
 const publicCount = numberWords[[...projects, ...moreProjects].filter((p) => p.href).length] ?? "Several";
 
+const total = projects.length + moreProjects.length;
+const numberOf = (p: Project) =>
+  projects.includes(p) ? projects.indexOf(p) + 1 : projects.length + moreProjects.indexOf(p) + 1;
+
 export function Projects() {
+  const [filter, setFilter] = useState<Category | "all">("all");
+  const [openCase, setOpenCase] = useState<string | null>(null);
+  const matches = (p: Project) => filter === "all" || p.categories.includes(filter);
+  const featured = projects.filter(matches);
+  const more = moreProjects.filter(matches);
+
   return (
     <section id="work" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-36">
       <div className="shell px-5 sm:px-6">
         <div className="mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
+          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
             Selected work since 2024
           </div>
@@ -30,10 +41,36 @@ export function Projects() {
             Here&apos;s what I&apos;ve built and still look after. {publicCount} have public links. The rest belong to
             clients, so I describe what they do without saying who they are.
           </p>
+
+          {/* Filters: plain text tabs, the active one underlined */}
+          <div role="tablist" aria-label="Filter projects" className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-b border-[var(--color-border)]">
+            {projectFilters.map((f) => {
+              const count = f.id === "all" ? total : [...projects, ...moreProjects].filter((p) => p.categories.includes(f.id as Category)).length;
+              const active = filter === f.id;
+              return (
+                <button
+                  key={f.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setFilter(f.id)}
+                  className={cn(
+                    "-mb-px border-b-2 pb-3 text-sm transition-colors",
+                    active
+                      ? "border-orange-300 text-[var(--color-fg)]"
+                      : "border-transparent text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]",
+                  )}
+                >
+                  {f.label} <span className="font-mono text-xs text-[var(--color-fg-subtle)]">{count}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
+        {featured.length > 0 && (
         <div className="grid gap-5 sm:gap-7">
-          {projects.map((p, i) => {
+          {featured.map((p, i) => {
             const reversed = i % 2 === 1;
             const live = !!p.href;
             return (
@@ -50,9 +87,9 @@ export function Projects() {
                   <div className={cn("relative p-6 sm:p-12", reversed && "lg:order-2")}>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                       <span className="font-mono text-xs text-[var(--color-fg-subtle)]">
-                        {pad(i + 1)} / {pad(projects.length + moreProjects.length)}
+                        {pad(numberOf(p))} / {pad(total)}
                       </span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
+                      <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
                         {p.role}
                       </span>
                     </div>
@@ -84,7 +121,6 @@ export function Projects() {
                           href={p.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          data-cursor="link"
                           className="inline-flex items-center gap-1.5 font-mono text-sm text-[var(--color-fg)] underline decoration-[var(--color-border-strong)] underline-offset-[6px] transition-colors hover:decoration-[color:var(--card-accent)]"
                         >
                           {p.href!.replace(/^https?:\/\//, "")}
@@ -127,7 +163,7 @@ export function Projects() {
                             <span className="h-2 w-2 rounded-full bg-white/20" />
                             <span className="h-2 w-2 rounded-full bg-white/20" />
                             <span className="h-2 w-2 rounded-full bg-white/20" />
-                            <span className="ml-3 truncate font-mono text-[10px] text-[var(--color-fg-subtle)]">
+                            <span className="ml-3 truncate font-mono text-xs text-[var(--color-fg-subtle)]">
                               {p.href?.replace(/^https?:\/\//, "")}
                             </span>
                           </div>
@@ -140,7 +176,7 @@ export function Projects() {
                             className="block h-auto w-full"
                           />
                         </figure>
-                        <span className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-fg-subtle)] transition-opacity duration-500 group-hover:opacity-0 [@media(hover:hover)]:inline">
+                        <span className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-fg-subtle)] transition-opacity duration-500 group-hover:opacity-0 [@media(hover:hover)]:inline">
                           Hover for a look at the live site
                         </span>
                       </>
@@ -149,15 +185,35 @@ export function Projects() {
                 </div>
 
                 {p.caseStudy && (
-                  <div className="grid gap-6 border-t border-[var(--color-border)] bg-black/20 p-6 sm:p-10 lg:grid-cols-[1fr_1.6fr_1fr] lg:gap-10">
+                  <div className="border-t border-[var(--color-border)] bg-black/20">
+                  <button
+                    type="button"
+                    aria-expanded={openCase === p.slug}
+                    aria-controls={`case-${p.slug}`}
+                    onClick={() => setOpenCase(openCase === p.slug ? null : p.slug)}
+                    className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left text-sm font-medium text-[var(--color-fg)] transition-colors hover:bg-white/[0.03] sm:px-10"
+                  >
+                    {openCase === p.slug ? "Hide the case study" : "Read the case study: the challenge, what I built and the result"}
+                    <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform duration-300", openCase === p.slug && "rotate-180")} />
+                  </button>
+                  {/* Kept in the page (for search engines), just folded away */}
+                  <div
+                    id={`case-${p.slug}`}
+                    className={cn(
+                      "grid transition-[grid-template-rows] duration-500 ease-out",
+                      openCase === p.slug ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                    )}
+                  >
+                  <div className="overflow-hidden">
+                  <div className="grid gap-6 px-6 pb-8 pt-2 sm:px-10 sm:pb-10 lg:grid-cols-[1fr_1.6fr_1fr] lg:gap-10">
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
+                      <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
                         The challenge
                       </p>
                       <p className="mt-3 text-sm leading-relaxed text-[var(--color-fg-muted)]">{p.caseStudy.challenge}</p>
                     </div>
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
+                      <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
                         What I built
                       </p>
                       <ul className="mt-3 space-y-2">
@@ -174,25 +230,30 @@ export function Projects() {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
+                      <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: `color-mix(in srgb, ${p.accent} 60%, white)` }}>
                         The result
                       </p>
                       <p className="mt-3 text-sm leading-relaxed text-[var(--color-fg)]">{p.caseStudy.outcome}</p>
                     </div>
+                  </div>
+                  </div>
+                  </div>
                   </div>
                 )}
               </motion.article>
             );
           })}
         </div>
+        )}
 
-        <div className="mt-20 sm:mt-28">
-          <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
+        {more.length > 0 && (
+        <div className={cn(featured.length > 0 && "mt-20 sm:mt-28")}>
+          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
             Also in production
           </div>
           <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {moreProjects.map((p, i) => (
+            {more.map((p, i) => (
               <motion.li
                 key={p.slug}
                 initial={{ opacity: 0, y: 20 }}
@@ -202,16 +263,16 @@ export function Projects() {
                 className={cn(
                   "group relative isolate flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/70 p-6 backdrop-blur-sm transition-all hover:border-[color:var(--card-accent)] hover:shadow-[0_24px_60px_-24px_color-mix(in_srgb,var(--card-accent)_45%,transparent)] sm:p-8",
                   // The last card stretches to fill whatever is left of its row.
-                  i === moreProjects.length - 1 && i % 2 === 0 && "sm:col-span-2",
-                  i === moreProjects.length - 1 && i % 3 === 0 && "lg:col-span-3",
-                  i === moreProjects.length - 1 && i % 3 === 1 && "lg:col-span-2",
-                  i === moreProjects.length - 1 && i % 3 === 2 && "lg:col-span-1",
+                  i === more.length - 1 && i % 2 === 0 && "sm:col-span-2",
+                  i === more.length - 1 && i % 3 === 0 && "lg:col-span-3",
+                  i === more.length - 1 && i % 3 === 1 && "lg:col-span-2",
+                  i === more.length - 1 && i % 3 === 2 && "lg:col-span-1",
                 )}
                 style={{ ["--card-accent" as string]: p.accent } as React.CSSProperties}
               >
                 <Planet name={p.planet} color={p.accent} className="pointer-events-none absolute -right-8 -top-8 -z-10 w-40 sm:w-48" sizes="192px" />
                 <span className="font-mono text-xs text-[var(--color-fg-subtle)]">
-                  {pad(projects.length + i + 1)} / {pad(projects.length + moreProjects.length)}
+                  {pad(numberOf(p))} / {pad(total)}
                 </span>
                 <h3 className="mt-4 max-w-[70%] text-2xl font-extrabold tracking-[-0.02em] text-[var(--color-fg)] sm:text-3xl">
                   {p.name}
@@ -246,6 +307,7 @@ export function Projects() {
             ))}
           </ul>
         </div>
+        )}
       </div>
     </section>
   );

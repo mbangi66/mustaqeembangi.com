@@ -11,6 +11,7 @@ export const siteConfig = {
     "I build and run 30+ live apps for Gulf businesses: ERP and POS, WhatsApp ordering, clinics, online stores and AI.",
   email: "mbangi66@gmail.com",
   phone: "+965 410 76750",
+  whatsapp: "https://wa.me/96541076750",
   cvPath: "/Mustaqeem_Bangi_CV.pdf",
   url: "https://mustaqeembangi.vercel.app",
   availability: "Open to full time roles and freelance projects.",
@@ -46,6 +47,19 @@ export const industries: string[] = [
   "Marketing & brands",
 ];
 
+export type Category = "restaurants" | "healthcare" | "commerce" | "fleet" | "saas" | "desktop";
+
+// Filter tabs on the Work section, in display order.
+export const projectFilters: { id: Category | "all"; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "restaurants", label: "Restaurants & POS" },
+  { id: "healthcare", label: "Healthcare" },
+  { id: "commerce", label: "Stores & marketplaces" },
+  { id: "fleet", label: "Fleet & IoT" },
+  { id: "saas", label: "SaaS & AI" },
+  { id: "desktop", label: "Desktop & tools" },
+];
+
 export type CaseStudy = { challenge: string; built: string[]; outcome: string };
 
 export type Project = {
@@ -59,6 +73,7 @@ export type Project = {
   status: string;
   accent: string; // glow colour on the card
   planet: import("@/components/planet").PlanetName;
+  categories: Category[];
   image?: string; // real screenshot; replaces the planet when present
   caseStudy?: CaseStudy;
 };
@@ -67,6 +82,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "erp-platform",
+    categories: ["restaurants", "commerce"],
     planet: "jupiter",
     name: "Business ERP & Restaurant Platform",
     pitch: "One system running 14+ businesses: restaurants, shops, rentals and services.",
@@ -92,6 +108,7 @@ export const projects: Project[] = [
   },
   {
     slug: "social-hub",
+    categories: ["saas"],
     planet: "neptune",
     name: "Social Hub",
     pitch: "AI competitor tracking and social media management for Gulf brands.",
@@ -117,6 +134,7 @@ export const projects: Project[] = [
   },
   {
     slug: "gps-fleet",
+    categories: ["fleet"],
     planet: "earth",
     name: "Fleet Telematics",
     pitch: "Live GPS tracking for 7,000+ vehicles in Kuwait, plus transport bookings and fuel control.",
@@ -143,6 +161,7 @@ export const projects: Project[] = [
   },
   {
     slug: "whatsapp-platform",
+    categories: ["restaurants", "healthcare", "saas"],
     planet: "uranus",
     name: "WhatsApp Business Platform",
     pitch: "Ordering, bookings, clinics and campaigns, all run from WhatsApp.",
@@ -171,6 +190,7 @@ export const projects: Project[] = [
 export const moreProjects: Project[] = [
   {
     slug: "clinic-platform",
+    categories: ["healthcare"],
     planet: "eris",
     name: "Clinic Management",
     pitch: "Patients, doctors, visits and stock in one system.",
@@ -183,6 +203,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "hospital-service",
+    categories: ["healthcare", "restaurants"],
     planet: "moon-far",
     name: "Hospital Food & Room Service",
     pitch: "Patients order meals and call for help from their bed.",
@@ -195,6 +216,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "retail-platform",
+    categories: ["commerce"],
     planet: "venus",
     name: "Retail & Warehouse",
     pitch: "Storefront, shop POS and warehouse on one inventory.",
@@ -207,6 +229,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "desktop-pos",
+    categories: ["desktop", "restaurants"],
     planet: "haumea",
     name: "Desktop POS",
     pitch: "A till app that keeps selling when the internet drops.",
@@ -220,6 +243,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "print-agents",
+    categories: ["desktop", "restaurants"],
     planet: "venus-surface",
     name: "Print & Backup Agents",
     pitch: "Two Windows apps that run quietly on the shop and office PCs.",
@@ -232,6 +256,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "car-marketplace",
+    categories: ["commerce"],
     planet: "mars",
     name: "Car Marketplace",
     pitch: "Buy, sell and rent cars, with dealers on board.",
@@ -244,6 +269,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "automotive",
+    categories: ["fleet"],
     planet: "mercury",
     name: "Smart Car Wash & Parking",
     pitch: "Connected car wash machines, parking lots and service billing.",
@@ -256,6 +282,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "e-learning",
+    categories: ["saas"],
     planet: "saturn",
     name: "Najeh & Online Learning",
     pitch: "Course platforms with live classes, built for Gulf students.",
@@ -268,6 +295,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "site-builder",
+    categories: ["saas"],
     planet: "ceres",
     name: "Website Builder SaaS",
     pitch: "Customers launch their own sites from themes.",
@@ -280,6 +308,7 @@ export const moreProjects: Project[] = [
   },
   {
     slug: "luxury-store",
+    categories: ["commerce"],
     planet: "makemake",
     name: "Luxury Online Store",
     pitch: "An online store for a premium brand, built Arabic first.",
@@ -297,34 +326,9 @@ export type Highlight = { tag: string; title: string; body: string };
 // Hard problems solved, described without client details.
 export const highlights: Highlight[] = [
   {
-    tag: "Architecture",
-    title: "Four codebases into one",
-    body: "Merged four drifted copies of a restaurant system into a single Laravel 12 app, with module flags so each business turns on only what it uses.",
-  },
-  {
-    tag: "Offline",
-    title: "Tills that keep selling offline",
-    body: "The desktop POS saves every order locally and syncs when the connection comes back, so a dropped line never stops a sale.",
-  },
-  {
-    tag: "POS",
-    title: "Tablets that pair in seconds",
-    body: "Till tablets connect with a single use code and get their own login. The history shows whether a cashier or the till itself made each change.",
-  },
-  {
     tag: "Reliability",
     title: "Messaging that survives outages",
     body: "If one WhatsApp provider goes down, another takes over. Each one is watched, rate limited and logged, so the business never goes quiet.",
-  },
-  {
-    tag: "No code",
-    title: "Flows change without a deploy",
-    body: "Businesses edit their own WhatsApp journeys in a visual builder. Every version is saved, so any change can be rolled back.",
-  },
-  {
-    tag: "Privacy",
-    title: "Every patient file access logged",
-    body: "Clinic systems record who opened which patient file and when, with permissions set by role for every screen.",
   },
   {
     tag: "AI cost",
@@ -332,9 +336,9 @@ export const highlights: Highlight[] = [
     body: "WhatsApp automations check rate limits and abuse rules before any paid template or AI call, so spam never turns into an invoice.",
   },
   {
-    tag: "Data",
-    title: "Millions of rows, kept in sync",
-    body: "A Python pipeline moves fleet data from legacy MSSQL into MariaDB continuously, so live maps and reports never query the old system.",
+    tag: "Privacy",
+    title: "Every patient file access logged",
+    body: "Clinic systems record who opened which patient file and when, with permissions set by role for every screen.",
   },
   {
     tag: "Printing",
@@ -345,11 +349,6 @@ export const highlights: Highlight[] = [
     tag: "Payments",
     title: "Money to the fils",
     body: "The Kuwaiti dinar has three decimals, and most software rounds to two. Mine keeps every fils, and test payments can never touch real money.",
-  },
-  {
-    tag: "DevOps",
-    title: "Deploys nobody notices",
-    body: "Every live update follows the same careful order (caches, queues, workers), so customers keep using the app while it changes underneath them.",
   },
   {
     tag: "Ops",
@@ -475,12 +474,9 @@ export const experience: ExperienceItem[] = [
     summary:
       "I design, build and run the company's products, and look after the servers all of them live on.",
     highlights: [
-      "Merged four restaurant codebases into one system that now runs 14+ businesses, with branches, menus, add ons and orders printed automatically in each kitchen",
-      "Built a WhatsApp ordering bot on the Cloud API: cuisine, restaurant, item and checkout, with carousels, a remembered cart and delivery by location",
-      "Built a hospital meal and room service system: QR ordering by meal type, kitchen approvals, and tablets that call a waiter",
-      "Built store and inventory management with barcode scanning, stock transfers and automatic cash flow, profit and break even reports",
-      "Built Najeh, an online learning platform with subject packages, live classes and MyFatoorah payments",
-      "Built fleet transport bookings with monthly contracts and missed ride billing, plus fuel tracking from GPS data",
+      "Merged four restaurant codebases into one system that now runs 14+ businesses, with orders printed automatically in each kitchen",
+      "Built a WhatsApp ordering bot and a WhatsApp business platform on the Cloud API, with carousels, a remembered cart and delivery by location",
+      "Built a hospital meal and room service system, store and inventory management with finance reports, the Najeh learning platform and fleet transport bookings",
       "Run 30+ live apps: deploys with no downtime, queues, DNS and mail, and nightly backups to an office NAS",
     ],
     stack: ["Laravel", "Livewire", "Filament", "Vue/Inertia", "MySQL", "WhatsApp Cloud API", "Linux"],

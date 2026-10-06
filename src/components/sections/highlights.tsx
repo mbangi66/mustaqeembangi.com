@@ -8,7 +8,7 @@ export function Highlights() {
     <section id="highlights" className="relative scroll-mt-24 border-t border-[var(--color-border)] py-20 sm:py-32">
       <div className="shell px-5 sm:px-6">
         <div className="mb-10 max-w-3xl sm:mb-14">
-          <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
+          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
             <span className="h-px w-8 bg-[var(--color-border-strong)]" />
             Engineering highlights
           </div>
@@ -32,7 +32,7 @@ export function Highlights() {
               className="group relative bg-[var(--color-bg)]/90 p-6 backdrop-blur-sm transition-colors hover:bg-[var(--color-bg-subtle)] sm:p-8"
             >
               <div className="flex items-center justify-between gap-3">
-                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-orange-200/80">
+                <span className="font-mono text-xs uppercase tracking-[0.18em] text-orange-200/80">
                   {h.tag}
                 </span>
                 <span className="font-mono text-xs text-[var(--color-fg-subtle)]">{String(i + 1).padStart(2, "0")}</span>

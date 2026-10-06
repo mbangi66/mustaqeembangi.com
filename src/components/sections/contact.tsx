@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { ArrowUpRight, Check, Copy, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { siteConfig, socials } from "@/lib/data";
-import { GithubIcon, LinkedinIcon, TwitterIcon } from "@/components/brand-icons";
+import { GithubIcon, LinkedinIcon, TwitterIcon, WhatsappIcon } from "@/components/brand-icons";
 import { Moon } from "@/components/planet";
 
 const socialIcon = (name: string) => {
@@ -83,6 +83,15 @@ export function Contact() {
                 {siteConfig.responsePromise}
               </span>
             </div>
+            <a
+              href={siteConfig.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex h-12 items-center gap-2.5 rounded-full border border-emerald-400/40 px-6 text-sm font-semibold text-[var(--color-fg)] transition-colors hover:border-emerald-300 hover:bg-emerald-400/10"
+            >
+              <WhatsappIcon className="h-5 w-5 text-emerald-400" />
+              Or message me on WhatsApp
+            </a>
           </div>
 
           <div className="mt-16 flex flex-wrap items-center gap-6 border-t border-[var(--color-border)] pt-8">

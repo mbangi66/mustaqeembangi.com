@@ -13,7 +13,7 @@ export function Work() {
       <div className="shell-narrow px-5 sm:px-6">
         <div className="mb-10 flex items-baseline justify-between gap-4 sm:mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.18em]">
+            <div className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.18em]">
               <span className="h-px w-6 bg-[var(--color-border-strong)]" />
               Mission log
             </div>
@@ -45,7 +45,7 @@ export function Work() {
               <span aria-hidden className="absolute left-0 top-6 h-[15px] w-[15px] rounded-full border border-orange-300/60 bg-[var(--color-bg)] shadow-[0_0_12px_rgba(251,146,60,0.6)] lg:hidden" />
               <div className="relative grid grid-cols-12 items-baseline gap-4 rounded-lg p-4 pl-8 lg:pl-4 transition-all duration-300 hover:!opacity-100 hover:bg-white/[0.03] lg:gap-6 lg:group-hover/list:opacity-50">
                 <div className="col-span-12 lg:col-span-3">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-subtle)]">
+                  <p className="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-fg-subtle)]">
                     {job.period}
                   </p>
                 </div>
@@ -55,7 +55,7 @@ export function Work() {
                     <span className="text-[var(--color-fg-muted)]">·</span>
                     <span className="text-[var(--color-fg-muted)]">{job.company}</span>
                   </h3>
-                  <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                  <p className="mt-1 font-mono text-xs uppercase tracking-wider text-[var(--color-fg-subtle)]">
                     {job.location}
                   </p>
                   <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--color-fg-muted)]">
@@ -79,13 +79,13 @@ export function Work() {
         </ul>
 
         <div className="mt-14 border-t border-[var(--color-border)] pt-10 sm:mt-16">
-          <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-orange-200/80">Education</h3>
+          <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-orange-200/80">Education</h3>
           <ul className="mt-5 grid gap-6 sm:grid-cols-2">
             {education.map((e) => (
               <li key={e.school}>
                 <p className="text-base font-semibold text-[var(--color-fg)]">{e.course}</p>
                 <p className="mt-1 text-sm text-[var(--color-fg-muted)]">{e.school}</p>
-                <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-subtle)]">{e.period}</p>
+                <p className="mt-1 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-fg-subtle)]">{e.period}</p>
               </li>
             ))}
           </ul>

@@ -29,7 +29,7 @@ export function TimeWidget() {
 
   if (!now) {
     return (
-      <span className="hidden items-center gap-2 font-mono text-[11px] text-[var(--color-fg-subtle)] lg:inline-flex">
+      <span className="hidden items-center gap-2 font-mono text-xs text-[var(--color-fg-subtle)] lg:inline-flex">
         <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-border-strong)]" />
         Kuwait
       </span>
@@ -39,7 +39,7 @@ export function TimeWidget() {
   const { time, dayLabel } = format(now);
 
   return (
-    <span className="hidden items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)] lg:inline-flex">
+    <span className="hidden items-center gap-2 font-mono text-xs uppercase tracking-wider text-[var(--color-fg-subtle)] lg:inline-flex">
       <span className="relative flex h-1.5 w-1.5">
         <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-60" />
         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />

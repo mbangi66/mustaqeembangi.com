@@ -9,7 +9,7 @@ export function Toolbox() {
       <div className="shell px-5 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1fr_2.2fr] lg:gap-16">
           <div>
-            <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-[11px] sm:tracking-[0.22em]">
+            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:text-xs sm:tracking-[0.22em]">
               <span className="h-px w-8 bg-[var(--color-border-strong)]" />
               Toolbox
             </div>
@@ -31,7 +31,7 @@ export function Toolbox() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: (i % 3) * 0.06 }}
               >
-                <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-orange-200/80">{g.title}</h3>
+                <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-orange-200/80">{g.title}</h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-[var(--color-fg)]/85">{g.items.join(", ")}</p>
               </motion.div>
             ))}

@@ -86,7 +86,7 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.6, delay: 0.2 }}
         >
-          <BlackHoleScene active={visible} particles={narrow ? 250 : 500} />
+          <BlackHoleScene active={visible} particles={narrow ? 250 : 500} bloom={!narrow} />
         </motion.div>
       )}
 
@@ -113,7 +113,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:mb-12 sm:text-[11px] sm:tracking-[0.22em]"
+          className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] sm:mb-12 sm:text-xs sm:tracking-[0.22em]"
         >
           <span className="relative inline-flex h-1.5 w-1.5">
             <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
@@ -190,7 +190,6 @@ export function Hero() {
           <Magnetic strength={0.22}>
             <a
               href="#work"
-              data-cursor="link"
               className="group relative inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-[var(--color-fg)] px-6 text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-bg)] sm:h-14 sm:w-auto sm:px-7"
             >
               <span className="relative z-10 flex items-center gap-2 transition-colors group-hover:text-white">
@@ -209,7 +208,6 @@ export function Hero() {
               href={siteConfig.cvPath}
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor="link"
               className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] px-6 font-mono text-sm text-[var(--color-fg)] backdrop-blur-md transition-colors hover:border-white/40 hover:bg-white/[0.07] sm:h-14 sm:w-auto sm:px-7"
             >
               <Download className="h-4 w-4" />
@@ -228,7 +226,7 @@ export function Hero() {
         >
           {kpis.map((k) => (
             <div key={k.label} className="flex flex-col-reverse">
-              <dt className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] sm:mt-2 sm:text-[11px] sm:tracking-[0.18em]">
+              <dt className="mt-1.5 font-mono text-xs uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] sm:mt-2 sm:text-xs sm:tracking-[0.18em]">
                 {k.label}
               </dt>
               <dd className="font-sans text-3xl font-extrabold tracking-[-0.04em] text-[var(--color-fg)] sm:text-5xl">
@@ -244,10 +242,9 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.3, duration: 0.8 }}
-        data-cursor="link"
         className="group absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)] md:flex"
       >
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em]">scroll</span>
+        <span className="font-mono text-xs uppercase tracking-[0.3em]">scroll</span>
         <MoveDown className="h-3.5 w-3.5 motion-safe:animate-bounce" />
       </motion.a>
     </section>

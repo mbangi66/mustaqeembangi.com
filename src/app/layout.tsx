@@ -10,7 +10,6 @@ import { Providers } from "@/components/providers";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { CommandPalette } from "@/components/command-palette";
-import { Cursor } from "@/components/cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { SpaceBackdrop } from "@/components/space-backdrop";
 import { siteConfig, socials } from "@/lib/data";
@@ -139,7 +138,6 @@ export default function RootLayout({
         <Providers>
           <SpaceBackdrop />
           <ScrollProgress />
-          <Cursor />
           <Nav />
 
           <main className="relative">{children}</main>

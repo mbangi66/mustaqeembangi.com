@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Command, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { WhatsappIcon } from "./brand-icons";
 import { navItems, siteConfig } from "@/lib/data";
 import { TimeWidget } from "./time-widget";
 import { cn } from "@/lib/utils";
@@ -36,10 +37,6 @@ export function Nav() {
     });
     return () => observer.disconnect();
   }, []);
-
-  const triggerPalette = () => {
-    window.dispatchEvent(new CustomEvent("open-cmdk"));
-  };
 
   return (
     <header
@@ -76,7 +73,6 @@ export function Nav() {
               key={item.href}
               href={item.href}
               data-active={active === item.href}
-              data-cursor="link"
               className={cn(
                 "nav-link rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
                 active === item.href
@@ -89,22 +85,21 @@ export function Nav() {
           ))}
         </nav>
 
-        <div className="absolute left-1/2 top-full hidden -translate-x-1/2 pt-1 lg:flex">
-          <TimeWidget />
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={triggerPalette}
-            aria-label="Open command palette"
-            className="hidden h-10 items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] px-2.5 text-xs text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-bg-muted)] hover:text-[var(--color-fg)] sm:inline-flex"
+        <div className="flex items-center gap-3">
+          {/* Kuwait clock lives in the bar itself so it never floats over content */}
+          <span className="hidden xl:inline-flex">
+            <TimeWidget />
+          </span>
+          <a
+            href={siteConfig.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Message me on WhatsApp"
+            title="Message me on WhatsApp"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-[var(--color-fg-muted)] transition-colors hover:border-emerald-400/50 hover:text-emerald-300"
           >
-            <span className="hidden lg:inline">Search</span>
-            <kbd className="inline-flex items-center gap-0.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-1 py-px font-mono text-[10px] text-[var(--color-fg-subtle)]">
-              <Command className="h-2.5 w-2.5" />K
-            </kbd>
-          </button>
+            <WhatsappIcon className="h-4.5 w-4.5" />
+          </a>
           <a
             href="#contact"
             className="hidden h-10 items-center rounded-md bg-[var(--color-fg)] px-3.5 text-sm font-medium text-[var(--color-bg)] transition-opacity hover:opacity-90 sm:inline-flex"
@@ -141,6 +136,15 @@ export function Nav() {
               className="mt-2 inline-flex h-12 items-center justify-center rounded-md bg-[var(--color-fg)] text-sm font-semibold text-[var(--color-bg)]"
             >
               Hire me
+            </a>
+            <a
+              href={siteConfig.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-[var(--color-border-strong)] text-sm font-semibold text-[var(--color-fg)]"
+            >
+              <WhatsappIcon className="h-4 w-4" />
+              Message on WhatsApp
             </a>
           </div>
         </div>

@@ -357,9 +357,12 @@ function BlackHole({ particles }: { particles: number }) {
 export function BlackHoleScene({
   active,
   particles = 500,
+  bloom = true,
 }: {
   active: boolean;
   particles?: number;
+  /** The glow pass is the heaviest part; phones skip it. */
+  bloom?: boolean;
 }) {
   return (
     <Canvas
@@ -371,9 +374,11 @@ export function BlackHoleScene({
       <Suspense fallback={null}>
         <Stars radius={60} depth={40} count={1400} factor={2.5} saturation={0.2} fade speed={0.3} />
         <BlackHole particles={particles} />
+        {bloom && (
         <EffectComposer multisampling={4}>
           <Bloom intensity={0.55} luminanceThreshold={0.62} luminanceSmoothing={0.2} mipmapBlur radius={0.42} />
         </EffectComposer>
+        )}
       </Suspense>
     </Canvas>
   );

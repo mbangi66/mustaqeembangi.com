@@ -37,7 +37,7 @@ src/
 │   ├── black-hole-scene.tsx   # WebGL black hole + accretion disk
 │   ├── space-backdrop.tsx     # Fixed canvas starfield + shooting stars
 │   ├── planet.tsx             # CSS planet, CSS moon, CSS black hole fallback
-│   ├── nav.tsx, footer.tsx, command-palette.tsx (⌘K), cursor.tsx
+│   ├── nav.tsx, footer.tsx, command-palette.tsx (⌘K)
 │   └── sections/
 │       ├── hero.tsx, projects.tsx, capabilities.tsx,
 │       └── about.tsx, work.tsx (experience), contact.tsx

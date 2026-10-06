@@ -108,7 +108,7 @@ export function CommandPalette() {
           className="w-full max-w-xl overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)] font-mono text-sm shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex items-center gap-2 border-b border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
+          <div className="flex items-center gap-2 border-b border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
             <span className="h-2 w-2 rounded-full bg-[#ff5f57]/70" />
             <span className="h-2 w-2 rounded-full bg-[#febc2e]/70" />
             <span className="h-2 w-2 rounded-full bg-[#28c840]/70" />
@@ -132,7 +132,7 @@ export function CommandPalette() {
           <button
             type="button"
             onClick={() => setEaster(false)}
-            className="block w-full border-t border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-center text-[10px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
+            className="block w-full border-t border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-center text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
           >
             press esc to close
           </button>
@@ -157,7 +157,7 @@ export function CommandPalette() {
               placeholder="Search projects, jump to section, copy email…"
               className="h-12 flex-1 bg-transparent text-sm text-[var(--color-fg)] placeholder:text-[var(--color-fg-subtle)] outline-none"
             />
-            <kbd className="hidden rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--color-fg-subtle)] sm:inline">
+            <kbd className="hidden rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs text-[var(--color-fg-subtle)] sm:inline">
               ESC
             </kbd>
           </div>
@@ -180,7 +180,7 @@ export function CommandPalette() {
                 >
                   <Sparkles className="h-4 w-4 text-brand-400" />
                   <span>{p.name}</span>
-                  <span className="ml-auto truncate font-mono text-[10px] text-[var(--color-fg-subtle)]">
+                  <span className="ml-auto truncate font-mono text-xs text-[var(--color-fg-subtle)]">
                     {p.href?.replace(/^https?:\/\//, "")}
                   </span>
                 </Command.Item>
@@ -281,7 +281,7 @@ export function CommandPalette() {
             </Command.Group>
           </Command.List>
 
-          <div className="flex items-center justify-between border-t border-[var(--color-border)] px-3 py-2 text-[11px] text-[var(--color-fg-subtle)]">
+          <div className="flex items-center justify-between border-t border-[var(--color-border)] px-3 py-2 text-xs text-[var(--color-fg-subtle)]">
             <span className="font-mono">cmdk</span>
             <div className="flex items-center gap-3">
               <span>↑↓ navigate</span>
