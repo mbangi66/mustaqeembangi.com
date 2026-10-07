@@ -3,8 +3,8 @@
 Personal portfolio for **Mustaqeem Abdullah Bangi**, Senior Laravel & Systems Engineer.
 Live at **https://mustaqeem.is-a.dev** (English) and **/ar** (Arabic, right to left).
 
-Space-themed: a real-time WebGL black hole in the hero, a rising moon behind the contact section, a
-starfield behind every page, and CSS planets for each project.
+Space-themed: a real-time WebGL black hole in the hero, a NASA moon behind the contact section, a
+starfield behind every page, and a real planet for each project.
 
 Built with Next.js 16 (App Router, Turbopack), React 19, Tailwind v4, three.js
 (React Three Fiber + drei), Motion, Lenis and cmdk.
@@ -35,31 +35,43 @@ English lives at `/` and Arabic at `/ar`. Each has its own root layout
 
 ## Editing content
 
-All text lives in [`src/lib/data.ts`](src/lib/data.ts): bio, headline facts,
-projects, capabilities, principles, experience and navigation. Change it there,
-not in the components.
+English text lives in [`src/lib/data.ts`](src/lib/data.ts) and Arabic in
+[`src/lib/content-ar.ts`](src/lib/content-ar.ts): bio, facts, projects, highlights,
+capabilities, experience and navigation. Change it there, not in the components.
 
 ## Project structure
 
 ```
 src/
 ├── app/
-│   ├── layout.tsx             # Root layout, fonts, metadata, starfield
-│   ├── page.tsx               # Single page composing all sections
-│   ├── opengraph-image.tsx    # Generated share image (LinkedIn, WhatsApp, X)
-│   └── globals.css            # Tailwind v4 theme tokens
+│   ├── (en)/layout.tsx, page.tsx      # English site at /
+│   ├── (ar)/ar/layout.tsx, page.tsx   # Arabic site at /ar (right to left)
+│   ├── global-not-found.tsx           # Bilingual 404 page
+│   ├── opengraph-image.jpg            # Share card (LinkedIn, WhatsApp, X)
+│   ├── icon.png, apple-icon.png, favicon.ico
+│   ├── robots.ts, sitemap.ts
+│   └── globals.css                    # Theme tokens, Arabic and RTL rules
 ├── components/
-│   ├── black-hole-scene.tsx   # WebGL black hole + accretion disk
-│   ├── space-backdrop.tsx     # Fixed canvas starfield + shooting stars
-│   ├── planet.tsx             # CSS planet, CSS moon, CSS black hole fallback
+│   ├── site-shell.tsx                 # <html>, fonts, metadata, structured data
+│   ├── home.tsx                       # The single page, shared by both languages
+│   ├── black-hole-scene.tsx           # WebGL black hole with bloom
+│   ├── space-backdrop.tsx             # Starfield and shooting stars
+│   ├── planet.tsx                     # Planet and moon images, CSS black hole fallback
+│   ├── bidi-list.tsx                  # Lists that read right in both directions
 │   ├── nav.tsx, footer.tsx, command-palette.tsx (⌘K)
-│   └── sections/
-│       ├── hero.tsx, projects.tsx, capabilities.tsx,
-│       └── about.tsx, work.tsx (experience), contact.tsx
+│   └── sections/                      # hero, industries, projects, highlights,
+│                                      # capabilities, toolbox, about, process,
+│                                      # work (experience), contact
 └── lib/
-    ├── data.ts                # All portfolio content
-    └── utils.ts               # cn() class-merging helper
+    ├── data.ts                        # English content
+    ├── content-ar.ts                  # Arabic content
+    ├── ui.ts                          # Interface wording, both languages
+    ├── i18n.tsx                       # useLocale()
+    └── utils.ts
 ```
+
+Images: `public/planets/` and `public/moon.webp` are rendered from Solar System Scope
+(CC BY 4.0) and NASA maps; `public/work/` holds real product screenshots.
 
 ## Performance and accessibility
 
